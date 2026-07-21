@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="preload" href="assets/fonts/lemi-milk-bubble.woff2" as="font" type="font/woff2" crossorigin>
+  <script>document.documentElement.classList.add("font-pending");</script>
   <title>不牛马厨房</title>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <style>
@@ -13,6 +14,10 @@
       font-style: normal;
       font-weight: 400;
       font-display: swap;
+    }
+
+    html.font-pending body {
+      visibility: hidden;
     }
 
     :root {
@@ -2585,6 +2590,13 @@
       }
     }
   </style>
+  <script>
+    document.fonts.load('1em "Lemi Milk Bubble"').then(() => {
+      document.documentElement.classList.remove("font-pending");
+    }).catch(() => {
+      document.documentElement.classList.add("font-failed");
+    });
+  </script>
 </head>
 <body>
   <div class="app">
