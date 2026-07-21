@@ -1283,6 +1283,26 @@
       min-height: 148px;
     }
 
+    .recipe-image-shell.is-photo-unavailable::after,
+    .selected-image-shell.is-photo-unavailable::after {
+      content: "暂无可授权实拍图";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: linear-gradient(135deg, #fffaf2, #f4efe6);
+      color: var(--muted-ink);
+      font-size: 15px;
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .is-photo-unavailable .recipe-image,
+    .is-photo-unavailable .selected-image {
+      visibility: hidden;
+    }
+
     .recipe-card h3 {
       margin: 0;
       font-size: 18px;
@@ -1968,6 +1988,19 @@
       border-top: 1px solid var(--line);
       box-shadow: 0 -12px 24px rgba(15, 23, 42, 0.08);
       backdrop-filter: blur(14px);
+    }
+
+    .site-footer {
+      padding: 10px 18px 96px;
+      color: var(--muted-ink);
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .site-footer a {
+      color: inherit;
+      text-decoration: underline;
+      text-underline-offset: 3px;
     }
 
     .bottom-nav-inner {
@@ -3180,6 +3213,8 @@
     </div>
   </nav>
 
+  <footer class="site-footer"><a href="assets/dishes/ATTRIBUTION.md" target="_blank" rel="noopener">菜图授权与来源</a></footer>
+
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
   <script>
@@ -3309,20 +3344,21 @@
     };
 
     // Verified Wikimedia Commons food photos. Variants intentionally share a photo only
-    // when they are the same dish with a heat or home-style modifier.
+    // when they are the same dish with a heat or home-style modifier. The local files
+    // below are documented in assets/dishes/ATTRIBUTION.md.
     const curatedRecipePhotos = {
-      "辣子鸡丁": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/La_Zi_Ji_%28Chicken_with_Chiles%29_%282269517013%29.jpg/960px-La_Zi_Ji_%28Chicken_with_Chiles%29_%282269517013%29.jpg",
-      "辣子鸡": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/La_Zi_Ji_%28Chicken_with_Chiles%29_%282269517013%29.jpg/960px-La_Zi_Ji_%28Chicken_with_Chiles%29_%282269517013%29.jpg",
-      "水煮牛肉": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5d/Shuizhu_Roupian_at_Daqian_Restaurant%2C_Dachenglu_%2820260126131330%29.jpg/960px-Shuizhu_Roupian_at_Daqian_Restaurant%2C_Dachenglu_%2820260126131330%29.jpg",
-      "毛血旺": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/df/Chongqing-style_boiled_blood_curd_%28Mao_Xuewang%29.jpg/960px-Chongqing-style_boiled_blood_curd_%28Mao_Xuewang%29.jpg",
-      "毛肚鸭血锅": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/Red_House_hot_pot_Chongqing.jpg/960px-Red_House_hot_pot_Chongqing.jpg",
+      "辣子鸡丁": "assets/dishes/la-zi-ji.jpg",
+      "辣子鸡": "assets/dishes/la-zi-ji.jpg",
+      "水煮牛肉": "assets/dishes/shuizhu-roupian.jpg",
+      "毛血旺": "assets/dishes/mao-xuewang.jpg",
+      "毛肚鸭血锅": "assets/dishes/chongqing-hotpot.jpg",
       "鸡翅": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Fried-Chicken-Set.jpg/960px-Fried-Chicken-Set.jpg",
-      "宫保鸡丁": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Kung-pao-shanghai.jpg/960px-Kung-pao-shanghai.jpg",
+      "宫保鸡丁": "assets/dishes/kung-pao-chicken.jpg",
       "回锅肉": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Hunan_cuisine%2C_twice-cooked_pork.jpg/960px-Hunan_cuisine%2C_twice-cooked_pork.jpg",
       "麻婆豆腐": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Billyfoodmabodofu3.jpg/960px-Billyfoodmabodofu3.jpg",
       "冬阴功汤": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d9/%E6%99%AF%E6%B4%AA_%E6%B3%B0%E9%A4%90%E5%86%AC%E9%98%B4%E5%8A%9F%E6%B1%A4.jpg/960px-%E6%99%AF%E6%B4%AA_%E6%B3%B0%E9%A4%90%E5%86%AC%E9%98%B4%E5%8A%9F%E6%B1%A4.jpg",
       "越南牛肉粉": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/16/HK_QB_Quarry_Bay_%E4%B8%83%E5%A7%8A%E5%A6%B9%E9%81%93_Tsat_Tsz_Mui_Road_%E5%81%A5%E5%BA%B7%E9%82%A8_Healthy_Village_shop_%E5%A4%A7%E5%8F%BB%E8%B6%8A%E5%8D%97%E7%89%9B%E8%82%89%E7%B2%89%E9%A4%90%E5%BB%B3_Dalat_Vietnamese_Restaurant_January_2026_N13P_01.jpg/960px-HK_QB_Quarry_Bay_%E4%B8%83%E5%A7%8A%E5%A6%B9%E9%81%93_Tsat_Tsz_Mui_Road_%E5%81%A5%E5%BA%B7%E9%82%A8_Healthy_Village_shop_%E5%A4%A7%E5%8F%BB%E8%B6%8A%E5%8D%97%E7%89%9B%E8%82%89%E7%B2%89%E9%A4%90%E5%BB%B3_Dalat_Vietnamese_Restaurant_January_2026_N13P_01.jpg",
-      "黑椒牛排饭": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Black_Pepper_Beefsteak_and_Prickly_Ash_Fish_Fillets_set_meal_on_C7076_%2820190419133002%29.jpg/960px-Black_Pepper_Beefsteak_and_Prickly_Ash_Fish_Fillets_set_meal_on_C7076_%2820190419133002%29.jpg",
+      "黑椒牛排饭": "assets/dishes/black-pepper-beefsteak.jpg",
       "双皮奶": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Double_skin_milk.jpg/960px-Double_skin_milk.jpg"
     };
 
@@ -4141,38 +4177,6 @@
       save(storageKeys.recipePhotos, recipePhotoCache);
     }
 
-    function recipeIllustration(recipe) {
-      const name = String(recipe?.name || "今日菜品").slice(0, 12);
-      const ingredient = String(recipe?.ingredients?.find((item) => !isPantryIngredient(item)) || "家常食材").slice(0, 12);
-      const seed = [...name].reduce((total, char) => total + char.codePointAt(0), 0);
-      const palettes = [
-        ["#FFF6E8", "#F4A261", "#C65D33"],
-        ["#F1F8EC", "#8FCB8E", "#287A55"],
-        ["#FFF0F1", "#F197A9", "#AF3E63"],
-        ["#EFF7FB", "#8EC5D8", "#31758D"]
-      ];
-      const [background, accent, ink] = palettes[seed % palettes.length];
-      const escapeSvgText = (value) => value.replace(/[&<>"']/g, (char) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&apos;"
-      })[char]);
-      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="${escapeSvgText(name)}菜名插画">
-        <rect width="800" height="600" fill="${background}"/>
-        <circle cx="130" cy="105" r="120" fill="${accent}" opacity=".18"/>
-        <circle cx="700" cy="500" r="170" fill="${accent}" opacity=".14"/>
-        <ellipse cx="400" cy="360" rx="238" ry="104" fill="#fffdf9" stroke="${accent}" stroke-width="18"/>
-        <ellipse cx="400" cy="336" rx="184" ry="64" fill="${accent}" opacity=".8"/>
-        <path d="M265 338c38-77 86-108 139-91 45-71 111-51 139 12 43-5 78 24 91 79-70 44-300 45-369 0Z" fill="#fff8e7" opacity=".92"/>
-        <path d="M315 322c22-55 59-69 93-25m-18 45c23-71 69-83 106-29m-4 34c30-57 72-51 98-2" fill="none" stroke="${ink}" stroke-width="13" stroke-linecap="round" opacity=".64"/>
-        <text x="400" y="154" text-anchor="middle" fill="${ink}" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="48" font-weight="700">${escapeSvgText(name)}</text>
-        <text x="400" y="500" text-anchor="middle" fill="${ink}" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="28" opacity=".78">${escapeSvgText(ingredient)} · 本地菜名插画</text>
-      </svg>`;
-      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-    }
-
     async function requestWikimediaPhoto(recipe, variant = 0, forceRefresh = false) {
       const key = photoSearchKey(recipe, variant);
       const cachedPhoto = recipePhotoCache[key];
@@ -4222,14 +4226,17 @@
     }
 
     function applyRecipeImageFallback(image, credit, recipe, source) {
-      const showIllustration = () => {
-        image.src = recipeIllustration(recipe);
-        if (credit) credit.textContent = "本地菜名插画";
+      const imageShell = image.closest(".recipe-image-shell, .selected-image-shell");
+      const showNoPhoto = () => {
+        image.removeAttribute("src");
+        imageShell?.classList.add("is-photo-unavailable");
+        if (credit) credit.textContent = "暂无可授权实拍图";
       };
       const showImage = (imageSource, imageCredit, onFailure) => {
         const preload = new Image();
         preload.onload = () => {
           image.src = imageSource;
+          imageShell?.classList.remove("is-photo-unavailable");
           if (credit) credit.textContent = imageCredit;
         };
         preload.onerror = onFailure;
@@ -4242,10 +4249,10 @@
         image.removeAttribute("src");
       };
       if (!recipe) {
-        image.removeAttribute("src");
+        showNoPhoto();
         return;
       }
-      showIllustration();
+      showNoPhoto();
       const hasDirectImage = source && !/loremflickr\.com|\.mm\.bing\.net\//.test(source);
       const variant = Number(image.dataset.imageVariant || 0);
       const searchKey = photoSearchKey(recipe, variant);
@@ -4255,7 +4262,7 @@
           if (image.dataset.photoSearchKey !== searchKey || !photo?.url) return;
           showImage(photo.url, photo.credit, () => {
             if (forceRefresh) {
-              showIllustration();
+              showNoPhoto();
               return;
             }
             forgetRecipePhoto(searchKey);
