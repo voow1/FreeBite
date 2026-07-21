@@ -84,3 +84,15 @@
 | `meat-sauce-noodles.webp` | 杂酱面 | avlxyz | [炸酱面 Beijing Noodles with Meat Sauce](https://www.flickr.com/photos/10559879@N00/3012466496) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
 | `spicy-crayfish.webp` | 香辣小龙虾尾 | avlxyz | [香辣小龙虾 Spicy Mini Freshwater Lobsters](https://www.flickr.com/photos/10559879@N00/2501115641) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
 | `shrimp-scrambled-eggs.webp` | 虾仁滑蛋 | stu_spivack | [shrimp with scrambled eggs](https://www.flickr.com/photos/35034346243@N01/9336352485) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
+| `dry-pot-cauliflower.webp` | 干锅花菜 | heiyo | [干锅花菜](https://www.flickr.com/photos/88718223@N00/13121053625) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
+| `home-style-tofu.webp` | 家常豆腐 | avlxyz | [家常豆腐 Homestyle Tofu](https://www.flickr.com/photos/10559879@N00/2304041908) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
+| `yam-rib-soup.webp` | 山药排骨汤 | Celestial_Troupe2012 | [山药排骨汤](https://www.flickr.com/photos/79538530@N06/9659878449) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en) |
+| `pepper-salt-ribs.webp` | 椒盐排骨 | D11xzj | [椒盐排骨](https://www.flickr.com/photos/76958594@N04/7222272788) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en) |
+| `steamed-pork.webp` | 粉蒸肉 | ruocaled | [粉蒸肉](https://www.flickr.com/photos/54063325@N07/8349004575) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en) |
+| `quick-fried-kidney.webp` | 火爆腰花 | 双核心飞鱼 | [火爆腰花](https://www.flickr.com/photos/45390424@N02/14390166819) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en) |
+| `cold-three-shreds.webp` | 凉拌三丝 | avlxyz | [凉拌三丝 Spicy Sichuan Salad](https://www.flickr.com/photos/10559879@N00/3495773419) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
+| `sesame-bagel.webp` | 芝麻贝果 | WordRidden | [Homemade sesame bagel](https://www.flickr.com/photos/97844767@N00/6972157016) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en) |
+| `rye-bread.webp` | 黑麦欧包 | katerha | [Rye Bread](https://www.flickr.com/photos/8489692@N03/4222865830) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en) |
+| `walnut-bread.webp` | 核桃欧包 | grongar | [Walnut Bread](https://www.flickr.com/photos/70757891@N00/5625932402) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en) |
+| `whole-wheat-chicken-sandwich.webp` | 全麦鸡肉三明治 | diettogo1 | [Smoked Chicken Sandwich on Whole Wheat Bread](https://www.flickr.com/photos/92766653@N07/8855565271) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
+| `sour-soup-beef.webp` | 酸汤牛肉 | Leeinm | [酸汤牛肉](https://commons.wikimedia.org/w/index.php?curid=139076493) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.en) |
