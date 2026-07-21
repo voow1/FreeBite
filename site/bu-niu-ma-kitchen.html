@@ -4126,9 +4126,58 @@
       });
     }
 
-    async function requestWikimediaPhoto(recipe, variant = 0) {
+    function isWikimediaImageUrl(value) {
+      try {
+        const url = new URL(value);
+        return url.protocol === "https:" && url.hostname === "upload.wikimedia.org";
+      } catch (error) {
+        return false;
+      }
+    }
+
+    function forgetRecipePhoto(key) {
+      if (!recipePhotoCache[key]) return;
+      delete recipePhotoCache[key];
+      save(storageKeys.recipePhotos, recipePhotoCache);
+    }
+
+    function recipeIllustration(recipe) {
+      const name = String(recipe?.name || "今日菜品").slice(0, 12);
+      const ingredient = String(recipe?.ingredients?.find((item) => !isPantryIngredient(item)) || "家常食材").slice(0, 12);
+      const seed = [...name].reduce((total, char) => total + char.codePointAt(0), 0);
+      const palettes = [
+        ["#FFF6E8", "#F4A261", "#C65D33"],
+        ["#F1F8EC", "#8FCB8E", "#287A55"],
+        ["#FFF0F1", "#F197A9", "#AF3E63"],
+        ["#EFF7FB", "#8EC5D8", "#31758D"]
+      ];
+      const [background, accent, ink] = palettes[seed % palettes.length];
+      const escapeSvgText = (value) => value.replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&apos;"
+      })[char]);
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="${escapeSvgText(name)}菜名插画">
+        <rect width="800" height="600" fill="${background}"/>
+        <circle cx="130" cy="105" r="120" fill="${accent}" opacity=".18"/>
+        <circle cx="700" cy="500" r="170" fill="${accent}" opacity=".14"/>
+        <ellipse cx="400" cy="360" rx="238" ry="104" fill="#fffdf9" stroke="${accent}" stroke-width="18"/>
+        <ellipse cx="400" cy="336" rx="184" ry="64" fill="${accent}" opacity=".8"/>
+        <path d="M265 338c38-77 86-108 139-91 45-71 111-51 139 12 43-5 78 24 91 79-70 44-300 45-369 0Z" fill="#fff8e7" opacity=".92"/>
+        <path d="M315 322c22-55 59-69 93-25m-18 45c23-71 69-83 106-29m-4 34c30-57 72-51 98-2" fill="none" stroke="${ink}" stroke-width="13" stroke-linecap="round" opacity=".64"/>
+        <text x="400" y="154" text-anchor="middle" fill="${ink}" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="48" font-weight="700">${escapeSvgText(name)}</text>
+        <text x="400" y="500" text-anchor="middle" fill="${ink}" font-family="Microsoft YaHei, PingFang SC, sans-serif" font-size="28" opacity=".78">${escapeSvgText(ingredient)} · 本地菜名插画</text>
+      </svg>`;
+      return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
+    }
+
+    async function requestWikimediaPhoto(recipe, variant = 0, forceRefresh = false) {
       const key = photoSearchKey(recipe, variant);
-      if (recipePhotoCache[key]?.url) return recipePhotoCache[key];
+      const cachedPhoto = recipePhotoCache[key];
+      if (!forceRefresh && isWikimediaImageUrl(cachedPhoto?.url)) return cachedPhoto;
+      if (cachedPhoto) forgetRecipePhoto(key);
       if (recipePhotoRequests.has(key)) return recipePhotoRequests.get(key);
 
       const request = (async () => {
@@ -4173,6 +4222,10 @@
     }
 
     function applyRecipeImageFallback(image, credit, recipe, source) {
+      const showIllustration = () => {
+        image.src = recipeIllustration(recipe);
+        if (credit) credit.textContent = "本地菜名插画";
+      };
       const showImage = (imageSource, imageCredit, onFailure) => {
         const preload = new Image();
         preload.onload = () => {
@@ -4192,15 +4245,22 @@
         image.removeAttribute("src");
         return;
       }
+      showIllustration();
       const hasDirectImage = source && !/loremflickr\.com|\.mm\.bing\.net\//.test(source);
       const variant = Number(image.dataset.imageVariant || 0);
       const searchKey = photoSearchKey(recipe, variant);
       image.dataset.photoSearchKey = searchKey;
-      const showRelevantPhoto = () => {
-        image.removeAttribute("src");
-        requestWikimediaPhoto(recipe, variant).then((photo) => {
+      const showRelevantPhoto = (forceRefresh = false) => {
+        requestWikimediaPhoto(recipe, variant, forceRefresh).then((photo) => {
           if (image.dataset.photoSearchKey !== searchKey || !photo?.url) return;
-          showImage(photo.url, photo.credit, () => image.removeAttribute("src"));
+          showImage(photo.url, photo.credit, () => {
+            if (forceRefresh) {
+              showIllustration();
+              return;
+            }
+            forgetRecipePhoto(searchKey);
+            showRelevantPhoto(true);
+          });
         });
       };
       if (hasDirectImage) {
