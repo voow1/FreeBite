@@ -9,5 +9,7 @@ site/assets/archive/
 # Historical working copies
 *.before-*.html
 
-# Unverified third-party font binaries: keep out of the first release
-site/assets/fonts/
+# Keep unreviewed fonts out, but publish the verified site font and its notice.
+site/assets/fonts/*
+!site/assets/fonts/lemi-milk-bubble.ttf
+!site/assets/fonts/LEMI-LICENSE-NOTICE.txt
