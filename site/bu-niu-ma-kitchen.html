@@ -3224,8 +3224,7 @@
       shopping: "bnmKitchen.shopping",
       settings: "bnmKitchen.settings",
       mascot: "bnmKitchen.mascot",
-      mascotRevision: "bnmKitchen.mascotRevision",
-      recipePhotos: "bnmKitchen.recipePhotos"
+      mascotRevision: "bnmKitchen.mascotRevision"
     };
 
     const wheelColors = [
@@ -3439,7 +3438,18 @@
       "黑麦欧包": "assets/dishes/rye-bread.webp",
       "核桃欧包": "assets/dishes/walnut-bread.webp",
       "全麦鸡肉三明治": "assets/dishes/whole-wheat-chicken-sandwich.webp",
-      "酸汤牛肉": "assets/dishes/sour-soup-beef.webp"
+      "酸汤牛肉": "assets/dishes/sour-soup-beef.webp",
+      "豆浆油条轻量版": "assets/dishes/doujiang-youtiao.webp",
+      "豆花面": "assets/dishes/douhua-noodles.webp",
+      "泡椒鸡杂": "assets/dishes/pickled-pepper-chicken-giblets.webp",
+      "酸辣米线": "assets/dishes/hot-sour-rice-noodles.webp",
+      "滑蛋虾仁": "assets/dishes/shrimp-scrambled-eggs.webp",
+      "鱼香肉丝少甜版": "assets/dishes/fish-flavored-shredded-pork.webp",
+      "变态辣鸡翅": "assets/dishes/fried-chicken-wings.webp",
+      "麻辣火锅家常版": "assets/dishes/chongqing-hotpot.webp",
+      "尖椒炒肉": "assets/dishes/lajiao-chaorou.webp",
+      "小炒黄牛肉": "assets/dishes/small-fried-yellow-beef.webp",
+      "杭州片儿川": "assets/dishes/pianerchuan.webp"
     };
 
     const r = (name, kcal, time, heat, tags, ingredients, flags = [], note = "") => ({
@@ -3950,9 +3960,6 @@
       localStorage.setItem(storageKeys.mascotRevision, mascotRevision);
     }
 
-    const recipePhotoCache = load(storageKeys.recipePhotos, {});
-    const recipePhotoRequests = new Map();
-
     function load(key, fallback) {
       try {
         const value = localStorage.getItem(key);
@@ -4002,7 +4009,7 @@
       return {
         ...recipe,
         image: curatedImage,
-        imageCredit: curatedImage ? "Wikimedia Commons" : "",
+        imageCredit: curatedImage ? "已核验开放授权图片" : "",
         imageVariant: recipe.imageVariant || 0
       };
     }
@@ -4183,128 +4190,6 @@
         .trim() || name;
     }
 
-    function photoSearchKey(recipe, variant = 0) {
-      return `${photoSearchQuery(recipe)}:${Math.max(0, Number(variant) || 0)}`;
-    }
-
-    function photoSearchQueries(recipe) {
-      const query = photoSearchQuery(recipe);
-      const exactAliases = {
-        "麻婆豆腐": "Mapo tofu",
-        "水煮肉片": "Sichuan boiled pork",
-        "水煮牛肉": "Shuizhu Roupian",
-        "毛血旺": "Mao Xuewang",
-        "辣子鸡丁": "La Zi Ji",
-        "辣子鸡": "La Zi Ji",
-        "香辣鸡翅": "chicken wings",
-        "辣鸡翅": "chicken wings",
-        "回锅肉": "Twice cooked pork",
-        "担担面": "Dan dan noodles",
-        "红油抄手": "Sichuan wonton",
-        "宫保鸡丁": "Kung Pao chicken",
-        "番茄炒蛋": "Tomato and egg stir fry",
-        "酸菜鱼": "Suan cai yu",
-        "剁椒鱼头": "Steamed fish head"
-      };
-      // Only use the dish name and deliberately selected aliases. Generic food-category
-      // searches were the source of images that looked plausible but showed another dish.
-      return [...new Set([query, exactAliases[query]].filter(Boolean))];
-    }
-
-    function requestWikimediaData(params) {
-      const url = `https://commons.wikimedia.org/w/api.php?${params.toString()}`;
-      if (typeof window.fetch === "function") {
-        return window.fetch(url)
-          .then((response) => response.ok ? response.json() : null)
-          .catch(() => null);
-      }
-
-      // The desktop mini-app preview does not expose fetch. Wikimedia supports JSONP,
-      // which lets the same online search work there without a proxy or local photos.
-      return new Promise((resolve) => {
-        const callback = `bnmWikiPhoto${Date.now()}${Math.random().toString(36).slice(2)}`;
-        const script = document.createElement("script");
-        let settled = false;
-        const finish = (data) => {
-          if (settled) return;
-          settled = true;
-          clearTimeout(timer);
-          delete window[callback];
-          script.remove();
-          resolve(data || null);
-        };
-        const timer = window.setTimeout(() => finish(null), 9000);
-        window[callback] = (data) => finish(data);
-        script.async = true;
-        script.onerror = () => finish(null);
-        script.src = `${url}&callback=${encodeURIComponent(callback)}`;
-        document.head.append(script);
-      });
-    }
-
-    function isWikimediaImageUrl(value) {
-      try {
-        const url = new URL(value);
-        return url.protocol === "https:" && url.hostname === "upload.wikimedia.org";
-      } catch (error) {
-        return false;
-      }
-    }
-
-    function forgetRecipePhoto(key) {
-      if (!recipePhotoCache[key]) return;
-      delete recipePhotoCache[key];
-      save(storageKeys.recipePhotos, recipePhotoCache);
-    }
-
-    async function requestWikimediaPhoto(recipe, variant = 0, forceRefresh = false) {
-      const key = photoSearchKey(recipe, variant);
-      const cachedPhoto = recipePhotoCache[key];
-      if (!forceRefresh && isWikimediaImageUrl(cachedPhoto?.url)) return cachedPhoto;
-      if (cachedPhoto) forgetRecipePhoto(key);
-      if (recipePhotoRequests.has(key)) return recipePhotoRequests.get(key);
-
-      const request = (async () => {
-        try {
-          let candidates = [];
-          for (const query of photoSearchQueries(recipe)) {
-            const params = new URLSearchParams({
-              action: "query",
-              generator: "search",
-              gsrsearch: query,
-              gsrnamespace: "6",
-              gsrlimit: "12",
-              prop: "imageinfo",
-              iiprop: "url",
-              iiurlwidth: "900",
-              format: "json",
-              origin: "*"
-            });
-            const data = await requestWikimediaData(params);
-            if (!data) continue;
-            candidates = Object.values(data?.query?.pages || {})
-              .map((page) => ({ title: page.title || "", url: page.imageinfo?.[0]?.thumburl || page.imageinfo?.[0]?.url || "" }))
-              .filter((item) => item.url
-                && /\.(jpe?g|png|webp)$/i.test(item.title)
-                && !/(logo|icon|map|diagram|drawing|flag|coat of arms|cadal|nlc)/i.test(item.title));
-            if (candidates.length) break;
-          }
-          if (!candidates.length) return null;
-          const picked = candidates[Math.max(0, Number(variant) || 0) % candidates.length];
-          const photo = { url: picked.url, credit: "" };
-          recipePhotoCache[key] = photo;
-          save(storageKeys.recipePhotos, recipePhotoCache);
-          return photo;
-        } catch (error) {
-          return null;
-        } finally {
-          recipePhotoRequests.delete(key);
-        }
-      })();
-      recipePhotoRequests.set(key, request);
-      return request;
-    }
-
     function applyRecipeImageFallback(image, credit, recipe, source) {
       const imageShell = image.closest(".recipe-image-shell, .selected-image-shell");
       const showNoPhoto = () => {
@@ -4334,27 +4219,11 @@
       }
       showNoPhoto();
       const hasDirectImage = source && !/loremflickr\.com|\.mm\.bing\.net\//.test(source);
-      const variant = Number(image.dataset.imageVariant || 0);
-      const searchKey = photoSearchKey(recipe, variant);
-      image.dataset.photoSearchKey = searchKey;
-      const showRelevantPhoto = (forceRefresh = false) => {
-        requestWikimediaPhoto(recipe, variant, forceRefresh).then((photo) => {
-          if (image.dataset.photoSearchKey !== searchKey || !photo?.url) return;
-          showImage(photo.url, photo.credit, () => {
-            if (forceRefresh) {
-              showNoPhoto();
-              return;
-            }
-            forgetRecipePhoto(searchKey);
-            showRelevantPhoto(true);
-          });
-        });
-      };
       if (hasDirectImage) {
-        showImage(source, recipe.imageCredit || "自定义图片", showRelevantPhoto);
+        showImage(source, recipe.imageCredit || "自定义图片", showNoPhoto);
         return;
       }
-      showRelevantPhoto();
+      showNoPhoto();
     }
 
     function heatLabel(heat) {
