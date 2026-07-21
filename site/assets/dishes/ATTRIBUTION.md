@@ -23,3 +23,6 @@
 | `oyakodon.webp` | 亲子丼 | Ocdp | [Oyakodon 003](https://commons.wikimedia.org/wiki/File:Oyakodon_003.jpg) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/deed.en) |
 | `miso-soup.webp` | 味噌汤 | Ocdp | [Miso Soup 001](https://commons.wikimedia.org/wiki/File:Miso_Soup_001.jpg) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/deed.en) |
 | `borscht.webp` | 罗宋汤 | Vyacheslav Argenberg | [Borscht, Rostov-on-Don, Russia](https://commons.wikimedia.org/wiki/File:Borscht,_Rostov-on-Don,_Russia.jpg) | [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) |
+| `pad-kra-pao.webp` | 打抛猪肉饭 | Andy Li | [Kao Rad Pad Kra-pao - Unithai 2023-07-08](https://commons.wikimedia.org/wiki/File:Kao_Rad_Pad_Kra-pao_-_Unithai_2023-07-08.jpg) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/deed.en) |
+| `gyudon.webp` | 牛丼 | Ceeseven | [Gyudon with Shichimi](https://commons.wikimedia.org/wiki/File:Gyudon_with_Shichimi.jpg) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
+| `chicken-caesar-salad.webp` | 鸡胸凯撒沙拉 | Andy Li | [Chicken Caesar Salad - Amo 2026-04-11](https://commons.wikimedia.org/wiki/File:Chicken_Caesar_Salad_-_Amo_2026-04-11.jpg) | [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/deed.en) |
