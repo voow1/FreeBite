@@ -1,0 +1,13 @@
+# Local preview output and diagnostics
+*.log
+preview-server.*
+
+# Downloaded source packages and local archives
+*.zip
+site/assets/archive/
+
+# Historical working copies
+*.before-*.html
+
+# Unverified third-party font binaries: keep out of the first release
+site/assets/fonts/
