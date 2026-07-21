@@ -2672,7 +2672,7 @@
             <div class="panel picker-controls">
               <div class="wheel-panel" aria-label="抽菜转盘">
                 <div class="wheel-stage" data-wheel-state="idle">
-                  <div class="wheel-mascot" aria-hidden="true"><img class="wheel-mascot-img" id="wheelMascotImg" src="assets/astr-idle.webp" alt=""></div>
+                  <div class="wheel-mascot" aria-hidden="true"><img class="wheel-mascot-img" id="wheelMascotImg" alt="" decoding="async" fetchpriority="high"></div>
                   <div class="wheel-plate" id="wheelPlate"></div>
                   <button class="wheel-center" id="wheelCenterButton" type="button" aria-label="抽一道菜" data-stage="idle"><span id="wheelCenterText">抽</span></button>
                   <div class="wheel-click-hint" aria-hidden="true">
@@ -4137,6 +4137,21 @@
       };
     }
 
+    const mascotAssetPreloadCache = new Map();
+
+    function preloadMascotSources(sources = currentMascotSources()) {
+      [...new Set(Object.values(sources).filter(Boolean))].forEach((source) => {
+        if (mascotAssetPreloadCache.has(source)) return;
+        const image = new Image();
+        image.decoding = "async";
+        image.fetchPriority = "high";
+        image.onload = () => image.dataset.preloadState = "ready";
+        image.onerror = () => mascotAssetPreloadCache.delete(source);
+        mascotAssetPreloadCache.set(source, image);
+        image.src = source;
+      });
+    }
+
     function saveMascot() {
       save(storageKeys.mascot, state.mascot.id === "custom" ? state.mascot : { presetId: state.mascot.id });
     }
@@ -4459,6 +4474,7 @@
         state.mascotRunDirection = null;
       }
       const mascotSources = currentMascotSources();
+      preloadMascotSources(mascotSources);
       let src = mascotSources.idle;
       if (stage === "spinning" || stage === "dragging") {
         src = normalizedDirection < 0 ? mascotSources.runLeft : mascotSources.runRight;
@@ -4472,7 +4488,11 @@
       if (!mascot) return;
       if (mascot.dataset.baseSrc !== src || restart) {
         mascot.dataset.baseSrc = src;
-        mascot.src = restart && !src.startsWith("data:") ? `${src}?t=${Date.now()}` : src;
+        if (restart && mascot.getAttribute("src") === src) {
+          mascot.removeAttribute("src");
+          void mascot.offsetWidth;
+        }
+        mascot.src = src;
       }
     }
 
@@ -5027,7 +5047,7 @@
       const items = [...mascotPresets, ...customPreset];
       options.innerHTML = items.map((item) => `
         <button class="mascot-option ${state.mascot.id === item.id ? "active" : ""}" type="button" data-mascot="${escapeHtml(item.id)}" aria-pressed="${state.mascot.id === item.id}">
-          <img src="${escapeHtml(item.sources.idle)}" alt="${escapeHtml(item.name)}">
+          <img src="${escapeHtml(item.sources.idle)}" alt="${escapeHtml(item.name)}" loading="${state.mascot.id === item.id ? "eager" : "lazy"}" decoding="async" fetchpriority="${state.mascot.id === item.id ? "high" : "low"}">
           <span>${escapeHtml(item.name)}</span>
         </button>
       `).join("");
@@ -5598,6 +5618,7 @@
       const stoppedPetTheme = state.settings.followPetTheme && !preset.petTheme;
       if (stoppedPetTheme) state.settings.followPetTheme = false;
       state.mascot = preset;
+      preloadMascotSources();
       saveMascot();
       if (stoppedPetTheme) save(storageKeys.settings, state.settings);
       renderMascotOptions();
@@ -5625,6 +5646,7 @@
             customSources.done = customSources.done || dataUrl;
           }
           state.mascot = { id: "custom", name: "我的角色", sources: customSources };
+          preloadMascotSources();
           state.settings.followPetTheme = false;
           saveMascot();
           save(storageKeys.settings, state.settings);
@@ -5788,6 +5810,7 @@
     const pickerControls = document.querySelector(".picker-controls");
     if (wheelEntryMount && pickerControls) wheelEntryMount.append(pickerControls);
 
+    preloadMascotSources();
     renderFormOptions();
     renderMascotOptions();
     renderStats();
