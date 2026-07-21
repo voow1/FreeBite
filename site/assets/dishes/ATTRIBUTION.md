@@ -1,6 +1,6 @@
 # 本地菜图授权与来源
 
-以下文件来自 Wikimedia Commons 或 Flickr 的原始作品页；保留原作者、来源页与许可信息。仅收录 CC0、公共领域、CC BY 或 CC BY-SA 图片；图片只用于对应菜品，不作为其他菜品的通用替代图。
+以下文件来自 Wikimedia Commons、Flickr 或 Pexels 的原始作品页；保留原作者、来源页与许可信息。仅收录 CC0、公共领域、CC BY、CC BY-SA，或原始 Pexels 作品页标注为“Free to use”且符合 Pexels License 的图片；图片只用于对应菜品，不作为其他菜品的通用替代图。
 
 | 本地文件 | 对应菜品 | 作者 | 原始文件页 | 许可 |
 |---|---|---|---|---|
@@ -102,3 +102,7 @@
 | `hot-sour-rice-noodles.webp` | 酸辣米线 | bfishadow | [Hot and Sour Rice Noodles](https://www.flickr.com/photos/61368956@N00/5703942506) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en) |
 | `small-fried-yellow-beef.webp` | 小炒黄牛肉 | Liuxingy | [湘菜馆之小炒黄牛肉](https://commons.wikimedia.org/wiki/File:%E6%B9%98%E8%8F%9C%E9%A6%86%E4%B9%8B%E5%B0%8F%E7%82%92%E9%BB%84%E7%89%9B%E8%82%89.jpg) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.en) |
 | `pianerchuan.webp` | 杭州片儿川 | N509FZ | [Pian'erchuan noodles at Kuiyuanguan](https://commons.wikimedia.org/wiki/File:Pian%27erchuan_noodles_at_Kuiyuanguan_(20190807110615).jpg) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/deed.en) |
+| `chicken-quinoa-salad.webp` | 鸡胸藜麦沙拉 | Mounika Movva | [Delicious grilled chicken breast served with a colorful quinoa and veggie salad](https://www.pexels.com/photo/meal-on-a-plate-9397764/) | [Pexels License（Free to use）](https://www.pexels.com/license/) |
+| `cucumber-lime-water.webp` | 黄瓜青柠水 | Georgie Devlin | [Overhead view of cucumber lime water with fresh herbs](https://www.pexels.com/photo/overhead-shot-of-glasses-with-cucumber-slices-8652954/) | [Pexels License（Free to use）](https://www.pexels.com/license/) |
+| `egg-lettuce-wrap.webp` | 鸡蛋生菜卷 | Mike Art 🎥 Visual Creator \| Photography and Video 📸 | [Delicious lettuce wraps with egg filling and crackers](https://www.pexels.com/photo/healthy-lettuce-wraps-on-wooden-platter-37112189/) | [Pexels License（Free to use）](https://www.pexels.com/license/) |
+| `chicken-broccoli-bowl.webp` | 西兰花鸡胸碗 | ROMAN ODINTSOV | [A vibrant bowl of chicken, broccoli, and sesame](https://www.pexels.com/photo/chicken-and-vegetables-in-bowl-5836775/) | [Pexels License（Free to use）](https://www.pexels.com/license/) |
