@@ -1298,8 +1298,32 @@
       text-align: center;
     }
 
+    .recipe-image-shell.is-photo-loading::after,
+    .selected-image-shell.is-photo-loading::after {
+      content: "图片加载中";
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: linear-gradient(110deg, #fffaf2 30%, #f4efe6 48%, #fffaf2 66%);
+      background-size: 220% 100%;
+      color: var(--soft-ink);
+      font-size: 14px;
+      font-weight: 800;
+      text-align: center;
+      animation: recipe-image-loading 1.4s ease-in-out infinite;
+    }
+
+    @keyframes recipe-image-loading {
+      from { background-position: 100% 0; }
+      to { background-position: -100% 0; }
+    }
+
     .is-photo-unavailable .recipe-image,
-    .is-photo-unavailable .selected-image {
+    .is-photo-loading .recipe-image,
+    .is-photo-unavailable .selected-image,
+    .is-photo-loading .selected-image {
       visibility: hidden;
     }
 
@@ -2625,7 +2649,7 @@
               </div>
               <div class="selected-image-shell">
                 <button class="image-refresh" id="selectedImageRefresh" type="button" aria-label="换一张菜品图"><i data-lucide="refresh-cw"></i></button>
-                <img class="selected-image" id="selectedImage" alt="菜品图片" loading="eager">
+                <img class="selected-image" id="selectedImage" alt="菜品图片" loading="eager" decoding="async" fetchpriority="high">
                 <div class="image-credit" id="selectedImageCredit">网络真图</div>
               </div>
               <h2 id="selectedName">先抽一道</h2>
@@ -3184,7 +3208,7 @@
       </div>
       <div id="wheelEntryMount"></div>
       <article class="wheel-reveal" id="wheelReveal" aria-live="polite">
-        <img class="wheel-reveal-image" id="wheelRevealImage" alt="抽中菜品图片">
+        <img class="wheel-reveal-image" id="wheelRevealImage" alt="抽中菜品图片" decoding="async" fetchpriority="high">
         <div>
           <p class="eyebrow">今晚开饭</p>
           <h2 id="wheelRevealName">菜品揭晓</h2>
@@ -4342,40 +4366,102 @@
         .trim() || name;
     }
 
-    function applyRecipeImageFallback(image, credit, recipe, source) {
+    const recipeImagePreloadCache = new Map();
+    let libraryImageObserver = null;
+
+    function isDirectRecipeImage(source) {
+      return Boolean(source) && !/loremflickr\.com|\.mm\.bing\.net\//.test(source);
+    }
+
+    function preloadRecipeImageSource(source, priority = "auto") {
+      if (!isDirectRecipeImage(source)) return Promise.reject(new Error("missing recipe image"));
+      const cached = recipeImagePreloadCache.get(source);
+      if (cached) {
+        if (priority === "high") cached.image.fetchPriority = "high";
+        return cached.promise;
+      }
+      const preload = new Image();
+      preload.decoding = "async";
+      preload.fetchPriority = priority;
+      const promise = new Promise((resolve, reject) => {
+        preload.onload = () => resolve(source);
+        preload.onerror = () => {
+          recipeImagePreloadCache.delete(source);
+          reject(new Error(`failed to load ${source}`));
+        };
+      });
+      recipeImagePreloadCache.set(source, { image: preload, promise });
+      preload.src = source;
+      return promise;
+    }
+
+    function preloadRecipeImages(recipes, priority = "high") {
+      [...new Set((recipes || []).map((recipe) => recipe?.image).filter(isDirectRecipeImage))]
+        .forEach((source) => preloadRecipeImageSource(source, priority).catch(() => {}));
+    }
+
+    function markRecipeImageLoading(image) {
       const imageShell = image.closest(".recipe-image-shell, .selected-image-shell");
+      image.removeAttribute("src");
+      imageShell?.classList.remove("is-photo-unavailable");
+      imageShell?.classList.add("is-photo-loading");
+    }
+
+    function applyRecipeImageFallback(image, credit, recipe, source, options = {}) {
+      const imageShell = image.closest(".recipe-image-shell, .selected-image-shell");
+      const priority = options.priority || "auto";
       const showNoPhoto = () => {
         image.removeAttribute("src");
+        imageShell?.classList.remove("is-photo-loading");
         imageShell?.classList.add("is-photo-unavailable");
         if (credit) credit.textContent = "暂无可授权实拍图";
       };
-      const showImage = (imageSource, imageCredit, onFailure) => {
-        const preload = new Image();
-        preload.onload = () => {
+      const showImage = (imageSource, imageCredit) => {
+        markRecipeImageLoading(image);
+        preloadRecipeImageSource(imageSource, priority).then(() => {
           image.src = imageSource;
+          imageShell?.classList.remove("is-photo-loading");
           imageShell?.classList.remove("is-photo-unavailable");
           if (credit) credit.textContent = imageCredit;
-        };
-        preload.onerror = onFailure;
-        preload.src = imageSource;
+        }).catch(showNoPhoto);
       };
 
       image.style.backgroundImage = "none";
-      image.onerror = () => {
-        image.onerror = null;
-        image.removeAttribute("src");
-      };
+      image.onerror = showNoPhoto;
       if (!recipe) {
-        showNoPhoto();
+        image.removeAttribute("src");
+        imageShell?.classList.remove("is-photo-loading", "is-photo-unavailable");
+        return;
+      }
+      if (isDirectRecipeImage(source)) {
+        showImage(source, recipe.imageCredit || "自定义图片");
         return;
       }
       showNoPhoto();
-      const hasDirectImage = source && !/loremflickr\.com|\.mm\.bing\.net\//.test(source);
-      if (hasDirectImage) {
-        showImage(source, recipe.imageCredit || "自定义图片", showNoPhoto);
+    }
+
+    function queueLibraryRecipeImage(image, credit, recipe, source, index) {
+      const load = () => {
+        if (!image.isConnected || image.dataset.imageLoadStarted === "true") return;
+        image.dataset.imageLoadStarted = "true";
+        libraryImageObserver?.unobserve(image);
+        applyRecipeImageFallback(image, credit, recipe, source, { priority: index < 6 ? "high" : "low" });
+      };
+      markRecipeImageLoading(image);
+      if (index < 6 || !("IntersectionObserver" in window)) {
+        load();
         return;
       }
-      showNoPhoto();
+      if (!libraryImageObserver) {
+        libraryImageObserver = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            entry.target._loadRecipeImage?.();
+          });
+        }, { rootMargin: "900px 0px", threshold: 0.01 });
+      }
+      image._loadRecipeImage = load;
+      libraryImageObserver.observe(image);
     }
 
     function heatLabel(heat) {
@@ -4510,7 +4596,12 @@
         showToast(hasAvoidSettings() ? "当前筛选没有可选菜，可以清空忌口或放宽筛选。" : "当前筛选没有可选菜，放宽一点再抽。");
         return;
       }
-      state.wheelItems = sampleWheelItems(pool, Math.min(8, pool.length));
+      const wheelCount = Math.min(8, pool.length);
+      const poolIds = new Set(pool.map((recipe) => recipe.id));
+      const preparedWheelItems = state.wheelItems.filter((recipe) => poolIds.has(recipe.id));
+      state.wheelItems = preparedWheelItems.length === wheelCount
+        ? preparedWheelItems
+        : sampleWheelItems(pool, wheelCount);
       renderWheel();
       const index = Math.floor(Math.random() * state.wheelItems.length);
       const picked = state.wheelItems[index];
@@ -4677,6 +4768,7 @@
     function renderWheel() {
       const items = state.wheelItems.length ? state.wheelItems : sampleWheelItems(filteredRecipes(), Math.min(8, filteredRecipes().length));
       state.wheelItems = items;
+      preloadRecipeImages(items, "high");
       const plate = document.getElementById("wheelPlate");
       const labels = document.getElementById("wheelLabels");
       plate.style.transform = `rotate(${state.spinRotation}deg)`;
@@ -4728,7 +4820,7 @@
       selectedImage.alt = recipe ? `${recipe.name}图片` : "菜品图片";
       selectedImage.dataset.imageVariant = recipe ? String(recipe.imageVariant || 0) : "0";
       selectedImageCredit.textContent = recipe ? (recipe.imageCredit || "网络真图") : "网络真图";
-      applyRecipeImageFallback(selectedImage, selectedImageCredit, recipe, recipe ? recipe.image : fallbackDishImage());
+      applyRecipeImageFallback(selectedImage, selectedImageCredit, recipe, recipe ? recipe.image : fallbackDishImage(), { priority: "high" });
 
       const tags = document.getElementById("selectedTags");
       tags.innerHTML = "";
@@ -4782,7 +4874,7 @@
       const image = document.getElementById("wheelRevealImage");
       image.alt = `${recipe.name}成品图`;
       image.dataset.imageVariant = String(recipe.imageVariant || 0);
-      applyRecipeImageFallback(image, null, recipe, recipe.image);
+      applyRecipeImageFallback(image, null, recipe, recipe.image, { priority: "high" });
       document.getElementById("wheelRevealName").textContent = recipes.length > 1 ? `今晚 ${recipes.length} 道` : recipe.name;
       document.getElementById("wheelRevealKcal").textContent = recipes.reduce((sum, item) => sum + Number(item.kcal || 0), 0);
       document.getElementById("wheelRevealTime").textContent = Math.max(...recipes.map((item) => Number(item.time || 0)));
@@ -4821,6 +4913,7 @@
         button.classList.toggle("active", button.dataset.libraryTag === libraryTag);
       });
       const list = document.getElementById("recipeList");
+      libraryImageObserver?.disconnect();
       list.innerHTML = "";
 
       if (!recipes.length) {
@@ -4831,13 +4924,13 @@
         return;
       }
 
-      recipes.forEach((recipe) => {
+      recipes.forEach((recipe, index) => {
         const card = document.createElement("article");
         card.className = "recipe-card";
         card.innerHTML = `
           <div class="recipe-image-shell">
             <button class="image-refresh" type="button" data-refresh-image="${recipe.id}" aria-label="换一张菜品图"><i data-lucide="refresh-cw"></i></button>
-            <img class="recipe-image" alt="${escapeHtml(recipe.name)}图片" loading="lazy" data-image-variant="${recipe.imageVariant || 0}">
+            <img class="recipe-image" alt="${escapeHtml(recipe.name)}图片" loading="${index < 6 ? "eager" : "lazy"}" decoding="async" fetchpriority="${index < 2 ? "high" : "low"}" data-image-variant="${recipe.imageVariant || 0}">
             <div class="image-credit">${escapeHtml(recipe.imageCredit || "网络真图")}</div>
           </div>
           <div class="recipe-title-row">
@@ -4864,7 +4957,7 @@
         `;
         list.append(card);
         const image = card.querySelector(".recipe-image");
-        applyRecipeImageFallback(image, card.querySelector(".image-credit"), recipe, recipe.image);
+        queueLibraryRecipeImage(image, card.querySelector(".image-credit"), recipe, recipe.image, index);
       });
 
       refreshIcons();
