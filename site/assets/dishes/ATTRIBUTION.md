@@ -1,6 +1,6 @@
 # 本地菜图授权与来源
 
-以下文件均来自 Wikimedia Commons；保留原作者、文件页与许可信息。图片只用于对应菜品，不作为其他菜品的通用替代图。
+以下文件来自 Wikimedia Commons 或 Flickr 的原始作品页；保留原作者、来源页与许可信息。仅收录 CC0、公共领域、CC BY 或 CC BY-SA 图片；图片只用于对应菜品，不作为其他菜品的通用替代图。
 
 | 本地文件 | 对应菜品 | 作者 | 原始文件页 | 许可 |
 |---|---|---|---|---|
@@ -76,3 +76,11 @@
 | `milk-oatmeal.webp` | 牛奶燕麦粥 | Renee Comet | [Oatmeal](https://commons.wikimedia.org/wiki/File:Oatmeal_(1).jpg) | Public domain |
 | `chicken-meatballs.webp` | 低脂鸡肉丸 | Arnold Gatilao from Oakland, CA, USA | [Tsukune (chicken meatballs)](https://commons.wikimedia.org/wiki/File:Tsukune_(chicken_meatballs)_(16065642291).jpg) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) |
 | `oatmeal-muffins.webp` | 无糖燕麦马芬 | AlbertCahalan | [Cookbook Raisin Oatmeal Muffins](https://commons.wikimedia.org/wiki/File:CookbookRaisinOatmealMuffins.jpg) | Public domain |
+| `green-pepper-shredded-pork.webp` | 青椒肉丝 | Andrew and Annemarie | [Shredded Pork & Green Peppers with Rice](https://www.flickr.com/photos/13818951@N08/14419974066) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
+| `garlic-vermicelli-shrimp.webp` | 蒜蓉粉丝虾 | Teleyinex | [Steamed Shrimp & Vermicelli in Garlic Sauce](https://www.flickr.com/photos/32985084@N00/6955843275) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
+| `spicy-shredded-potato.webp` | 酸辣土豆丝 | Gary Soup | [Spicy Shredded Potatoes at Xi An Gourmet](https://www.flickr.com/photos/87117631@N00/14454403392) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/deed.en) |
+| `chicken-mushroom-stew.webp` | 小鸡炖蘑菇 | avlxyz | [Chicken and Mushroom Stew - Original Taste - Alpha](https://www.flickr.com/photos/10559879@N00/2300203732) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
+| `sichuan-chilli-chicken.webp` | 魔鬼辣子鸡 | avlxyz | [干香辣子鸡 Sichuan Chilli Chicken - Original Taste](https://www.flickr.com/photos/10559879@N00/2403237498) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
+| `meat-sauce-noodles.webp` | 杂酱面 | avlxyz | [炸酱面 Beijing Noodles with Meat Sauce](https://www.flickr.com/photos/10559879@N00/3012466496) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
+| `spicy-crayfish.webp` | 香辣小龙虾尾 | avlxyz | [香辣小龙虾 Spicy Mini Freshwater Lobsters](https://www.flickr.com/photos/10559879@N00/2501115641) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
+| `shrimp-scrambled-eggs.webp` | 虾仁滑蛋 | stu_spivack | [shrimp with scrambled eggs](https://www.flickr.com/photos/35034346243@N01/9336352485) | [CC BY-SA 2.0](https://creativecommons.org/licenses/by-sa/2.0/deed.en) |
