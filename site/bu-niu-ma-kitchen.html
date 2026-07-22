@@ -931,6 +931,22 @@
       border-bottom: 1px solid var(--line);
     }
 
+    .picker-heading-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .picker-heading-row .section-title {
+      min-width: 0;
+      align-items: flex-start;
+    }
+
+    .picker-heading-copy {
+      min-width: 0;
+    }
+
     .selected-head .people-picker {
       display: grid;
       padding-top: 12px;
@@ -1174,6 +1190,48 @@
       aspect-ratio: 16 / 10;
     }
 
+    .selected-image-nav {
+      position: absolute;
+      z-index: 4;
+      top: 50%;
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      padding: 0;
+      border: 1px solid rgba(255, 255, 255, 0.82);
+      border-radius: 50%;
+      background: rgba(20, 50, 35, 0.7);
+      color: white;
+      box-shadow: 0 8px 20px rgba(25, 45, 34, 0.24);
+      backdrop-filter: blur(8px);
+      transform: translateY(-50%);
+      transition: transform 160ms ease, background 160ms ease, box-shadow 160ms ease;
+    }
+
+    .selected-image-nav:hover {
+      background: color-mix(in srgb, var(--accent) 86%, #173d2b);
+      box-shadow: 0 10px 24px color-mix(in srgb, var(--accent) 28%, transparent);
+    }
+
+    .selected-image-nav:active {
+      transform: translateY(-50%) scale(0.92);
+    }
+
+    .selected-image-nav.prev {
+      left: 10px;
+    }
+
+    .selected-image-nav.next {
+      right: 10px;
+    }
+
+    .selected-image-nav svg {
+      width: 22px;
+      height: 22px;
+      stroke-width: 3;
+    }
+
     .selected-image-shell.is-empty {
       display: grid;
       place-items: center;
@@ -1244,7 +1302,7 @@
     .picked-menu-list {
       display: grid;
       grid-auto-flow: column;
-      grid-auto-columns: minmax(168px, 0.82fr);
+      grid-auto-columns: minmax(150px, 1fr);
       gap: 8px;
       overflow-x: auto;
       padding: 2px;
@@ -1252,8 +1310,17 @@
       scrollbar-width: thin;
     }
 
+    .picked-menu-preview {
+      display: grid;
+      gap: 7px;
+      padding: 10px;
+      border: 1px solid color-mix(in srgb, var(--accent) 18%, var(--line));
+      border-radius: var(--radius);
+      background: color-mix(in srgb, var(--surface) 74%, white);
+    }
+
     .picked-menu-summary {
-      margin: 0 0 8px;
+      margin: 0;
       color: var(--muted-ink);
       font-size: 13px;
       font-weight: 800;
@@ -2204,21 +2271,50 @@
 
     .draw-entry-button {
       width: fit-content;
-      min-height: 38px;
-      padding: 0 14px;
-      border: 1px solid var(--accent);
-      border-radius: var(--radius);
-      background: var(--surface);
-      color: var(--accent);
-      font-size: 15px;
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 6px 14px 6px 7px;
+      border: 1px solid color-mix(in srgb, var(--accent) 70%, white);
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), color-mix(in srgb, var(--accent) 76%, #0b5334));
+      color: white;
+      font-size: 14px;
       font-weight: 900;
+      white-space: nowrap;
+      box-shadow: 0 10px 22px color-mix(in srgb, var(--accent) 24%, transparent);
+      transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
+    }
+
+    .draw-entry-button:hover {
+      filter: saturate(1.08) brightness(1.03);
+      box-shadow: 0 12px 26px color-mix(in srgb, var(--accent) 32%, transparent);
+    }
+
+    .draw-entry-button:active {
+      transform: translateY(1px) scale(0.97);
+    }
+
+    .draw-entry-icon {
+      width: 34px;
+      height: 34px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.22);
+    }
+
+    .draw-entry-icon svg {
+      width: 19px;
+      height: 19px;
+      stroke-width: 2.7;
     }
 
     .draw-entry-guide {
-      display: grid;
-      justify-items: start;
-      gap: 7px;
-      margin-top: 10px;
+      display: block;
+      margin-top: 6px;
     }
 
     .draw-entry-guide-copy[hidden] {
@@ -2242,17 +2338,24 @@
       animation: drawGuideNudge 900ms ease-in-out infinite alternate;
     }
 
-    .draw-entry-guide .draw-entry-button {
-      min-height: 42px;
-      padding: 0 16px;
-      background: var(--accent);
-      color: white;
-      box-shadow: 0 8px 16px color-mix(in srgb, var(--accent) 22%, transparent);
-    }
-
     @keyframes drawGuideNudge {
       from { transform: translateX(0); }
       to { transform: translateX(4px); }
+    }
+
+    @media (max-width: 520px) {
+      .picker-heading-row {
+        grid-template-columns: 1fr;
+      }
+
+      .draw-entry-button {
+        justify-self: start;
+      }
+
+      .selected-image-nav {
+        width: 38px;
+        height: 38px;
+      }
     }
 
     .wheel-entry {
@@ -2910,19 +3013,30 @@
         <div class="grid two">
           <div class="selected-card">
             <div class="selected-head">
-              <div class="section-title">
-                <span class="icon"><i data-lucide="sparkles"></i></span>
-                <div>
-                  <h2 id="pickerTitle">今晚吃这个</h2>
-                  <p id="poolText">当前菜池：855 道</p>
-                  <div class="draw-entry-guide" id="drawEntryGuide">
-                    <span class="draw-entry-guide-copy" id="drawEntryGuideCopy">还没想好吃什么？点转盘，让它替你决定 <i data-lucide="corner-right-down"></i></span>
-                    <button class="draw-entry-button" id="openWheelEntry" type="button">打开转盘</button>
+              <div class="picker-heading-row">
+                <div class="section-title">
+                  <span class="icon"><i data-lucide="sparkles"></i></span>
+                  <div class="picker-heading-copy">
+                    <h2 id="pickerTitle">今晚吃这个！</h2>
+                    <p id="poolText">当前菜池：855 道</p>
+                    <div class="draw-entry-guide" id="drawEntryGuide">
+                      <span class="draw-entry-guide-copy" id="drawEntryGuideCopy">还没想好吃什么？点右边转盘，让它替你决定 <i data-lucide="corner-right-up"></i></span>
+                    </div>
                   </div>
                 </div>
+                <button class="draw-entry-button" id="openWheelEntry" type="button">
+                  <span class="draw-entry-icon" aria-hidden="true"><i data-lucide="shuffle"></i></span>
+                  <span id="drawEntryLabel">打开转盘</span>
+                </button>
+              </div>
+              <div class="picked-menu-preview" id="pickedMenuPreview" hidden>
+                <p class="picked-menu-summary" id="pickedMenuSummary"></p>
+                <div class="picked-menu-list" id="pickedMenuList"></div>
               </div>
               <div class="selected-image-shell">
                 <img class="selected-image" id="selectedImage" alt="菜品图片" loading="eager" decoding="async" fetchpriority="high">
+                <button class="selected-image-nav prev" id="selectedPrevRecipe" type="button" aria-label="查看上一道菜" hidden><i data-lucide="chevron-left"></i></button>
+                <button class="selected-image-nav next" id="selectedNextRecipe" type="button" aria-label="查看下一道菜" hidden><i data-lucide="chevron-right"></i></button>
                 <div class="image-credit" id="selectedImageCredit">网络真图</div>
               </div>
               <h2 id="selectedName">先抽一道</h2>
@@ -2947,8 +3061,6 @@
             </div>
             <div class="selected-body">
               <div class="tag-row" id="selectedTags"></div>
-              <p class="picked-menu-summary" id="pickedMenuSummary" hidden></p>
-              <div class="picked-menu-list" id="pickedMenuList"></div>
               <div>
                 <div class="section-disclosure">
                   <div class="section-disclosure-label">
@@ -5199,11 +5311,13 @@
       const recipe = activeSelectedRecipe(recipes);
       document.getElementById("selectedName").textContent = recipe ? recipe.name : "先抽一道";
       const drawEntryButton = document.getElementById("openWheelEntry");
+      const drawEntryLabel = document.getElementById("drawEntryLabel");
       const drawEntryGuideCopy = document.getElementById("drawEntryGuideCopy");
       const drawCount = targetMenuCount(filteredRecipes());
-      if (drawEntryButton) drawEntryButton.textContent = drawCount > 1
+      if (drawEntryLabel) drawEntryLabel.textContent = drawCount > 1
         ? `${recipe ? "再抽" : "抽"} ${drawCount} 道`
         : (recipe ? "再抽一道" : "打开转盘");
+      if (drawEntryButton) drawEntryButton.setAttribute("aria-label", drawEntryLabel?.textContent || "打开转盘");
       if (drawEntryGuideCopy) drawEntryGuideCopy.hidden = Boolean(recipe || state.wheelGuideDismissed);
       document.getElementById("selectedKcal").textContent = recipe ? recipe.kcal : "--";
       document.getElementById("selectedTime").textContent = recipe ? recipe.time : "--";
@@ -5220,6 +5334,9 @@
       const pickedMenuList = document.getElementById("pickedMenuList");
       pickedMenuList.innerHTML = "";
       const pickedMenuSummary = document.getElementById("pickedMenuSummary");
+      const pickedMenuPreview = document.getElementById("pickedMenuPreview");
+      const previousRecipeButton = document.getElementById("selectedPrevRecipe");
+      const nextRecipeButton = document.getElementById("selectedNextRecipe");
       const ingredients = document.getElementById("selectedIngredients");
       ingredients.innerHTML = "";
       const ingredientTitle = document.getElementById("selectedIngredientsTitle");
@@ -5228,7 +5345,9 @@
       const markCookedButton = document.getElementById("markCooked");
 
       if (!recipe) {
-        pickedMenuSummary.hidden = true;
+        pickedMenuPreview.hidden = true;
+        previousRecipeButton.hidden = true;
+        nextRecipeButton.hidden = true;
         ingredientTitle.textContent = "食材";
         methodTitle.textContent = "做法";
         addToListButton.innerHTML = '<i data-lucide="shopping-basket"></i>加入清单';
@@ -5241,8 +5360,11 @@
       recipe.tags.slice(0, 8).forEach((tag) => tags.append(createTag(tag, "tag")));
       recipe.flags.slice(0, 5).forEach((flag) => tags.append(createTag(flagLabels[flag] || flag, flag === "spicy" ? "health-tag caution" : "health-tag")));
       if (recipes.length > 1) {
-        pickedMenuSummary.hidden = false;
-        pickedMenuSummary.textContent = `今晚 ${recipes.length} 道 · 已按主菜、素菜、汤/主食搭配 · 点选菜色查看详情`;
+        pickedMenuPreview.hidden = false;
+        previousRecipeButton.hidden = false;
+        nextRecipeButton.hidden = false;
+        const activeIndex = recipes.findIndex((item) => item.id === recipe.id);
+        pickedMenuSummary.textContent = `本轮 ${recipes.length} 道 · 当前第 ${activeIndex + 1} 道 · 点选卡片或左右切换`;
         pickedMenuList.innerHTML = recipes.map((item) => `
           <button class="picked-menu-item ${item.id === recipe.id ? "active" : ""}" type="button" data-picked-recipe="${escapeHtml(item.id)}" aria-pressed="${item.id === recipe.id}">
             <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}图片" loading="lazy">
@@ -5253,7 +5375,9 @@
           </button>
         `).join("");
       } else {
-        pickedMenuSummary.hidden = true;
+        pickedMenuPreview.hidden = true;
+        previousRecipeButton.hidden = true;
+        nextRecipeButton.hidden = true;
       }
       recipe.ingredients.forEach((ingredient) => {
         const li = document.createElement("li");
@@ -5833,6 +5957,17 @@
       state.activeSelectedRecipeId = recipe.id;
       renderSelected();
     });
+    function cycleSelectedRecipe(direction) {
+      const recipes = selectedRecipes();
+      if (recipes.length < 2) return;
+      const activeRecipe = activeSelectedRecipe(recipes);
+      const activeIndex = Math.max(0, recipes.findIndex((item) => item.id === activeRecipe?.id));
+      const nextIndex = (activeIndex + direction + recipes.length) % recipes.length;
+      state.activeSelectedRecipeId = recipes[nextIndex].id;
+      renderSelected();
+    }
+    document.getElementById("selectedPrevRecipe").addEventListener("click", () => cycleSelectedRecipe(-1));
+    document.getElementById("selectedNextRecipe").addEventListener("click", () => cycleSelectedRecipe(1));
     document.getElementById("openHistoryEntry").addEventListener("click", () => {
       openChoiceSheet("最近做过", document.getElementById("historyDetail"), document.getElementById("historyPanel"));
     });
