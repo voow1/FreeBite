@@ -8,8 +8,10 @@ site/assets/archive/
 
 # Historical working copies
 *.before-*.html
+*.before-*.cmd
 
 # Keep unreviewed fonts out, but publish the verified site font and its notice.
 site/assets/fonts/*
 !site/assets/fonts/lemi-milk-bubble.ttf
+!site/assets/fonts/lemi-milk-bubble.woff2
 !site/assets/fonts/LEMI-LICENSE-NOTICE.txt

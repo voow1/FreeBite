@@ -228,7 +228,7 @@
     html[data-pet-theme="strawberry"] .tab {
       position: relative;
       isolation: isolate;
-      overflow: hidden;
+      overflow: visible;
     }
 
     html[data-pet-theme="strawberry"] .tab > * {
@@ -236,62 +236,161 @@
       z-index: 2;
     }
 
-    html[data-pet-theme="strawberry"] .tab::before,
-    html[data-pet-theme="strawberry"] .tab::after {
-      content: "";
-      position: absolute;
-      z-index: 1;
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 220ms ease, transform 260ms ease;
-    }
-
-    html[data-pet-theme="strawberry"] .tab::before {
-      top: -12px;
-      right: -10px;
-      width: 54px;
-      height: 54px;
-      background: url("assets/strawberry-corner.svg") center / contain no-repeat;
-      transform: translate(10px, -8px) scale(0.72) rotate(8deg);
-    }
-
-    html[data-pet-theme="strawberry"] .tab::after {
-      right: 0;
-      bottom: -2px;
-      left: 0;
-      height: 28px;
-      background: url("assets/strawberry-cream-ribbon.svg") center bottom / 160px 35px repeat-x;
-      transform: translateY(8px);
-    }
-
-    html[data-pet-theme="strawberry"] .tab.active::before {
-      opacity: 0.58;
-      transform: translate(0, 0) scale(1) rotate(0);
-      animation: strawberryNavBerry 2.8s ease-in-out infinite;
-    }
-
-    html[data-pet-theme="strawberry"] .tab.active::after {
-      opacity: 0.72;
-      transform: translateY(0);
-      animation: strawberryNavRibbon 5s linear infinite;
+    html[data-pet-theme="strawberry"] .tab.active {
+      background: linear-gradient(180deg, rgba(255, 245, 248, 0.96), rgba(255, 232, 240, 0.9));
+      box-shadow: inset 0 0 0 1px rgba(215, 73, 122, 0.1);
     }
 
     html[data-pet-theme="strawberry"] .tab:active {
       transform: scale(0.97);
     }
 
-    html[data-pet-theme="strawberry"] .tab:nth-child(2)::before { transform-origin: 70% 35%; }
-    html[data-pet-theme="strawberry"] .tab:nth-child(3)::before { transform-origin: 35% 70%; }
-    html[data-pet-theme="strawberry"] .tab:nth-child(4)::before { transform-origin: 60% 60%; }
-
-    @keyframes strawberryNavBerry {
-      0%, 100% { transform: translate(0, 0) scale(1) rotate(0); }
-      50% { transform: translate(-2px, 2px) scale(1.06) rotate(-4deg); }
+    .tab-icon {
+      width: 20px;
+      height: 20px;
+      display: grid;
+      place-items: center;
+      flex: 0 0 auto;
+      position: relative;
+      transition: transform 180ms ease;
     }
 
-    @keyframes strawberryNavRibbon {
-      from { background-position: 0 bottom; }
-      to { background-position: 160px bottom; }
+    .tab-icon svg {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100%;
+      transition: color 160ms ease;
+    }
+
+    html[data-pet-theme="strawberry"] .tab.active .tab-icon {
+      transform: translateY(-1px) scale(1.06);
+      animation: strawberryTabSelect 220ms cubic-bezier(0.22, 0.78, 0.36, 1) both;
+    }
+
+    html[data-pet-theme="strawberry"] .tab.active .tab-icon::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      width: 21px;
+      height: 21px;
+      border-radius: 7px;
+      background: rgba(239, 127, 168, 0.18);
+      transform: rotate(-8deg);
+    }
+
+    html[data-pet-theme="strawberry"] .tab.active[data-tab-theme="picker"] .tab-icon::before {
+      border: 1px solid rgba(185, 39, 97, 0.18);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.92) 24%, rgba(239, 127, 168, 0.2) 28% 46%, transparent 49%);
+      box-shadow: 0 0 0 3px rgba(239, 127, 168, 0.08);
+      transform: rotate(12deg);
+    }
+
+    html[data-pet-theme="strawberry"] .tab.active[data-tab-theme="library"] .tab-icon::before {
+      width: 9px;
+      height: 19px;
+      border-radius: 2px 2px 5px 5px;
+      background: #f3a1bd;
+      transform: translateX(8px) translateY(-4px);
+    }
+
+    html[data-pet-theme="strawberry"] .tab.active[data-tab-theme="pantry"] .tab-icon::before {
+      width: 11px;
+      height: 16px;
+      border-radius: 12px 2px 12px 2px;
+      background: #b9d3a7;
+      transform: translateX(7px) translateY(-5px) rotate(30deg);
+    }
+
+    html[data-pet-theme="strawberry"] .tab.active[data-tab-theme="profile"] .tab-icon::before {
+      width: 18px;
+      height: 16px;
+      border-radius: 5px 5px 7px 7px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 0 0 2px #f3a1bd;
+      transform: translateY(1px);
+    }
+
+    /* Reuse the little chef's own recognizable props instead of introducing a second icon set. */
+    html[data-pet-theme="strawberry"] .tab[data-mascot-element] .tab-icon::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      pointer-events: none;
+      opacity: 0.66;
+      transition: opacity 160ms ease, transform 180ms ease;
+    }
+
+    html[data-pet-theme="strawberry"] .tab.active[data-mascot-element] .tab-icon::after {
+      opacity: 1;
+    }
+
+    html[data-pet-theme="strawberry"] .tab[data-mascot-element="hat-spoon"] .tab-icon::after {
+      width: 4px;
+      height: 12px;
+      border-radius: 999px;
+      background: #ee7ca5;
+      box-shadow: 0 -5px 0 2px #ffd8e5;
+      transform: translate(9px, 2px) rotate(-31deg);
+    }
+
+    html[data-pet-theme="strawberry"] .tab.active[data-mascot-element="hat-spoon"] .tab-icon::after {
+      transform: translate(9px, 1px) rotate(-25deg);
+    }
+
+    html[data-pet-theme="strawberry"] .tab[data-mascot-element="clip-book"] .tab-icon::after {
+      width: 9px;
+      height: 10px;
+      border-radius: 55% 55% 58% 58%;
+      background:
+        radial-gradient(circle at 30% 38%, #fff 0 1px, transparent 1.5px),
+        radial-gradient(circle at 68% 42%, #fff 0 1px, transparent 1.5px),
+        #ef709d;
+      box-shadow: -2px -3px 0 -1px #8eb47b, 2px -3px 0 -1px #8eb47b;
+      transform: translate(8px, -6px) rotate(8deg);
+    }
+
+    html[data-pet-theme="strawberry"] .tab.active[data-mascot-element="clip-book"] .tab-icon::after {
+      transform: translate(8px, -7px) rotate(0deg);
+    }
+
+    html[data-pet-theme="strawberry"] .tab[data-mascot-element="basket"] .tab-icon::after {
+      width: 10px;
+      height: 4px;
+      border: 2px solid #d99a61;
+      border-bottom: 0;
+      border-radius: 9px 9px 0 0;
+      transform: translate(6px, -5px) rotate(8deg);
+    }
+
+    html[data-pet-theme="strawberry"] .tab.active[data-mascot-element="basket"] .tab-icon::after {
+      transform: translate(6px, -6px) rotate(0deg);
+    }
+
+    html[data-pet-theme="strawberry"] .tab[data-mascot-element="apron"] .tab-icon::after {
+      width: 12px;
+      height: 5px;
+      border-radius: 80% 80% 45% 45%;
+      background: #f08cad;
+      box-shadow: -5px -1px 0 -1px #f6b2c8, 5px -1px 0 -1px #f6b2c8;
+      transform: translate(5px, 7px);
+    }
+
+    html[data-pet-theme="strawberry"] .tab.active[data-mascot-element="apron"] .tab-icon::after {
+      transform: translate(5px, 6px) scale(1.05);
+    }
+
+    @keyframes strawberryTabSelect {
+      0% { transform: translateY(1px) scale(0.92); }
+      65% { transform: translateY(-2px) scale(1.09); }
+      100% { transform: translateY(-1px) scale(1.06); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html[data-pet-theme="strawberry"] .tab.active .tab-icon {
+        animation: none;
+      }
     }
 
     .pet-theme-pop {
@@ -1094,6 +1193,31 @@
       display: none;
     }
 
+    .selected-image-shell.is-image-unavailable,
+    .recipe-image-shell.is-image-unavailable {
+      display: grid;
+      place-items: center;
+      background: var(--surface-2);
+      box-shadow: none;
+    }
+
+    .selected-image-shell.is-image-unavailable::after,
+    .recipe-image-shell.is-image-unavailable::after {
+      content: attr(data-image-fallback);
+      max-width: 80%;
+      color: var(--muted-ink);
+      font-size: 14px;
+      font-weight: 900;
+      line-height: 1.5;
+      text-align: center;
+    }
+
+    .selected-image[hidden],
+    .recipe-image[hidden],
+    .wheel-reveal-image[hidden] {
+      display: none;
+    }
+
     .selected-image,
     .recipe-image {
       width: 100%;
@@ -1119,7 +1243,20 @@
 
     .picked-menu-list {
       display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(168px, 0.82fr);
       gap: 8px;
+      overflow-x: auto;
+      padding: 2px;
+      scroll-snap-type: x proximity;
+      scrollbar-width: thin;
+    }
+
+    .picked-menu-summary {
+      margin: 0 0 8px;
+      color: var(--muted-ink);
+      font-size: 13px;
+      font-weight: 800;
     }
 
     .picked-menu-item {
@@ -1127,10 +1264,32 @@
       grid-template-columns: 62px minmax(0, 1fr);
       gap: 10px;
       align-items: center;
+      min-height: 76px;
       padding: 8px;
+      font: inherit;
+      text-align: left;
+      color: inherit;
+      cursor: pointer;
       background: #fffaf4;
       border: 1px solid var(--line);
       border-radius: var(--radius);
+      scroll-snap-align: start;
+      transition: border-color 180ms ease, background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+    }
+
+    .picked-menu-item.active {
+      background: var(--surface-2);
+      border-color: var(--accent);
+      box-shadow: 0 6px 14px rgba(124, 78, 58, 0.1);
+    }
+
+    .picked-menu-item:active {
+      transform: scale(0.98);
+    }
+
+    .picked-menu-item:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--accent) 45%, white);
+      outline-offset: 2px;
     }
 
     .picked-menu-item img {
@@ -1381,6 +1540,13 @@
       width: 52px;
       height: 52px;
       object-fit: contain;
+      transform: scale(var(--mascot-preview-scale, 1));
+      transform-origin: 50% 82%;
+      transition: transform 180ms ease;
+    }
+
+    .mascot-option[data-mascot="milk-tea-puppy"] {
+      --mascot-preview-scale: 0.9;
     }
 
     .mascot-upload-grid {
@@ -2048,6 +2214,47 @@
       font-weight: 900;
     }
 
+    .draw-entry-guide {
+      display: grid;
+      justify-items: start;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .draw-entry-guide-copy[hidden] {
+      display: none;
+    }
+
+    .draw-entry-guide-copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--primary-strong);
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.45;
+    }
+
+    .draw-entry-guide-copy svg {
+      width: 17px;
+      height: 17px;
+      color: var(--accent);
+      animation: drawGuideNudge 900ms ease-in-out infinite alternate;
+    }
+
+    .draw-entry-guide .draw-entry-button {
+      min-height: 42px;
+      padding: 0 16px;
+      background: var(--accent);
+      color: white;
+      box-shadow: 0 8px 16px color-mix(in srgb, var(--accent) 22%, transparent);
+    }
+
+    @keyframes drawGuideNudge {
+      from { transform: translateX(0); }
+      to { transform: translateX(4px); }
+    }
+
     .wheel-entry {
       position: fixed;
       inset: 0;
@@ -2121,9 +2328,9 @@
     }
 
     .wheel-entry-topbar {
-      display: flex;
+      display: grid;
+      grid-template-columns: auto minmax(250px, 1fr) auto;
       align-items: center;
-      justify-content: space-between;
       gap: 12px;
     }
 
@@ -2132,6 +2339,38 @@
       color: var(--primary-strong);
       font-family: "Lemi Milk Bubble", "Fredoka", "Microsoft YaHei", "PingFang SC", sans-serif;
       font-size: 26px;
+    }
+
+    .wheel-serving-picker {
+      display: grid;
+      grid-template-columns: auto minmax(220px, 1fr);
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+    }
+
+    .wheel-serving-picker > span {
+      color: var(--muted-ink);
+      font-size: 12px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .wheel-serving-picker .serving-options {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 4px;
+      padding: 3px;
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+    }
+
+    .wheel-serving-picker .segment {
+      min-height: 34px;
+      padding: 0 5px;
+      border-radius: 5px;
+      font-size: 12px;
     }
 
     .wheel-entry-close {
@@ -2153,6 +2392,7 @@
 
     .wheel-entry .picker-controls {
       display: grid;
+      margin-top: 68px;
       padding: 12px;
       border: 1px solid var(--line);
       box-shadow: var(--shadow);
@@ -2189,6 +2429,21 @@
       object-fit: cover;
       border-radius: var(--radius);
       background: var(--surface-2);
+    }
+
+    .wheel-image-unavailable {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      display: grid;
+      place-items: center;
+      padding: 20px;
+      color: var(--muted-ink);
+      background: var(--surface-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 900;
+      text-align: center;
     }
 
     .wheel-reveal h2 {
@@ -2249,6 +2504,40 @@
 
       .bottom-nav-inner {
         padding-inline: 4px;
+      }
+
+      .wheel-entry-topbar {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+          "title close"
+          "serving serving";
+        gap: 10px;
+      }
+
+      .wheel-entry-topbar h2 {
+        grid-area: title;
+      }
+
+      .wheel-entry-close {
+        grid-area: close;
+      }
+
+      .wheel-serving-picker {
+        grid-area: serving;
+        grid-template-columns: auto minmax(0, 1fr);
+        width: 100%;
+        padding: 8px 9px;
+        background: color-mix(in srgb, var(--surface-2) 62%, white);
+        border: 1px solid var(--line);
+        border-radius: var(--radius);
+      }
+
+      .wheel-serving-picker .serving-options {
+        border: 0;
+      }
+
+      .wheel-entry .picker-controls {
+        margin-top: 72px;
       }
 
       .tab {
@@ -2626,7 +2915,10 @@
                 <div>
                   <h2 id="pickerTitle">今晚吃这个</h2>
                   <p id="poolText">当前菜池：855 道</p>
-                  <button class="draw-entry-button" id="openWheelEntry" type="button">抽一道</button>
+                  <div class="draw-entry-guide" id="drawEntryGuide">
+                    <span class="draw-entry-guide-copy" id="drawEntryGuideCopy">还没想好吃什么？点转盘，让它替你决定 <i data-lucide="corner-right-down"></i></span>
+                    <button class="draw-entry-button" id="openWheelEntry" type="button">打开转盘</button>
+                  </div>
                 </div>
               </div>
               <div class="selected-image-shell">
@@ -2655,12 +2947,13 @@
             </div>
             <div class="selected-body">
               <div class="tag-row" id="selectedTags"></div>
+              <p class="picked-menu-summary" id="pickedMenuSummary" hidden></p>
               <div class="picked-menu-list" id="pickedMenuList"></div>
               <div>
                 <div class="section-disclosure">
                   <div class="section-disclosure-label">
                     <span class="icon"><i data-lucide="list-checks"></i></span>
-                    <h3>食材</h3>
+                    <h3 id="selectedIngredientsTitle">食材</h3>
                   </div>
                 </div>
                 <ul class="ingredient-list" id="selectedIngredients"></ul>
@@ -2668,7 +2961,7 @@
               <div>
                 <div class="section-title">
                   <span class="icon"><i data-lucide="clipboard-list"></i></span>
-                  <h3>做法</h3>
+                  <h3 id="selectedMethodTitle">做法</h3>
                 </div>
                 <p class="muted method-copy" id="selectedNote">按筛选条件随机推荐，默认不放甜辣/糖醋类菜。</p>
               </div>
@@ -2919,7 +3212,7 @@
                 <img id="petThemePreview" src="assets/pink-pastry-girl-idle.webp" alt="当前宠物主题预览">
                 <div class="pet-theme-link-copy">
                   <strong id="petThemeName">草莓甜心厨房</strong>
-                  <span id="petThemeDescription">页面保持干净，草莓角标、流动丝带和点击糖粒集中在底部四栏。</span>
+                  <span id="petThemeDescription">小厨帽、草莓发夹、食材篮和围裙口袋贯穿导航；小厨本人只陪伴首页抽菜。</span>
                   <button class="pet-theme-toggle" id="petThemeToggle" type="button" aria-pressed="false">启用宠物主题</button>
                 </div>
               </div>
@@ -3184,7 +3477,16 @@
     <button class="wheel-entry-backdrop" id="wheelEntryBackdrop" type="button" aria-label="点击空白区域返回首页"></button>
     <div class="wheel-entry-inner">
       <div class="wheel-entry-topbar">
-        <h2>抽一道菜</h2>
+        <h2 id="wheelEntryTitle">抽一道菜</h2>
+        <div class="wheel-serving-picker" aria-label="选择转盘用餐人数">
+          <span>用餐人数</span>
+          <div class="segmented serving-options" data-serving-group data-serving-surface="wheel">
+            <button class="segment active" data-serving="1" type="button">1 人</button>
+            <button class="segment" data-serving="2" type="button">2 人</button>
+            <button class="segment" data-serving="3" type="button">3 人</button>
+            <button class="segment" data-serving="4" type="button">4+ 人</button>
+          </div>
+        </div>
         <button class="wheel-entry-close" id="wheelEntryClose" type="button" aria-label="关闭抽菜转盘"><i data-lucide="x"></i></button>
       </div>
       <div id="wheelEntryMount"></div>
@@ -3211,10 +3513,10 @@
 
   <nav class="bottom-nav" aria-label="主导航">
     <div class="bottom-nav-inner">
-      <button class="tab active" data-view="picker"><i data-lucide="shuffle"></i><span>首页</span></button>
-      <button class="tab" data-view="library"><i data-lucide="book-open"></i><span>菜库</span></button>
-      <button class="tab" data-view="pantry"><i data-lucide="salad"></i><span>食材</span></button>
-      <button class="tab" data-view="profile"><i data-lucide="circle-user-round"></i><span>我的</span></button>
+      <button class="tab active" data-view="picker" data-tab-theme="picker" data-mascot-element="hat-spoon"><span class="tab-icon" aria-hidden="true"><i data-lucide="chef-hat"></i></span><span>首页</span></button>
+      <button class="tab" data-view="library" data-tab-theme="library" data-mascot-element="clip-book"><span class="tab-icon" aria-hidden="true"><i data-lucide="book-open"></i></span><span>菜库</span></button>
+      <button class="tab" data-view="pantry" data-tab-theme="pantry" data-mascot-element="basket"><span class="tab-icon" aria-hidden="true"><i data-lucide="shopping-basket"></i></span><span>食材</span></button>
+      <button class="tab" data-view="profile" data-tab-theme="profile" data-mascot-element="apron"><span class="tab-icon" aria-hidden="true"><i data-lucide="shirt"></i></span><span>我的</span></button>
     </div>
   </nav>
 
@@ -3286,6 +3588,9 @@
         }
       }
     ];
+    const mascotPreviewStates = ["idle", "runRight", "runLeft", "done"];
+    let mascotPreviewTimer = null;
+    let mascotPreviewStateIndex = 0;
 
     const preservedOrProcessedPattern = /泡菜|泡椒|泡姜|酸菜|榨菜|雪菜|酸豆角|咸菜|腌|腊肉|香肠|午餐肉|火腿|培根|牛肉丸|鱼丸|火锅底料|香锅料|酸汤酱|剁椒|豆瓣酱|豆豉|酱油|生抽|老抽|蚝油|椒盐|蒸肉米粉/;
     const lowIodineTextPattern = /海带|紫菜|海藻|海鲜|虾|花甲|鱿鱼|小龙虾|鱼片|鱼头|鲫鱼|鲜鱼|鱼类|贝类|奶|牛奶|奶油|黄油|芝士|奶酪|酸奶|豆腐|豆皮|豆制品|豆腐丝|千页豆腐|豆干|豆浆|鸡蛋|蛋黄|全蛋|滑蛋|炒蛋|蛋花|碘盐|加碘盐|海盐/;
@@ -4098,6 +4403,8 @@
       settings: { ...defaultSettings, ...load(storageKeys.settings, {}) },
       mascot: normalizeMascot(load(storageKeys.mascot, null)),
       selected: null,
+      activeSelectedRecipeId: null,
+      wheelGuideDismissed: false,
       search: "",
       wheelItems: [],
       isSpinning: false,
@@ -4511,8 +4818,9 @@
       const button = document.getElementById("wheelCenterButton");
       const text = document.getElementById("wheelCenterText");
       if (!button || !text) return;
+      const drawCount = targetMenuCount(filteredRecipes());
       const states = {
-        idle: { html: "抽", label: "抽一道菜", disabled: false },
+        idle: { html: "抽", label: drawCount > 1 ? `抽 ${drawCount} 道菜` : "抽一道菜", disabled: false },
         spinning: { html: '<span class="wheel-center-line">即将</span><span class="wheel-center-line">揭晓</span>', label: "即将揭晓", disabled: true },
         done: { html: "开饭", label: "开饭", disabled: true }
       };
@@ -4530,21 +4838,116 @@
       return state.selected ? [state.selected] : [];
     }
 
+    function activeSelectedRecipe(recipes = selectedRecipes()) {
+      if (!recipes.length) {
+        state.activeSelectedRecipeId = null;
+        return null;
+      }
+      const active = recipes.find((item) => item.id === state.activeSelectedRecipeId);
+      if (active) return active;
+      state.activeSelectedRecipeId = recipes[0].id;
+      return recipes[0];
+    }
+
     function targetMenuCount(pool) {
       const count = Number(state.settings.servingCount || 1);
       return Math.min(Math.max(1, count), pool.length || 1);
     }
 
+    function recipeMenuProfile(recipe) {
+      const tags = new Set(recipe.tags || []);
+      const text = `${recipe.name} ${(recipe.ingredients || []).join(" ")}`;
+      const animalProtein = /鸡|鸭|鹅|猪|牛|羊|鱼|虾|蟹|肉|排骨|肥肠|腊肠|香肠|火腿|培根|生蚝|扇贝|鱿鱼/.test(text);
+      const plantOrEggProtein = /蛋|豆腐|豆干|豆皮|腐竹/.test(text);
+      const drink = tags.has("饮品");
+      const soup = tags.has("汤菜") || /汤|羹/.test(recipe.name);
+      const staple = tags.has("主食") || tags.has("面食") || tags.has("饭类") || /饭|面|粉|粥|饺|包|馒头|饼$/.test(recipe.name);
+      const richTechnique = tags.has("火锅干锅") || tags.has("烧烤") || /干锅|火锅|香锅|油炸|炸|红烧|扣肉|烤全|烤羊排|猪蹄|肥肠|毛血旺|水煮/.test(recipe.name);
+      const vegetable = !drink && !soup && !staple && !animalProtein && !richTechnique
+        && (tags.has("素菜") || tags.has("凉菜") || tags.has("清淡") || tags.has("少油可做"));
+      const main = !drink && !soup && !staple && !vegetable
+        && (animalProtein || tags.has("高蛋白") || richTechnique);
+      const light = !drink && !main && (vegetable || soup || staple || plantOrEggProtein || tags.has("清淡") || tags.has("减肥") || tags.has("少油可做"));
+      const protein = /牛/.test(text) ? "牛" : /羊/.test(text) ? "羊" : /猪|肉|排骨|肥肠|腊肠|香肠|火腿|培根/.test(text) ? "猪" : /鸡/.test(text) ? "鸡" : /鸭|鹅/.test(text) ? "禽" : /鱼/.test(text) ? "鱼" : /虾|蟹|生蚝|扇贝|鱿鱼/.test(text) ? "海鲜" : plantOrEggProtein ? "蛋豆" : "";
+      const richness = (richTechnique ? 2 : 0) + (Number(recipe.kcal || 0) >= 480 ? 1 : 0) + (Number(recipe.heat || 0) >= 4 ? 1 : 0);
+      const method = soup ? "汤炖" : /蒸|白灼/.test(recipe.name) ? "蒸煮" : /凉拌|沙拉/.test(recipe.name) ? "凉拌" : /炸|烤|煎/.test(recipe.name) ? "煎炸烤" : /炒|爆|干锅|香锅/.test(recipe.name) ? "炒制" : "其他";
+      const flavorTags = [...tags].filter((tag) => ["川味", "湘味", "粤式", "江浙", "东北", "西北", "云南贵州", "日韩", "东南亚", "西式", "清淡"].includes(tag));
+      return { drink, soup, staple, vegetable, main, light, protein, richness, method, flavorTags };
+    }
+
+    function balancedWheelPool(pool, count = targetMenuCount(pool)) {
+      if (count <= 1) return pool;
+      const mealRecipes = pool.filter((recipe) => !recipeMenuProfile(recipe).drink);
+      return mealRecipes.length ? mealRecipes : pool;
+    }
+
+    function menuRoleMatches(recipe, role) {
+      const profile = recipeMenuProfile(recipe);
+      if (role === "main") return profile.main;
+      if (role === "vegetable") return profile.vegetable;
+      if (role === "soup") return profile.soup;
+      if (role === "staple") return profile.staple;
+      if (role === "soupOrStaple") return profile.soup || profile.staple;
+      if (role === "light") return profile.light && !profile.main;
+      return profile.light;
+    }
+
     function buildPickedMenu(pool, anchor, count) {
-      const rest = pool.filter((recipe) => recipe.id !== anchor.id);
-      const lightTags = new Set(["素菜", "汤菜", "清淡", "饮品", "面食", "减肥"]);
-      const balanced = rest
-        .filter((recipe) => recipe.tags.some((tag) => lightTags.has(tag)))
-        .sort(() => Math.random() - 0.5);
-      const fallback = rest
-        .filter((recipe) => !balanced.some((item) => item.id === recipe.id))
-        .sort(() => Math.random() - 0.5);
-      return [anchor, ...balanced, ...fallback].slice(0, count);
+      if (count <= 1) return [anchor];
+      const candidates = balancedWheelPool(pool, count).filter((recipe) => recipe.id !== anchor.id);
+      const menu = [anchor];
+      const mainLimit = count >= 4 ? 2 : 1;
+      const rolePlans = {
+        2: ["main", "vegetable", "soupOrStaple"],
+        3: ["main", "vegetable", "soup", "light"],
+        4: ["main", "vegetable", "soup", "staple", "light"]
+      };
+      const plan = rolePlans[Math.min(count, 4)] || rolePlans[4];
+      const selectedIds = new Set(menu.map((recipe) => recipe.id));
+      const roleAlreadyFilled = (role) => menu.some((recipe) => menuRoleMatches(recipe, role));
+      const canAdd = (recipe) => {
+        if (selectedIds.has(recipe.id)) return false;
+        const profile = recipeMenuProfile(recipe);
+        if (profile.drink) return false;
+        if (profile.main && menu.filter((item) => recipeMenuProfile(item).main).length >= mainLimit) return false;
+        return true;
+      };
+      const candidateScore = (recipe, role) => {
+        const profile = recipeMenuProfile(recipe);
+        const profiles = menu.map(recipeMenuProfile);
+        let score = menuRoleMatches(recipe, role) ? 40 : 0;
+        if (role === "vegetable" && profile.vegetable) score += 25;
+        if (role === "soup" && profile.soup) score += 22;
+        if (profile.light) score += 8;
+        const nextAverageRichness = (profiles.reduce((sum, item) => sum + item.richness, 0) + profile.richness) / (profiles.length + 1);
+        score -= Math.max(0, nextAverageRichness - 1.25) * 12;
+        if (profile.protein && profiles.some((item) => item.protein === profile.protein)) score -= 18;
+        if (profile.method !== "其他" && profiles.some((item) => item.method === profile.method)) score -= 9;
+        if (profile.flavorTags.some((tag) => profiles.some((item) => item.flavorTags.includes(tag)))) score -= 5;
+        const averageHeat = menu.reduce((sum, item) => sum + Number(item.heat || 0), 0) / Math.max(1, menu.length);
+        score -= Math.max(0, (averageHeat + Number(recipe.heat || 0)) / 2 - 2) * 4;
+        score -= Math.max(0, Number(recipe.kcal || 0) - 450) / 25;
+        return score + Math.random() * 6;
+      };
+      const takeBest = (matches, role = "light") => {
+        if (!matches.length) return false;
+        const recipe = [...matches].sort((a, b) => candidateScore(b, role) - candidateScore(a, role))[0];
+        menu.push(recipe);
+        selectedIds.add(recipe.id);
+        return true;
+      };
+
+      plan.forEach((role) => {
+        if (menu.length >= count || roleAlreadyFilled(role)) return;
+        takeBest(candidates.filter((recipe) => canAdd(recipe) && menuRoleMatches(recipe, role)), role);
+      });
+      while (menu.length < count) {
+        const balancedFallback = candidates.filter((recipe) => canAdd(recipe));
+        if (takeBest(balancedFallback, "light")) continue;
+        // 筛选过窄时保持组合质量，不用明显同质的菜强行凑数。
+        break;
+      }
+      return menu.slice(0, count);
     }
 
     let wheelSequenceTimers = [];
@@ -4573,21 +4976,24 @@
       const pool = filteredRecipes();
       if (!pool.length) {
         state.selected = null;
+        state.activeSelectedRecipeId = null;
         renderSelected();
         setWheelCenterState("idle");
         showToast(hasAvoidSettings() ? "当前筛选没有可选菜，可以清空忌口或放宽筛选。" : "当前筛选没有可选菜，放宽一点再抽。");
         return;
       }
-      const wheelCount = Math.min(8, pool.length);
-      const poolIds = new Set(pool.map((recipe) => recipe.id));
+      const drawCount = targetMenuCount(pool);
+      const wheelPool = balancedWheelPool(pool, drawCount);
+      const wheelCount = Math.min(8, wheelPool.length);
+      const poolIds = new Set(wheelPool.map((recipe) => recipe.id));
       const preparedWheelItems = state.wheelItems.filter((recipe) => poolIds.has(recipe.id));
       state.wheelItems = preparedWheelItems.length === wheelCount
         ? preparedWheelItems
-        : sampleWheelItems(pool, wheelCount);
+        : sampleWheelItems(wheelPool, wheelCount);
       renderWheel();
       const index = Math.floor(Math.random() * state.wheelItems.length);
       const picked = state.wheelItems[index];
-      const pickedMenu = buildPickedMenu(pool, picked, targetMenuCount(pool));
+      const pickedMenu = buildPickedMenu(pool, picked, drawCount);
       const segment = 360 / state.wheelItems.length;
       const current = ((state.spinRotation % 360) + 360) % 360;
       const desired = 360 - (index * segment + segment / 2);
@@ -4609,6 +5015,7 @@
 
       scheduleWheelStep(() => {
         state.selected = pickedMenu;
+        state.activeSelectedRecipeId = pickedMenu[0]?.id || null;
         setWheelCenterState("done");
         status.textContent = pickedMenu.length > 1 ? `今日菜单：${pickedMenu.map((item) => item.name).join(" + ")}` : `今日签：${picked.name}`;
         renderSelected();
@@ -4634,9 +5041,10 @@
 
     function refreshWheelItemsAfterSpin() {
       const pool = filteredRecipes();
-      const count = Math.min(8, pool.length);
+      const wheelPool = balancedWheelPool(pool, targetMenuCount(pool));
+      const count = Math.min(8, wheelPool.length);
       const previousIds = new Set(state.wheelItems.map((item) => item.id));
-      state.wheelItems = sampleWheelItems(pool, count, previousIds);
+      state.wheelItems = sampleWheelItems(wheelPool, count, previousIds);
       renderWheel();
     }
 
@@ -4748,7 +5156,9 @@
     }
 
     function renderWheel() {
-      const items = state.wheelItems.length ? state.wheelItems : sampleWheelItems(filteredRecipes(), Math.min(8, filteredRecipes().length));
+      const pool = filteredRecipes();
+      const wheelPool = balancedWheelPool(pool, targetMenuCount(pool));
+      const items = state.wheelItems.length ? state.wheelItems : sampleWheelItems(wheelPool, Math.min(8, wheelPool.length));
       state.wheelItems = items;
       preloadRecipeImages(items, "high");
       const plate = document.getElementById("wheelPlate");
@@ -4786,16 +5196,18 @@
 
     function renderSelected() {
       const recipes = selectedRecipes();
-      const recipe = recipes[0];
-      const totalKcal = recipes.reduce((sum, item) => sum + Number(item.kcal || 0), 0);
-      const maxTime = recipes.reduce((max, item) => Math.max(max, Number(item.time || 0)), 0);
-      const maxHeat = recipes.reduce((max, item) => Math.max(max, Number(item.heat || 0)), 0);
-      document.getElementById("selectedName").textContent = recipes.length > 1 ? `今晚 ${recipes.length} 道` : (recipe ? recipe.name : "先抽一道");
+      const recipe = activeSelectedRecipe(recipes);
+      document.getElementById("selectedName").textContent = recipe ? recipe.name : "先抽一道";
       const drawEntryButton = document.getElementById("openWheelEntry");
-      if (drawEntryButton) drawEntryButton.textContent = recipe ? "再抽一道" : "抽一道";
-      document.getElementById("selectedKcal").textContent = recipe ? totalKcal : "--";
-      document.getElementById("selectedTime").textContent = recipe ? maxTime : "--";
-      document.getElementById("selectedHeat").textContent = recipe ? heatLabel(maxHeat) : "--";
+      const drawEntryGuideCopy = document.getElementById("drawEntryGuideCopy");
+      const drawCount = targetMenuCount(filteredRecipes());
+      if (drawEntryButton) drawEntryButton.textContent = drawCount > 1
+        ? `${recipe ? "再抽" : "抽"} ${drawCount} 道`
+        : (recipe ? "再抽一道" : "打开转盘");
+      if (drawEntryGuideCopy) drawEntryGuideCopy.hidden = Boolean(recipe || state.wheelGuideDismissed);
+      document.getElementById("selectedKcal").textContent = recipe ? recipe.kcal : "--";
+      document.getElementById("selectedTime").textContent = recipe ? recipe.time : "--";
+      document.getElementById("selectedHeat").textContent = recipe ? heatLabel(recipe.heat) : "--";
       const selectedImage = document.getElementById("selectedImage");
       const selectedImageCredit = document.getElementById("selectedImageCredit");
       selectedImage.closest(".selected-image-shell")?.classList.toggle("is-empty", !recipe);
@@ -4807,46 +5219,59 @@
       tags.innerHTML = "";
       const pickedMenuList = document.getElementById("pickedMenuList");
       pickedMenuList.innerHTML = "";
+      const pickedMenuSummary = document.getElementById("pickedMenuSummary");
       const ingredients = document.getElementById("selectedIngredients");
       ingredients.innerHTML = "";
+      const ingredientTitle = document.getElementById("selectedIngredientsTitle");
+      const methodTitle = document.getElementById("selectedMethodTitle");
+      const addToListButton = document.getElementById("addSelectedToList");
+      const markCookedButton = document.getElementById("markCooked");
 
       if (!recipe) {
+        pickedMenuSummary.hidden = true;
+        ingredientTitle.textContent = "食材";
+        methodTitle.textContent = "做法";
+        addToListButton.innerHTML = '<i data-lucide="shopping-basket"></i>加入清单';
+        markCookedButton.innerHTML = '<i data-lucide="check-circle-2"></i>今天做它';
         document.getElementById("selectedNote").textContent = "按筛选条件随机推荐，默认不放甜辣/糖醋类菜。";
+        refreshIcons();
         return;
       }
 
-      const tagSet = new Set();
-      const flagSet = new Set();
-      const ingredientSet = new Set();
-      recipes.forEach((item) => {
-        item.tags.forEach((tag) => tagSet.add(tag));
-        item.flags.forEach((flag) => flagSet.add(flag));
-        item.ingredients.forEach((ingredient) => ingredientSet.add(ingredient));
-      });
-
-      [...tagSet].slice(0, 8).forEach((tag) => tags.append(createTag(tag, "tag")));
-      [...flagSet].slice(0, 5).forEach((flag) => tags.append(createTag(flagLabels[flag] || flag, flag === "spicy" ? "health-tag caution" : "health-tag")));
+      recipe.tags.slice(0, 8).forEach((tag) => tags.append(createTag(tag, "tag")));
+      recipe.flags.slice(0, 5).forEach((flag) => tags.append(createTag(flagLabels[flag] || flag, flag === "spicy" ? "health-tag caution" : "health-tag")));
       if (recipes.length > 1) {
+        pickedMenuSummary.hidden = false;
+        pickedMenuSummary.textContent = `今晚 ${recipes.length} 道 · 已按主菜、素菜、汤/主食搭配 · 点选菜色查看详情`;
         pickedMenuList.innerHTML = recipes.map((item) => `
-          <div class="picked-menu-item">
+          <button class="picked-menu-item ${item.id === recipe.id ? "active" : ""}" type="button" data-picked-recipe="${escapeHtml(item.id)}" aria-pressed="${item.id === recipe.id}">
             <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}图片" loading="lazy">
             <div>
               <strong>${escapeHtml(item.name)}</strong>
               <span>${item.kcal} 千卡 / ${item.time} 分钟 / ${heatLabel(item.heat)}</span>
             </div>
-          </div>
+          </button>
         `).join("");
+      } else {
+        pickedMenuSummary.hidden = true;
       }
-      [...ingredientSet].forEach((ingredient) => {
+      recipe.ingredients.forEach((ingredient) => {
         const li = document.createElement("li");
         const span = document.createElement("span");
         span.textContent = ingredient;
         li.append(span);
         ingredients.append(li);
       });
-      document.getElementById("selectedNote").textContent = recipes
-        .map((item) => `${item.name}：${item.note || "这道菜还没有做法。"}`)
-        .join(" ");
+      ingredientTitle.textContent = `${recipe.name} · 食材`;
+      methodTitle.textContent = `${recipe.name} · 做法`;
+      document.getElementById("selectedNote").textContent = recipe.note || "这道菜还没有做法。";
+      addToListButton.innerHTML = recipes.length > 1
+        ? `<i data-lucide="shopping-basket"></i>加入 ${recipes.length} 道清单`
+        : '<i data-lucide="shopping-basket"></i>加入清单';
+      markCookedButton.innerHTML = recipes.length > 1
+        ? '<i data-lucide="check-circle-2"></i>今天都做'
+        : '<i data-lucide="check-circle-2"></i>今天做它';
+      refreshIcons();
     }
 
     function renderWheelReveal(recipes) {
@@ -5058,12 +5483,31 @@
       const items = [...mascotPresets, ...customPreset];
       options.innerHTML = items.map((item) => `
         <button class="mascot-option ${state.mascot.id === item.id ? "active" : ""}" type="button" data-mascot="${escapeHtml(item.id)}" aria-pressed="${state.mascot.id === item.id}">
-          <img src="${escapeHtml(item.sources.idle)}" alt="${escapeHtml(item.name)}" loading="${state.mascot.id === item.id ? "eager" : "lazy"}" decoding="async" fetchpriority="${state.mascot.id === item.id ? "high" : "low"}">
+          <img src="${escapeHtml(item.sources.idle)}" alt="${escapeHtml(item.name)}动态预览" data-mascot-preview="${escapeHtml(item.id)}" loading="${state.mascot.id === item.id ? "eager" : "lazy"}" decoding="async" fetchpriority="${state.mascot.id === item.id ? "high" : "low"}">
           <span>${escapeHtml(item.name)}</span>
         </button>
       `).join("");
+      startMascotPreviewLoop(items);
       renderPetThemeLink();
       refreshIcons();
+    }
+
+    function startMascotPreviewLoop(items) {
+      if (mascotPreviewTimer) window.clearInterval(mascotPreviewTimer);
+      mascotPreviewStateIndex = 0;
+      const advancePreview = () => {
+        mascotPreviewStateIndex = (mascotPreviewStateIndex + 1) % mascotPreviewStates.length;
+        const previewState = mascotPreviewStates[mascotPreviewStateIndex];
+        document.querySelectorAll("[data-mascot-preview]").forEach((image) => {
+          const mascot = items.find((item) => item.id === image.dataset.mascotPreview);
+          if (!mascot) return;
+          const nextSource = mascot.sources[previewState] || mascot.sources.idle;
+          if (image.dataset.previewSource === nextSource) return;
+          image.dataset.previewSource = nextSource;
+          image.src = nextSource;
+        });
+      };
+      mascotPreviewTimer = window.setInterval(advancePreview, 1800);
     }
 
     function renderPetThemeLink() {
@@ -5078,7 +5522,7 @@
       preview.alt = `${state.mascot?.name || "当前宠物"}主题预览`;
       name.textContent = hasTheme ? "草莓甜心厨房" : `${state.mascot?.name || "当前宠物"}主题待制作`;
       description.textContent = hasTheme
-        ? "页面保持干净，草莓角标、流动丝带和点击糖粒集中在底部四栏。"
+        ? "小厨本人只陪伴首页抽菜；小厨帽、草莓发夹、食材篮和围裙口袋拆成导航细节，让四个入口共用一套角色语言。"
         : "目前先完成草莓甜心小厨样板，其他宠物主题后续接入。";
       toggle.disabled = !hasTheme;
       toggle.setAttribute("aria-pressed", String(hasTheme && state.settings.followPetTheme));
@@ -5154,6 +5598,12 @@
       const serving = Number(state.settings.servingCount || 1);
       const servingSummary = document.getElementById("servingPickerSummary");
       if (servingSummary) servingSummary.textContent = serving === 4 ? "4+ 人" : `${serving} 人`;
+      const wheelEntryTitle = document.getElementById("wheelEntryTitle");
+      if (wheelEntryTitle) wheelEntryTitle.textContent = serving > 1 ? `抽 ${serving} 道菜` : "抽一道菜";
+      const wheelCenterButton = document.getElementById("wheelCenterButton");
+      if (wheelCenterButton && !state.isSpinning && wheelCenterButton.dataset.stage === "idle") {
+        wheelCenterButton.setAttribute("aria-label", serving > 1 ? `抽 ${serving} 道菜` : "抽一道菜");
+      }
 
       const heatSummary = document.getElementById("heatFilterSummary");
       if (heatSummary) {
@@ -5344,6 +5794,7 @@
       state.wheelItems = [];
       renderFilterState();
       renderWheel();
+      renderSelected();
       if (document.getElementById("view-library")?.classList.contains("active")) renderLibrary();
     }
 
@@ -5369,7 +5820,19 @@
       dismissWheelEntry();
     });
     document.getElementById("wheelEntryBackdrop").addEventListener("click", dismissWheelEntry);
-    document.getElementById("openWheelEntry").addEventListener("click", () => setWheelEntryOpen(true));
+    document.getElementById("openWheelEntry").addEventListener("click", () => {
+      state.wheelGuideDismissed = true;
+      document.getElementById("drawEntryGuideCopy")?.setAttribute("hidden", "");
+      setWheelEntryOpen(true);
+    });
+    document.getElementById("pickedMenuList").addEventListener("click", (event) => {
+      const button = event.target.closest("[data-picked-recipe]");
+      if (!button) return;
+      const recipe = selectedRecipes().find((item) => item.id === button.dataset.pickedRecipe);
+      if (!recipe) return;
+      state.activeSelectedRecipeId = recipe.id;
+      renderSelected();
+    });
     document.getElementById("openHistoryEntry").addEventListener("click", () => {
       openChoiceSheet("最近做过", document.getElementById("historyDetail"), document.getElementById("historyPanel"));
     });
@@ -5522,6 +5985,7 @@
       if (!recipe) return;
       if (pickButton) {
         state.selected = [recipe];
+        state.activeSelectedRecipeId = recipe.id;
         renderSelected();
         showView("picker");
         showToast(`今晚可以做「${recipe.name}」。`);
@@ -5536,11 +6000,17 @@
       addIngredientsToShopping(missing, false, message);
     });
 
-    document.querySelector("[data-serving-group]").addEventListener("click", (event) => {
-      const button = event.target.closest("[data-serving]");
-      if (!button) return;
-      state.settings.servingCount = Number(button.dataset.serving);
-      syncSettings();
+    document.querySelectorAll("[data-serving-group]").forEach((group) => {
+      group.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-serving]");
+        if (!button) return;
+        if (state.isSpinning) return showToast("本轮正在揭晓，下一轮再切换人数。");
+        state.settings.servingCount = Number(button.dataset.serving);
+        syncSettings();
+        if (group.dataset.servingSurface === "wheel") {
+          showToast(`本次抽 ${state.settings.servingCount} 道菜。`);
+        }
+      });
     });
 
     document.querySelector("[data-theme-choice='strawberry']").closest(".theme-options").addEventListener("click", (event) => {
@@ -5610,6 +6080,7 @@
       if (pickButton) {
         const recipe = findRecipe(pickButton.dataset.pick);
         state.selected = recipe ? [recipe] : null;
+        state.activeSelectedRecipeId = recipe?.id || null;
         renderSelected();
         showView("picker");
       }
