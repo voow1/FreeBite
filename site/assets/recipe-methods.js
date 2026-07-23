@@ -1650,7 +1650,8 @@
   }
 
   function resolve(recipe) {
-    const result = exact[recipe.name] || generated(recipe);
+    // 新增菜首次解析时固化为逐菜条目，后续读取保持稳定，避免同一菜在不同界面重复走兜底逻辑。
+    const result = exact[recipe.name] || (exact[recipe.name] = generated(recipe));
     const seenSourceUrls = new Set();
     return {
       ...result,
@@ -1666,7 +1667,9 @@
 
   window.BNMRecipeMethods = Object.freeze({
     sources: Object.freeze(sources),
-    exactCount: Object.keys(exact).length,
+    get exactCount() {
+      return Object.keys(exact).length;
+    },
     resolve
   });
 })();

@@ -3,14 +3,14 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="preload" href="assets/fonts/lemi-milk-bubble.woff2?v=1.6.3" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/lemi-milk-bubble.woff2?v=1.7.0" as="font" type="font/woff2" crossorigin>
   <script>document.documentElement.classList.add("font-pending");</script>
   <title>不牛马厨房</title>
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
   <style>
     @font-face {
       font-family: "Lemi Milk Bubble";
-      src: url("assets/fonts/lemi-milk-bubble.woff2?v=1.6.3") format("woff2");
+      src: url("assets/fonts/lemi-milk-bubble.woff2?v=1.7.0") format("woff2");
       font-style: normal;
       font-weight: 400;
       font-display: swap;
@@ -1543,6 +1543,19 @@
       -webkit-line-clamp: 3;
       overflow: hidden;
       line-height: 1.65;
+    }
+
+    .filter-chip-group-label {
+      flex: 0 0 100%;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .filter-chip-group-label:first-child {
+      margin-top: 0;
     }
 
     .method-panel {
@@ -4084,35 +4097,7 @@
                   <span>偏好</span><span class="filter-entry-summary" id="tagFilterSummary">不限</span><i data-lucide="chevron-right"></i>
                 </button>
                 <div class="filter-options" data-filter-options="tag">
-                  <div class="chips" data-filter-group="tag">
-                  <button class="chip" data-tag="川味">川味</button>
-                  <button class="chip" data-tag="快手">30分钟内</button>
-                  <button class="chip" data-tag="高蛋白">高蛋白</button>
-                  <button class="chip" data-tag="素菜">素菜</button>
-                  <button class="chip" data-tag="汤菜">汤菜</button>
-                  <button class="chip" data-tag="少油可做">少油可做</button>
-                  <button class="chip" data-tag="面食">面食</button>
-                  <button class="chip" data-tag="烘焙">烘焙</button>
-                  <button class="chip" data-tag="清淡">清淡</button>
-                  <button class="chip" data-tag="减肥">减肥</button>
-                  <button class="chip" data-tag="饮品">饮品</button>
-                  <button class="chip" data-tag="家常">家常</button>
-                  <button class="chip" data-tag="湘味">湘味</button>
-                  <button class="chip" data-tag="粤式">粤式</button>
-                  <button class="chip" data-tag="东北">东北</button>
-                  <button class="chip" data-tag="西北">西北</button>
-                  <button class="chip" data-tag="云南贵州">云南贵州</button>
-                  <button class="chip" data-tag="日韩">日韩</button>
-                  <button class="chip" data-tag="东南亚">东南亚</button>
-                  <button class="chip" data-tag="西式">西式</button>
-                  <button class="chip" data-tag="早餐">早餐</button>
-                  <button class="chip" data-tag="饭类">饭类</button>
-                  <button class="chip" data-tag="夜宵">夜宵</button>
-                  <button class="chip" data-tag="烧烤">烧烤</button>
-                  <button class="chip" data-tag="火锅干锅">火锅干锅</button>
-                  <button class="chip" data-tag="甜品">甜品</button>
-                  <button class="chip" data-tag="爆辣">爆辣</button>
-                  </div>
+                  <div class="chips" id="preferenceTagChips" data-filter-group="tag"></div>
                 </div>
               </div>
               <div class="filter-section" data-filter-section="health">
@@ -4984,8 +4969,97 @@
       "鸡胸肉吐司杯": "assets/dishes/chicken-toast.webp",
       "香辣土豆牛肉丁": "assets/dishes/potato-beef-stew.webp",
       "蒜蓉生菜": "assets/dishes/garlic-romaine-lettuce.webp",
-      "酸汤肥牛": "assets/dishes/sour-soup-beef.webp"
+      "酸汤肥牛": "assets/dishes/sour-soup-beef.webp",
+      "原味贝果": "assets/dishes/plain-bagel.webp",
+      "宫保鸡丁少糖版": "assets/dishes/kung-pao-chicken-less-sugar.webp",
+      "湘味口味虾": "assets/dishes/hunan-spicy-shrimp.webp",
+      "酸奶坚果碗": "assets/dishes/yogurt-nut-bowl.webp",
+      "腊味煲仔饭": "assets/dishes/claypot-rice-chinese-sausage.webp",
+      "牛肉米粉": "assets/dishes/beef-rice-noodles-v2.webp",
+      "蒜香法棍": "assets/dishes/garlic-baguette.webp",
+      "山楂洛神花茶": "assets/dishes/hibiscus-hawthorn-tea.webp",
+      "虾仁肠粉": "assets/dishes/shrimp-cheung-fun.webp",
+      "烤玉米": "assets/dishes/grilled-corn.webp",
+      "烤羊排": "assets/dishes/grilled-lamb-chops.webp",
+      "南瓜布丁": "assets/dishes/pumpkin-pudding.webp",
+      "芒果布丁": "assets/dishes/mango-pudding.webp",
+      "法式洋葱汤": "assets/dishes/french-onion-soup.webp",
+      "烟熏三文鱼沙拉": "assets/dishes/smoked-salmon-salad.webp",
+      "蒜香黄油虾": "assets/dishes/garlic-butter-shrimp.webp",
+      "韩式拌饭": "assets/dishes/korean-bibimbap.webp",
+      "咖喱牛腩": "assets/dishes/beef-curry.webp"
     };
+
+    const taxonomyTagGroups = Object.freeze({
+      role: ["主菜", "蔬菜", "汤菜", "主食", "凉菜", "甜品", "饮品"],
+      protein: ["鸡肉", "猪肉", "牛肉", "羊肉", "鸭鹅", "鱼类", "海鲜", "蛋类", "豆制品"],
+      method: ["炒制", "蒸煮", "汤炖", "凉拌", "煎制", "烤制", "炸制", "火锅干锅", "烘焙"],
+      time: ["15分钟内", "30分钟内", "慢炖"],
+      energy: ["低卡", "适中热量", "高热量"],
+      flavor: ["清淡", "咸鲜", "酸辣", "麻辣", "咖喱", "番茄味"]
+    });
+
+    const preferenceFilterGroups = Object.freeze([
+      { label: "菜品角色", tags: taxonomyTagGroups.role },
+      { label: "蛋白来源", tags: taxonomyTagGroups.protein },
+      { label: "烹饪方式", tags: taxonomyTagGroups.method },
+      { label: "时间与热量", tags: [...taxonomyTagGroups.time, ...taxonomyTagGroups.energy] },
+      { label: "口味与负担", tags: [...taxonomyTagGroups.flavor, "高蛋白", "少油可做", "减肥"] },
+      { label: "菜系与场景", tags: ["川味", "湘味", "粤式", "江浙", "东北", "西北", "云南贵州", "家常", "日韩", "东南亚", "西式", "早餐", "夜宵", "烧烤", "聚餐"] }
+    ]);
+
+    function inferRecipeTaxonomy({ name = "", kcal = 0, time = 0, heat = 0, tags = [], ingredients = [] }) {
+      const nextTags = new Set(tags || []);
+      const text = `${name} ${(ingredients || []).join(" ")}`;
+      const staple = nextTags.has("主食") || nextTags.has("面食") || nextTags.has("饭类") || /饭|面|粉|米线|河粉|粥|饺|包|馒头|饼$|泡馍/.test(name);
+      const soup = nextTags.has("汤菜") || /汤|羹|煲|炖|粥/.test(name);
+      const drink = nextTags.has("饮品") || /茶|气泡水|苏打水|果汁|奶昔|咖啡|拿铁|豆浆|饮$/.test(name);
+      const dessert = nextTags.has("甜品") || /蛋糕|布丁|奶冻|西米露|烧仙草|芋圆|慕斯|提拉米苏|甜品/.test(name);
+      const cold = nextTags.has("凉菜") || /凉拌|凉面|沙拉|冷盘|口水鸡|红油耳片/.test(name);
+      const animalProtein = /鸡(?!蛋)|鸭|鹅|猪|牛(?!奶)|羊|兔|肉丝|肉末|肉片|肉丸|排骨|肥肠|腰花|猪肝|鱼|虾|蟹|花甲|鱿鱼|生蚝|扇贝|田螺/.test(text);
+
+      if (drink) nextTags.add("饮品");
+      else if (dessert) nextTags.add("甜品");
+      else if (staple) nextTags.add("主食");
+      else if (soup) nextTags.add("汤菜");
+      else if (cold) nextTags.add("凉菜");
+      else if (animalProtein || nextTags.has("高蛋白")) nextTags.add("主菜");
+      else nextTags.add("蔬菜");
+
+      if (/鸡胸|鸡腿|鸡翅|鸡肉|鸡丁|鸡丝|鸡片|鸡块|土鸡|仔鸡|凤爪|鸡爪|鸡胗|鸡杂|鸡架|鸡皮|鸡汤/.test(text)) nextTags.add("鸡肉");
+      if (/猪|五花肉|里脊|排骨|肉丝|肉末|肉片|肉丸|肥肠|腰花|猪肝|猪耳|火腿|培根/.test(text)) nextTags.add("猪肉");
+      if (/牛肉|牛腩|肥牛|牛柳|黄牛/.test(text)) nextTags.add("牛肉");
+      if (/羊|羊排|羊蝎子/.test(text)) nextTags.add("羊肉");
+      if (/鸭|鹅/.test(text)) nextTags.add("鸭鹅");
+      if (/鱼|鲈鱼|鲫鱼|鳕鱼|龙利鱼/.test(text)) nextTags.add("鱼类");
+      if (/虾|蟹|花甲|鱿鱼|生蚝|扇贝|田螺|海鲜/.test(text)) nextTags.add("海鲜");
+      if (/鸡蛋|蛋液|蒸蛋|滑蛋|炒蛋|蛋花/.test(text)) nextTags.add("蛋类");
+      if (/豆腐|豆皮|豆干|香干|腐竹|豆浆|豆制品/.test(text)) nextTags.add("豆制品");
+
+      if (nextTags.has("火锅干锅") || /火锅|干锅|香锅|麻辣烫|冒菜|串串/.test(name)) nextTags.add("火锅干锅");
+      else if (nextTags.has("烘焙") || /蛋糕|马芬|司康|吐司|欧包|贝果|面包|曲奇|饼干/.test(name)) nextTags.add("烘焙");
+      else if (/蒸|白灼|水煮/.test(name)) nextTags.add("蒸煮");
+      else if (soup) nextTags.add("汤炖");
+      else if (cold || /拌/.test(name)) nextTags.add("凉拌");
+      else if (/炸|酥肉/.test(name)) nextTags.add("炸制");
+      else if (/烤|串|焗/.test(name)) nextTags.add("烤制");
+      else if (/煎|锅贴/.test(name)) nextTags.add("煎制");
+      else if (/炒|爆|熘|滑|烧|焖/.test(name)) nextTags.add("炒制");
+
+      if (Number(time) <= 15) nextTags.add("15分钟内");
+      if (Number(time) <= 30) nextTags.add("30分钟内");
+      if (Number(time) >= 50) nextTags.add("慢炖");
+      if (Number(kcal) < 300) nextTags.add("低卡");
+      else if (Number(kcal) < 500) nextTags.add("适中热量");
+      else nextTags.add("高热量");
+
+      if (/酸辣|泡椒|酸汤/.test(name)) nextTags.add("酸辣");
+      if (Number(heat) >= 3 || /麻辣|香辣|爆辣|辣子鸡|毛血旺/.test(name)) nextTags.add("麻辣");
+      if (/咖喱/.test(name)) nextTags.add("咖喱");
+      if (/番茄|茄汁|罗宋/.test(name)) nextTags.add("番茄味");
+      if (!nextTags.has("酸辣") && !nextTags.has("麻辣") && !nextTags.has("咖喱") && !nextTags.has("番茄味")) nextTags.add(Number(heat) === 0 ? "清淡" : "咸鲜");
+      return [...nextTags];
+    }
 
     const r = (name, kcal, time, heat, tags, ingredients, flags = [], note = "") => ({
       id: "",
@@ -4993,7 +5067,7 @@
       kcal,
       time,
       heat,
-      tags,
+      tags: inferRecipeTaxonomy({ name, kcal, time, heat, tags, ingredients }),
       ingredients,
       flags,
       note,
@@ -5319,9 +5393,42 @@
       [/气泡水|苏打|冷泡|茶|水|咖啡|拿铁|汁|昔|奶|豆浆|饮/, ["水或茶底"]]
     ];
 
-    const expandedRecipes = Object.entries(categoryExpansionNames)
-      .flatMap(([category, names]) => names.slice(0, 5).map((name, index) => recipeFromExpansion(category, name, index)))
-      .map((recipe, index) => withRecipeImage({ ...recipe, id: `exp-${index + 1}` }));
+    function canonicalRecipeName(name) {
+      return String(name || "")
+        .trim()
+        .replace(/(?:家常版|家庭版|轻量版|少甜版|少糖版|低糖版|无糖版|简版|早餐版|夜宵版|升级版|湘味版|特辣版|素菜版)$/g, "")
+        .replace(/[·\s_-]+/g, "")
+        .toLowerCase();
+    }
+
+    function buildExpandedRecipes(targetCount = 375) {
+      const categories = Object.entries(categoryExpansionNames).map(([category, names]) => ({ category, names, cursor: 0 }));
+      const seenNames = new Set(seedRecipes.map((recipe) => canonicalRecipeName(recipe.name)));
+      const selected = [];
+      let progressed = true;
+      while (selected.length < targetCount && progressed) {
+        progressed = false;
+        categories.forEach((item) => {
+          if (selected.length >= targetCount) return;
+          while (item.cursor < item.names.length) {
+            const sourceIndex = item.cursor;
+            const name = item.names[item.cursor++];
+            const canonicalName = canonicalRecipeName(name);
+            if (!canonicalName || seenNames.has(canonicalName)) continue;
+            seenNames.add(canonicalName);
+            selected.push(recipeFromExpansion(item.category, name, sourceIndex));
+            progressed = true;
+            break;
+          }
+        });
+      }
+      if (selected.length !== targetCount) {
+        throw new Error(`菜品候选不足：需要 ${targetCount} 道扩展菜，去重后仅有 ${selected.length} 道。`);
+      }
+      return selected.map((recipe, index) => withRecipeImage({ ...recipe, id: `exp-${index + 1}` }));
+    }
+
+    const expandedRecipes = buildExpandedRecipes();
 
     function recipeFromExpansion(category, name, index) {
       const profile = expansionProfiles[category];
@@ -5402,7 +5509,15 @@
       return notes[category];
     }
 
-    const tagOptions = ["川味", "湘味", "粤式", "江浙", "东北", "西北", "云南贵州", "家常", "日韩", "东南亚", "西式", "快手", "下饭", "高蛋白", "素菜", "汤菜", "凉菜", "主食", "面食", "饭类", "早餐", "夜宵", "烧烤", "火锅干锅", "烘焙", "甜品", "饮品", "减肥", "少油可做", "清淡", "聚餐", "豆制品", "爆辣"];
+    const tagOptions = [
+      "川味", "湘味", "粤式", "江浙", "东北", "西北", "云南贵州", "家常", "日韩", "东南亚", "西式",
+      ...taxonomyTagGroups.role,
+      ...taxonomyTagGroups.protein,
+      ...taxonomyTagGroups.method,
+      ...taxonomyTagGroups.time,
+      ...taxonomyTagGroups.energy,
+      "快手", "下饭", "高蛋白", "素菜", "少油可做", "减肥", "早餐", "夜宵", "饭类", "面食", "烧烤", "聚餐", "爆辣"
+    ].filter((tag, index, list) => list.indexOf(tag) === index);
     const flagOptions = [
       { value: "soy", label: "含大豆/豆制品" },
       { value: "seafood", label: "含海产品" },
@@ -5554,6 +5669,7 @@
 
     function withRecipeImage(recipe) {
       recipe = withAutoHealthFlags(recipe);
+      recipe = { ...recipe, tags: inferRecipeTaxonomy(recipe) };
       const hasCustomImage = recipe.image && !/\.mm\.bing\.net\//.test(recipe.image);
       if (hasCustomImage) return { ...recipe, imageCredit: recipe.imageCredit || "自定义" };
       const exactName = String(recipe?.name || "").trim();
@@ -5931,7 +6047,7 @@
     function recipeMenuProfile(recipe) {
       const tags = new Set(recipe.tags || []);
       const text = `${recipe.name} ${(recipe.ingredients || []).join(" ")}`;
-      const animalProtein = /鸡|鸭|鹅|猪|牛|羊|鱼|虾|蟹|肉|排骨|肥肠|腊肠|香肠|火腿|培根|生蚝|扇贝|鱿鱼/.test(text);
+      const animalProtein = ["鸡肉", "猪肉", "牛肉", "羊肉", "鸭鹅", "鱼类", "海鲜"].some((tag) => tags.has(tag));
       const plantOrEggProtein = /蛋|豆腐|豆干|豆皮|腐竹/.test(text);
       const drink = tags.has("饮品");
       const soup = tags.has("汤菜") || /汤|羹/.test(recipe.name);
@@ -5942,9 +6058,9 @@
       const main = !drink && !soup && !staple && !vegetable
         && (animalProtein || tags.has("高蛋白") || richTechnique);
       const light = !drink && !main && (vegetable || soup || staple || plantOrEggProtein || tags.has("清淡") || tags.has("减肥") || tags.has("少油可做"));
-      const protein = /牛/.test(text) ? "牛" : /羊/.test(text) ? "羊" : /猪|肉|排骨|肥肠|腊肠|香肠|火腿|培根/.test(text) ? "猪" : /鸡/.test(text) ? "鸡" : /鸭|鹅/.test(text) ? "禽" : /鱼/.test(text) ? "鱼" : /虾|蟹|生蚝|扇贝|鱿鱼/.test(text) ? "海鲜" : plantOrEggProtein ? "蛋豆" : "";
+      const protein = tags.has("牛肉") ? "牛" : tags.has("羊肉") ? "羊" : tags.has("猪肉") ? "猪" : tags.has("鸡肉") ? "鸡" : tags.has("鸭鹅") ? "禽" : tags.has("鱼类") ? "鱼" : tags.has("海鲜") ? "海鲜" : plantOrEggProtein ? "蛋豆" : "";
       const richness = (richTechnique ? 2 : 0) + (Number(recipe.kcal || 0) >= 480 ? 1 : 0) + (Number(recipe.heat || 0) >= 4 ? 1 : 0);
-      const method = soup ? "汤炖" : /蒸|白灼/.test(recipe.name) ? "蒸煮" : /凉拌|沙拉/.test(recipe.name) ? "凉拌" : /炸|烤|煎/.test(recipe.name) ? "煎炸烤" : /炒|爆|干锅|香锅/.test(recipe.name) ? "炒制" : "其他";
+      const method = ["汤炖", "蒸煮", "凉拌", "煎制", "炸制", "烤制", "炒制", "火锅干锅", "烘焙"].find((tag) => tags.has(tag)) || "其他";
       const flavorTags = [...tags].filter((tag) => ["川味", "湘味", "粤式", "江浙", "东北", "西北", "云南贵州", "日韩", "东南亚", "西式", "清淡"].includes(tag));
       return { drink, soup, staple, vegetable, main, light, protein, richness, method, flavorTags };
     }
@@ -6632,6 +6748,13 @@
     }
 
     function renderFormOptions() {
+      const preferenceTagChips = document.getElementById("preferenceTagChips");
+      if (preferenceTagChips) {
+        preferenceTagChips.innerHTML = preferenceFilterGroups.map((group) => `
+          <span class="filter-chip-group-label">${escapeHtml(group.label)}</span>
+          ${group.tags.map((tag) => `<button class="chip" type="button" data-tag="${escapeHtml(tag)}">${escapeHtml(tag)}</button>`).join("")}
+        `).join("");
+      }
       const tagChecks = document.getElementById("tagChecks");
       tagChecks.innerHTML = tagOptions.map((tag) => `
         <label class="check"><input type="checkbox" value="${tag}" name="tags"> ${tag}</label>
