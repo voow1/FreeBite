@@ -2851,10 +2851,11 @@
     .wheel-taste-heading-actions {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
 
-    .wheel-taste-reset {
+    .wheel-taste-reset,
+    .wheel-more-preferences-button {
       min-height: 44px;
       padding: 0 9px;
       border: 1px solid color-mix(in srgb, var(--accent) 28%, white);
@@ -2863,6 +2864,41 @@
       color: var(--accent);
       font-size: 12px;
       font-weight: 900;
+    }
+
+    .wheel-more-preferences-button {
+      background: var(--surface);
+    }
+
+    #wheelMorePreferenceSourceMount {
+      display: none;
+    }
+
+    .wheel-more-preferences-source {
+      display: grid;
+      gap: 18px;
+    }
+
+    .wheel-more-preference-section {
+      display: grid;
+      gap: 9px;
+    }
+
+    .wheel-more-preference-heading {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .wheel-more-preference-heading strong {
+      font-size: 15px;
+    }
+
+    .wheel-more-preference-heading span {
+      color: var(--muted-ink);
+      font-size: 12px;
+      font-weight: 800;
     }
 
     .wheel-entry-close {
@@ -4310,15 +4346,6 @@
                     <button class="segment" data-serving="4" type="button">4+ 人</button>
                   </div>
                 </div>
-                <div class="taste-picker preference-block">
-                  <div class="inline-preference-head">
-                    <span>口味偏好</span>
-                    <strong id="tastePickerSummary">全部</strong>
-                  </div>
-                  <div class="filter-options taste-options inline-taste-options">
-                    <div class="chips taste-option-chips" data-filter-group="taste" data-taste-surface="home"></div>
-                  </div>
-                </div>
               </div>
             </div>
             <div class="selected-body">
@@ -4371,65 +4398,6 @@
                 <p class="spin-status" id="spinStatus">今天听转盘的。</p>
               </div>
             </div>
-            <div class="panel picker-filter-panel">
-              <div class="filter-section" data-filter-section="heat">
-                <button class="filter-entry-button" type="button" data-open-filter="heat" aria-haspopup="dialog">
-                  <span>辣度</span><span class="filter-entry-summary" id="heatFilterSummary">全部</span><i data-lucide="chevron-right"></i>
-                </button>
-                <div class="filter-options" data-filter-options="heat">
-                  <div class="chips" data-filter-group="heat">
-                  <button class="chip active" data-heat="all">全部</button>
-                  <button class="chip" data-heat="0">不辣</button>
-                  <button class="chip" data-heat="1">微辣</button>
-                  <button class="chip" data-heat="2">中辣</button>
-                  <button class="chip" data-heat="3">重辣</button>
-                  <button class="chip" data-heat="4">爆辣</button>
-                  </div>
-                </div>
-              </div>
-              <div class="filter-section" data-filter-section="tag">
-                <button class="filter-entry-button" type="button" data-open-filter="tag" aria-haspopup="dialog">
-                  <span>更多偏好</span><span class="filter-entry-summary" id="tagFilterSummary">不限</span><i data-lucide="chevron-right"></i>
-                </button>
-                <div class="filter-options" data-filter-options="tag">
-                  <div class="chips" id="preferenceTagChips" data-filter-group="tag"></div>
-                </div>
-              </div>
-              <div class="filter-section" data-filter-section="health">
-                <button class="filter-entry-button" type="button" data-open-filter="health" aria-haspopup="dialog">
-                  <span>甲状腺模式</span><span class="filter-entry-summary" id="healthFilterSummary">未开启</span><i data-lucide="chevron-right"></i>
-                </button>
-                <div class="filter-options" data-filter-options="health">
-                  <div class="chips">
-                  <button class="chip warn" id="recoveryToggle"><i data-lucide="heart-pulse"></i>术后恢复期</button>
-                  <button class="chip warn" id="lowIodineToggle"><i data-lucide="shield-alert"></i>低碘预案</button>
-                  </div>
-                </div>
-              </div>
-              <div class="filter-section" data-filter-section="avoid">
-                <button class="filter-entry-button" type="button" data-open-filter="avoid" aria-haspopup="dialog">
-                  <span>忌口</span><span class="filter-entry-summary" id="avoidFilterSummary">未设置</span><i data-lucide="chevron-right"></i>
-                </button>
-                <div class="filter-options avoid-settings" data-filter-options="avoid">
-                  <div class="chips" data-filter-group="avoid">
-                  <button class="chip avoid" data-avoid-flag="soy" type="button">豆制品</button>
-                  <button class="chip avoid" data-avoid-flag="seafood" type="button">海产品</button>
-                  <button class="chip avoid" data-avoid-flag="fish" type="button">鱼类</button>
-                  <button class="chip avoid" data-avoid-flag="egg" type="button">鸡蛋</button>
-                  <button class="chip avoid" data-avoid-flag="preserved" type="button">腌制/加工</button>
-                  <button class="chip avoid" data-avoid-flag="iron" type="button">内脏血制品</button>
-                  <button class="chip avoid" data-avoid-flag="spicy" type="button">辛辣</button>
-                  </div>
-                  <div class="field">
-                    <label for="avoidTermsInput">自定义忌口</label>
-                    <div class="avoid-input-row">
-                      <input id="avoidTermsInput" type="text" placeholder="香菜、牛奶、羊肉、花生">
-                      <button class="ghost-action" id="clearAvoidButton" type="button"><i data-lucide="eraser"></i>清空</button>
-                    </div>
-                    <p class="avoid-summary" id="avoidSummary">还没有设置忌口。</p>
-                  </div>
-                </div>
-              </div>
               <div class="fridge-matcher" aria-labelledby="fridgeMatcherTitle">
                 <div class="section-title">
                   <span class="icon"><i data-lucide="refrigerator"></i></span>
@@ -4510,7 +4478,6 @@
                 <p class="fridge-summary" id="fridgeSummary">输入或点选食材后，会按当前筛选和忌口推荐菜色。</p>
                 <div class="fridge-results" id="fridgeResults"></div>
               </div>
-            </div>
 
             <div class="panel" id="historyPanel">
               <button class="history-entry-button" id="openHistoryEntry" type="button" aria-haspopup="dialog">
@@ -4873,12 +4840,58 @@
             <div class="inline-preference-head">
               <span>口味偏好</span>
               <div class="wheel-taste-heading-actions">
-                <strong id="wheelTasteSummary">全部</strong>
-                <button class="wheel-taste-reset" id="wheelTasteReset" type="button">重置</button>
+                <button class="wheel-taste-reset" id="wheelTasteReset" type="button">全部</button>
+                <button class="wheel-more-preferences-button" id="wheelMorePreferences" type="button" aria-haspopup="dialog">更多偏好</button>
               </div>
             </div>
             <div class="taste-options inline-taste-options">
               <div class="chips taste-option-chips" data-filter-group="taste" data-taste-surface="wheel"></div>
+            </div>
+          </div>
+          <div id="wheelMorePreferenceSourceMount">
+            <div class="wheel-more-preferences-source" id="wheelMorePreferenceSource">
+              <section class="wheel-more-preference-section">
+                <div class="wheel-more-preference-heading"><strong>辣度</strong><span id="heatFilterSummary">全部</span></div>
+                <div class="chips" data-filter-group="heat">
+                  <button class="chip active" data-heat="all" type="button">全部</button>
+                  <button class="chip" data-heat="0" type="button">不辣</button>
+                  <button class="chip" data-heat="1" type="button">微辣</button>
+                  <button class="chip" data-heat="2" type="button">中辣</button>
+                  <button class="chip" data-heat="3" type="button">重辣</button>
+                  <button class="chip" data-heat="4" type="button">爆辣</button>
+                </div>
+              </section>
+              <section class="wheel-more-preference-section">
+                <div class="wheel-more-preference-heading"><strong>更多偏好</strong><span id="tagFilterSummary">不限</span></div>
+                <div class="chips" id="preferenceTagChips" data-filter-group="tag"></div>
+              </section>
+              <section class="wheel-more-preference-section">
+                <div class="wheel-more-preference-heading"><strong>甲状腺模式</strong><span id="healthFilterSummary">未开启</span></div>
+                <div class="chips">
+                  <button class="chip warn" id="recoveryToggle" type="button"><i data-lucide="heart-pulse"></i>术后恢复期</button>
+                  <button class="chip warn" id="lowIodineToggle" type="button"><i data-lucide="shield-alert"></i>低碘预案</button>
+                </div>
+              </section>
+              <section class="wheel-more-preference-section">
+                <div class="wheel-more-preference-heading"><strong>忌口</strong><span id="avoidFilterSummary">未设置</span></div>
+                <div class="chips" data-filter-group="avoid">
+                  <button class="chip avoid" data-avoid-flag="soy" type="button">豆制品</button>
+                  <button class="chip avoid" data-avoid-flag="seafood" type="button">海产品</button>
+                  <button class="chip avoid" data-avoid-flag="fish" type="button">鱼类</button>
+                  <button class="chip avoid" data-avoid-flag="egg" type="button">鸡蛋</button>
+                  <button class="chip avoid" data-avoid-flag="preserved" type="button">腌制/加工</button>
+                  <button class="chip avoid" data-avoid-flag="iron" type="button">内脏血制品</button>
+                  <button class="chip avoid" data-avoid-flag="spicy" type="button">辛辣</button>
+                </div>
+                <div class="field">
+                  <label for="avoidTermsInput">自定义忌口</label>
+                  <div class="avoid-input-row">
+                    <input id="avoidTermsInput" type="text" placeholder="香菜、牛奶、羊肉、花生">
+                    <button class="ghost-action" id="clearAvoidButton" type="button"><i data-lucide="eraser"></i>清空</button>
+                  </div>
+                  <p class="avoid-summary" id="avoidSummary">还没有设置忌口。</p>
+                </div>
+              </section>
             </div>
           </div>
         </div>
@@ -7699,7 +7712,6 @@
       if (type === "taste") {
         return `
           <div class="preference-option-grid">
-            <button class="chip" type="button" ${attribute}="all">全部</button>
             ${tastePreferenceOptions.map((option) => `<button class="chip" type="button" ${attribute}="${escapeHtml(option)}">${escapeHtml(option)}</button>`).join("")}
           </div>
         `;
@@ -7852,6 +7864,12 @@
         button.classList.toggle("active", isActive);
         button.setAttribute("aria-pressed", String(isActive));
       });
+      const wheelTasteReset = document.getElementById("wheelTasteReset");
+      if (wheelTasteReset) {
+        const isAllTastes = !state.settings.tastes.length;
+        wheelTasteReset.classList.toggle("active", isAllTastes);
+        wheelTasteReset.setAttribute("aria-pressed", String(isAllTastes));
+      }
       document.querySelectorAll("[data-serving]").forEach((button) => {
         button.classList.toggle("active", Number(button.dataset.serving) === Number(state.settings.servingCount || 1));
       });
@@ -7890,11 +7908,6 @@
       if (wheelCenterButton && !state.isSpinning && wheelCenterButton.dataset.stage === "idle") {
         wheelCenterButton.setAttribute("aria-label", serving > 1 ? `抽 ${serving} 道菜` : "抽一道菜");
       }
-
-      const tastes = state.settings.tastes || [];
-      const tasteSummaryText = tastes.length ? tastes.join("、") : "全部";
-      [document.getElementById("tastePickerSummary"), document.getElementById("wheelTasteSummary")]
-        .forEach((summary) => { if (summary) summary.textContent = tasteSummaryText; });
 
       const heatSummary = document.getElementById("heatFilterSummary");
       if (heatSummary) {
@@ -8194,19 +8207,6 @@
       renderStats();
       showToast(`已补记「${name}」。`);
     });
-    const filterSheetTitles = {
-      heat: "选择辣度",
-      tag: "选择更多偏好",
-      health: "甲状腺模式",
-      avoid: "设置忌口"
-    };
-    document.querySelectorAll("[data-open-filter]").forEach((button) => {
-      button.addEventListener("click", () => {
-        const section = button.closest("[data-filter-section]");
-        const options = section?.querySelector("[data-filter-options]");
-        openChoiceSheet(filterSheetTitles[button.dataset.openFilter] || "选择", options, section);
-      });
-    });
     document.getElementById("choiceSheetClose").addEventListener("click", closeChoiceSheet);
     document.getElementById("choiceSheetBackdrop").addEventListener("click", closeChoiceSheet);
     document.getElementById("wheelRevealAgain").addEventListener("click", () => {
@@ -8292,6 +8292,12 @@
       state.settings.tastes = [];
       syncSettings();
       showToast("已恢复全部菜色。");
+    });
+
+    document.getElementById("wheelMorePreferences")?.addEventListener("click", () => {
+      const source = document.getElementById("wheelMorePreferenceSource");
+      const mount = document.getElementById("wheelMorePreferenceSourceMount");
+      openChoiceSheet("更多偏好", source, mount);
     });
 
     document.querySelector("[data-filter-group='avoid']").addEventListener("click", (event) => {
