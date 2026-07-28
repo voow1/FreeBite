@@ -4840,7 +4840,7 @@
             <div class="inline-preference-head">
               <span>口味偏好</span>
               <div class="wheel-taste-heading-actions">
-                <button class="wheel-taste-reset" id="wheelTasteReset" type="button">全部</button>
+                <button class="wheel-taste-reset" id="wheelTasteReset" type="button">重置</button>
                 <button class="wheel-more-preferences-button" id="wheelMorePreferences" type="button" aria-haspopup="dialog">更多偏好</button>
               </div>
             </div>
@@ -7712,6 +7712,7 @@
       if (type === "taste") {
         return `
           <div class="preference-option-grid">
+            <button class="chip" type="button" ${attribute}="all">全部</button>
             ${tastePreferenceOptions.map((option) => `<button class="chip" type="button" ${attribute}="${escapeHtml(option)}">${escapeHtml(option)}</button>`).join("")}
           </div>
         `;
@@ -7864,12 +7865,6 @@
         button.classList.toggle("active", isActive);
         button.setAttribute("aria-pressed", String(isActive));
       });
-      const wheelTasteReset = document.getElementById("wheelTasteReset");
-      if (wheelTasteReset) {
-        const isAllTastes = !state.settings.tastes.length;
-        wheelTasteReset.classList.toggle("active", isAllTastes);
-        wheelTasteReset.setAttribute("aria-pressed", String(isAllTastes));
-      }
       document.querySelectorAll("[data-serving]").forEach((button) => {
         button.classList.toggle("active", Number(button.dataset.serving) === Number(state.settings.servingCount || 1));
       });
