@@ -1,0 +1,38 @@
+{
+  "ok": true,
+  "errors": [],
+  "warnings": [],
+  "pet": {
+    "id": "milk-tea-puppy",
+    "name": "Milk Tea Puppy",
+    "sources": {
+      "idle": "assets/milk-tea-puppy-idle.webp",
+      "runRight": "assets/milk-tea-puppy-run-right.webp",
+      "runLeft": "assets/milk-tea-puppy-run-left.webp",
+      "done": "assets/milk-tea-puppy-done.webp"
+    }
+  },
+  "files": {
+    "idle": "milk-tea-puppy-idle.webp",
+    "runRight": "milk-tea-puppy-run-right.webp",
+    "runLeft": "milk-tea-puppy-run-left.webp",
+    "done": "milk-tea-puppy-done.webp"
+  },
+  "frameCounts": {
+    "idle": 8,
+    "runRight": 8,
+    "runLeft": 8,
+    "done": 6
+  },
+  "canvas": [
+    160,
+    160
+  ],
+  "runLeftMode": "generated",
+  "chromaRemoved": {
+    "idle": false,
+    "runRight": false,
+    "done": false,
+    "runLeft": false
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "id": "milk-tea-puppy",
+  "name": "Milk Tea Puppy",
+  "sources": {
+    "idle": "assets/milk-tea-puppy-idle.webp",
+    "runRight": "assets/milk-tea-puppy-run-right.webp",
+    "runLeft": "assets/milk-tea-puppy-run-left.webp",
+    "done": "assets/milk-tea-puppy-done.webp"
+  }
+}
