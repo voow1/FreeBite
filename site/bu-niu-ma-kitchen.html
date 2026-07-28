@@ -2848,6 +2848,23 @@
       gap: 10px;
     }
 
+    .wheel-taste-heading-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .wheel-taste-reset {
+      min-height: 44px;
+      padding: 0 9px;
+      border: 1px solid color-mix(in srgb, var(--accent) 28%, white);
+      border-radius: 999px;
+      background: color-mix(in srgb, var(--accent) 9%, white);
+      color: var(--accent);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
     .wheel-entry-close {
       width: 42px;
       height: 42px;
@@ -4855,7 +4872,10 @@
           <div class="wheel-inline-taste preference-block" aria-label="选择转盘口味偏好">
             <div class="inline-preference-head">
               <span>口味偏好</span>
-              <strong id="wheelTasteSummary">全部</strong>
+              <div class="wheel-taste-heading-actions">
+                <strong id="wheelTasteSummary">全部</strong>
+                <button class="wheel-taste-reset" id="wheelTasteReset" type="button">重置</button>
+              </div>
             </div>
             <div class="taste-options inline-taste-options">
               <div class="chips taste-option-chips" data-filter-group="taste" data-taste-surface="wheel"></div>
@@ -6490,8 +6510,8 @@
 
     const previousTastePreferences = Array.isArray(state.settings.tastes) ? state.settings.tastes : [];
     const migratedTasteTags = (state.settings.tags || []).filter((tag) => tastePreferenceOptions.includes(tag));
-    const storedTastePreference = previousTastePreferences.find((tag) => tastePreferenceOptions.includes(tag));
-    state.settings.tastes = [storedTastePreference || migratedTasteTags[0]].filter(Boolean);
+    const storedTastePreferences = previousTastePreferences.filter((tag) => tastePreferenceOptions.includes(tag));
+    state.settings.tastes = [...new Set([...storedTastePreferences, ...migratedTasteTags])];
     const tasteSettingsChanged = previousTastePreferences.join("|") !== state.settings.tastes.join("|");
     if (migratedTasteTags.length || tasteSettingsChanged) {
       state.settings.tags = state.settings.tags.filter((tag) => !tastePreferenceOptions.includes(tag));
@@ -7872,7 +7892,7 @@
       }
 
       const tastes = state.settings.tastes || [];
-      const tasteSummaryText = tastes[0] || "全部";
+      const tasteSummaryText = tastes.length ? tastes.join("、") : "全部";
       [document.getElementById("tastePickerSummary"), document.getElementById("wheelTasteSummary")]
         .forEach((summary) => { if (summary) summary.textContent = tasteSummaryText; });
 
@@ -8245,7 +8265,11 @@
         if (!button) return;
         if (state.isSpinning) return showToast("本轮正在揭晓，下一轮再切换口味。");
         const taste = button.dataset.taste;
-        state.settings.tastes = taste === "all" ? [] : [taste];
+        state.settings.tastes = taste === "all"
+          ? []
+          : state.settings.tastes.includes(taste)
+            ? state.settings.tastes.filter((item) => item !== taste)
+            : [...state.settings.tastes, taste];
         if (taste !== "all") {
           state.settings.heat = "all";
           state.settings.tags = [];
@@ -8257,9 +8281,17 @@
         } else if (!poolResult.recipes.length && state.settings.tastes.length) {
           showToast("当前口味与健康或忌口设置冲突，请放宽后再抽。");
         } else {
-          showToast(taste === "all" ? "已恢复全部菜色。" : `已切换到${taste}菜池。`);
+          showToast(!state.settings.tastes.length ? "已恢复全部菜色。" : `已选择：${state.settings.tastes.join("、")}。`);
         }
       });
+    });
+
+    document.getElementById("wheelTasteReset")?.addEventListener("click", () => {
+      if (state.isSpinning) return showToast("本轮正在揭晓，下一轮再重置口味。");
+      if (!state.settings.tastes.length) return showToast("当前已是全部菜色。");
+      state.settings.tastes = [];
+      syncSettings();
+      showToast("已恢复全部菜色。");
     });
 
     document.querySelector("[data-filter-group='avoid']").addEventListener("click", (event) => {
