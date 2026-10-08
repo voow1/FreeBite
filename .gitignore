@@ -5,6 +5,8 @@ preview-server.*
 # Downloaded source packages and local archives
 *.zip
 site/assets/archive/
+清理备份/
+旧网页/
 
 # Historical working copies
 *.before-*.html
