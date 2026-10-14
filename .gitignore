@@ -1,6 +1,9 @@
 # Local preview output and diagnostics
 *.log
 preview-server.*
+tools/miniprogram/.generated/
+project.private.config.json
+旧项目文档/
 
 # Downloaded source packages and local archives
 *.zip

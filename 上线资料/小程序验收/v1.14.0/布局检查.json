@@ -1,0 +1,677 @@
+{
+  "results": [
+    {
+      "width": 360,
+      "theme": "strawberry",
+      "view": "mine",
+      "overflow": false,
+      "errors": [],
+      "icons": [
+        {
+          "src": "/assets/themes/strawberry/home.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/strawberry/library.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/strawberry/ingredients.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/strawberry/mine.png",
+          "loaded": true
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "width": 360,
+      "theme": "strawberry",
+      "view": "wheel",
+      "overflow": false,
+      "errors": [],
+      "cta": 804.953125,
+      "viewport": 844
+    },
+    {
+      "width": 360,
+      "theme": "strawberry",
+      "view": "library",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "theme": "strawberry",
+      "view": "ingredients",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "theme": "strawberry",
+      "view": "home",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "theme": "milk-tea",
+      "view": "mine",
+      "overflow": false,
+      "errors": [],
+      "icons": [
+        {
+          "src": "/assets/themes/milk-tea/home.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/milk-tea/library.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/milk-tea/ingredients.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/milk-tea/mine.png",
+          "loaded": true
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "width": 360,
+      "theme": "milk-tea",
+      "view": "wheel",
+      "overflow": false,
+      "errors": [],
+      "cta": 804.953125,
+      "viewport": 844
+    },
+    {
+      "width": 360,
+      "theme": "milk-tea",
+      "view": "library",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "theme": "milk-tea",
+      "view": "ingredients",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "theme": "milk-tea",
+      "view": "home",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "theme": "lazy-cat",
+      "view": "mine",
+      "overflow": false,
+      "errors": [],
+      "icons": [
+        {
+          "src": "/assets/themes/lazy-cat/home.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/lazy-cat/library.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/lazy-cat/ingredients.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/lazy-cat/mine.png",
+          "loaded": true
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "width": 360,
+      "theme": "lazy-cat",
+      "view": "wheel",
+      "overflow": false,
+      "errors": [],
+      "cta": 804.953125,
+      "viewport": 844
+    },
+    {
+      "width": 360,
+      "theme": "lazy-cat",
+      "view": "library",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "theme": "lazy-cat",
+      "view": "ingredients",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "theme": "lazy-cat",
+      "view": "home",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "theme": "baozi",
+      "view": "mine",
+      "overflow": false,
+      "errors": [],
+      "icons": [
+        {
+          "src": "/assets/themes/baozi/home.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/baozi/library.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/baozi/ingredients.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/baozi/mine.png",
+          "loaded": true
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "width": 360,
+      "theme": "baozi",
+      "view": "wheel",
+      "overflow": false,
+      "errors": [],
+      "cta": 804.953125,
+      "viewport": 844
+    },
+    {
+      "width": 360,
+      "theme": "baozi",
+      "view": "library",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "theme": "baozi",
+      "view": "ingredients",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 360,
+      "theme": "baozi",
+      "view": "home",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "strawberry",
+      "view": "mine",
+      "overflow": false,
+      "errors": [],
+      "icons": [
+        {
+          "src": "/assets/themes/strawberry/home.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/strawberry/library.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/strawberry/ingredients.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/strawberry/mine.png",
+          "loaded": true
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "width": 390,
+      "theme": "strawberry",
+      "view": "wheel",
+      "overflow": false,
+      "errors": [],
+      "cta": 801.6875,
+      "viewport": 844
+    },
+    {
+      "width": 390,
+      "theme": "strawberry",
+      "view": "library",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "strawberry",
+      "view": "ingredients",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "strawberry",
+      "view": "home",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "milk-tea",
+      "view": "mine",
+      "overflow": false,
+      "errors": [],
+      "icons": [
+        {
+          "src": "/assets/themes/milk-tea/home.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/milk-tea/library.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/milk-tea/ingredients.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/milk-tea/mine.png",
+          "loaded": true
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "width": 390,
+      "theme": "milk-tea",
+      "view": "wheel",
+      "overflow": false,
+      "errors": [],
+      "cta": 801.6875,
+      "viewport": 844
+    },
+    {
+      "width": 390,
+      "theme": "milk-tea",
+      "view": "library",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "milk-tea",
+      "view": "ingredients",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "milk-tea",
+      "view": "home",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "lazy-cat",
+      "view": "mine",
+      "overflow": false,
+      "errors": [],
+      "icons": [
+        {
+          "src": "/assets/themes/lazy-cat/home.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/lazy-cat/library.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/lazy-cat/ingredients.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/lazy-cat/mine.png",
+          "loaded": true
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "width": 390,
+      "theme": "lazy-cat",
+      "view": "wheel",
+      "overflow": false,
+      "errors": [],
+      "cta": 801.6875,
+      "viewport": 844
+    },
+    {
+      "width": 390,
+      "theme": "lazy-cat",
+      "view": "library",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "lazy-cat",
+      "view": "ingredients",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "lazy-cat",
+      "view": "home",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "baozi",
+      "view": "mine",
+      "overflow": false,
+      "errors": [],
+      "icons": [
+        {
+          "src": "/assets/themes/baozi/home.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/baozi/library.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/baozi/ingredients.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/baozi/mine.png",
+          "loaded": true
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "width": 390,
+      "theme": "baozi",
+      "view": "wheel",
+      "overflow": false,
+      "errors": [],
+      "cta": 801.6875,
+      "viewport": 844
+    },
+    {
+      "width": 390,
+      "theme": "baozi",
+      "view": "library",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "baozi",
+      "view": "ingredients",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 390,
+      "theme": "baozi",
+      "view": "home",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 430,
+      "theme": "strawberry",
+      "view": "mine",
+      "overflow": false,
+      "errors": [],
+      "icons": [
+        {
+          "src": "/assets/themes/strawberry/home.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/strawberry/library.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/strawberry/ingredients.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/strawberry/mine.png",
+          "loaded": true
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "width": 430,
+      "theme": "strawberry",
+      "view": "wheel",
+      "overflow": false,
+      "errors": [],
+      "cta": 800.953125,
+      "viewport": 844
+    },
+    {
+      "width": 430,
+      "theme": "strawberry",
+      "view": "library",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 430,
+      "theme": "strawberry",
+      "view": "ingredients",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 430,
+      "theme": "strawberry",
+      "view": "home",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 430,
+      "theme": "milk-tea",
+      "view": "mine",
+      "overflow": false,
+      "errors": [],
+      "icons": [
+        {
+          "src": "/assets/themes/milk-tea/home.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/milk-tea/library.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/milk-tea/ingredients.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/milk-tea/mine.png",
+          "loaded": true
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "width": 430,
+      "theme": "milk-tea",
+      "view": "wheel",
+      "overflow": false,
+      "errors": [],
+      "cta": 800.953125,
+      "viewport": 844
+    },
+    {
+      "width": 430,
+      "theme": "milk-tea",
+      "view": "library",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 430,
+      "theme": "milk-tea",
+      "view": "ingredients",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 430,
+      "theme": "milk-tea",
+      "view": "home",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 430,
+      "theme": "lazy-cat",
+      "view": "mine",
+      "overflow": false,
+      "errors": [],
+      "icons": [
+        {
+          "src": "/assets/themes/lazy-cat/home.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/lazy-cat/library.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/lazy-cat/ingredients.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/lazy-cat/mine.png",
+          "loaded": true
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "width": 430,
+      "theme": "lazy-cat",
+      "view": "wheel",
+      "overflow": false,
+      "errors": [],
+      "cta": 800.953125,
+      "viewport": 844
+    },
+    {
+      "width": 430,
+      "theme": "lazy-cat",
+      "view": "library",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 430,
+      "theme": "lazy-cat",
+      "view": "ingredients",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 430,
+      "theme": "lazy-cat",
+      "view": "home",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 430,
+      "theme": "baozi",
+      "view": "mine",
+      "overflow": false,
+      "errors": [],
+      "icons": [
+        {
+          "src": "/assets/themes/baozi/home.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/baozi/library.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/baozi/ingredients.png",
+          "loaded": true
+        },
+        {
+          "src": "/assets/themes/baozi/mine.png",
+          "loaded": true
+        }
+      ],
+      "buttons": []
+    },
+    {
+      "width": 430,
+      "theme": "baozi",
+      "view": "wheel",
+      "overflow": false,
+      "errors": [],
+      "cta": 800.953125,
+      "viewport": 844
+    },
+    {
+      "width": 430,
+      "theme": "baozi",
+      "view": "library",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 430,
+      "theme": "baozi",
+      "view": "ingredients",
+      "overflow": false,
+      "errors": []
+    },
+    {
+      "width": 430,
+      "theme": "baozi",
+      "view": "home",
+      "overflow": false,
+      "errors": []
+    }
+  ],
+  "interaction": "pet switch, reload persistence, restore, reduced-motion spin, recipe and filter passed"
+}

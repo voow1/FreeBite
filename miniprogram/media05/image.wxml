@@ -1,0 +1,1 @@
+<image class="photo" src="{{path}}" mode="{{mode}}" bindload="loaded" binderror="failed" aria-label="{{label}}" />

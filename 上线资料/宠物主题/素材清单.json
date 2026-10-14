@@ -1,0 +1,22 @@
+{
+  "strawberry": {
+    "name": "草莓甜心",
+    "atlas": "上线资料/宠物主题/草莓甜心/主题图集-v2.png",
+    "generated": "exec-f01abba8-ddde-4f1b-9638-ccdf43fbd09f.png"
+  },
+  "milk-tea": {
+    "name": "奶茶小狗",
+    "atlas": "上线资料/宠物主题/奶茶小狗/主题图集-v2.png",
+    "generated": "exec-39c3c578-aa4a-44a1-bfa9-ee32da898e7f.png"
+  },
+  "lazy-cat": {
+    "name": "慵懒小猫",
+    "atlas": "上线资料/宠物主题/慵懒小猫/主题图集-v2.png",
+    "generated": "exec-bb5df0d0-9911-4962-8390-312f81641f4a.png"
+  },
+  "baozi": {
+    "name": "包仔小厨",
+    "atlas": "上线资料/宠物主题/包仔小厨/主题图集-v2.png",
+    "generated": "exec-b95b8856-a7c8-4e26-a8e7-9f1cda02b315.png"
+  }
+}

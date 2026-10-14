@@ -1,0 +1,133 @@
+{
+  "pages": [
+    "pages/kitchen/index",
+    "pages/recipe/index"
+  ],
+  "subPackages": [
+    {
+      "root": "info",
+      "name": "info",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media00",
+      "root": "media00",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media01",
+      "root": "media01",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media02",
+      "root": "media02",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media03",
+      "root": "media03",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media04",
+      "root": "media04",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media05",
+      "root": "media05",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media06",
+      "root": "media06",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media07",
+      "root": "media07",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media08",
+      "root": "media08",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media09",
+      "root": "media09",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media10",
+      "root": "media10",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media11",
+      "root": "media11",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media12",
+      "root": "media12",
+      "pages": [
+        "index"
+      ]
+    },
+    {
+      "name": "media13",
+      "root": "media13",
+      "pages": [
+        "index"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTitleText": "不牛马厨房",
+    "navigationBarBackgroundColor": "#fbfcff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#fbfcff"
+  },
+  "style": "v2",
+  "lazyCodeLoading": "requiredComponents",
+  "sitemapLocation": "sitemap.json",
+  "usingComponents": {
+    "asset-image": "/components/asset-image/index"
+  },
+  "preloadRule": {
+    "pages/kitchen/index": {
+      "network": "all",
+      "packages": [
+        "media00"
+      ]
+    }
+  }
+}

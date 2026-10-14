@@ -1,0 +1,35 @@
+{
+  "component": true,
+  "usingComponents": {
+    "media00": "/media00/image",
+    "media01": "/media01/image",
+    "media02": "/media02/image",
+    "media03": "/media03/image",
+    "media04": "/media04/image",
+    "media05": "/media05/image",
+    "media06": "/media06/image",
+    "media07": "/media07/image",
+    "media08": "/media08/image",
+    "media09": "/media09/image",
+    "media10": "/media10/image",
+    "media11": "/media11/image",
+    "media12": "/media12/image",
+    "media13": "/media13/image"
+  },
+  "componentPlaceholder": {
+    "media00": "view",
+    "media01": "view",
+    "media02": "view",
+    "media03": "view",
+    "media04": "view",
+    "media05": "view",
+    "media06": "view",
+    "media07": "view",
+    "media08": "view",
+    "media09": "view",
+    "media10": "view",
+    "media11": "view",
+    "media12": "view",
+    "media13": "view"
+  }
+}

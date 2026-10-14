@@ -1,0 +1,6 @@
+<import src="../../templates/recipe.wxml" />
+<view class="app detail-page" style="{{themeStyle}}">
+  <template wx:if="{{selected}}" is="recipe" data="{{selected,selectedMenu,standalone}}" />
+  <view wx:else class="empty"><text class="title">这道菜暂时找不到了</text><text>自定义菜谱保存在创建者的设备上。</text><button class="primary" bindtap="backHome">回厨房选一道</button></view>
+  <view wx:if="{{toast}}" class="toast">{{toast}}</view>
+</view>

@@ -1,0 +1,19 @@
+{
+  "description": "不牛马厨房微信小程序",
+  "miniprogramRoot": "miniprogram/",
+  "compileType": "miniprogram",
+  "appid": "wxacaeeb9071a24ad2",
+  "projectname": "FreeBite",
+  "setting": {
+    "es6": true,
+    "enhance": true,
+    "minified": true,
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "urlCheck": true,
+    "compileHotReLoad": false,
+    "uploadWithSourceMap": true
+  },
+  "packOptions": {"ignore": [{"type":"suffix","value":".md"},{"type":"suffix","value":".txt"}]},
+  "condition": {}
+}
