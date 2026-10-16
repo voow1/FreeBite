@@ -51,7 +51,7 @@ function pageHarness(){
   let saved;const store=createStore({getStorageSync:()=>saved,setStorageSync:(_,v)=>{saved=JSON.parse(JSON.stringify(v));}});
   const timer=clock(),calls=[];let page;
   const filename=path.join(__dirname,'../../miniprogram/pages/kitchen/index.js'),nativeRequire=createRequire(filename);
-  const wx={setNavigationBarColor(){},setBackgroundColor(){},setNavigationBarTitle(o){calls.push(['title',o]);},pageScrollTo(){},
+  const wx={setNavigationBarColor(){},setBackgroundColor(){},setNavigationBarTitle(o){calls.push(['title',o]);},pageScrollTo(o){o.complete?.();},
     navigateTo:o=>calls.push(['navigate',o]),reLaunch:o=>calls.push(['relaunch',o]),setClipboardData:o=>calls.push(['clipboard',o]),
     showModal:o=>o.success({confirm:true}),createSelectorQuery:()=>({in(){return this;},select(){return this;},fields(){return this;},exec:f=>f([])})};
   vm.runInNewContext(fs.readFileSync(filename,'utf8'),{require:p=>p==='../../utils/ui'?{...nativeRequire(p),applyNavigation(){}}:p==='../../utils/recipe-actions'?actions(wx):nativeRequire(p),Page:p=>page=p,getApp:()=>({getStore:()=>store}),wx,...timer});

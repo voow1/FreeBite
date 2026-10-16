@@ -1,13 +1,14 @@
 const motion=require('../../utils/motion');
 const pointer=require('../../utils/wheel-pointer');
 const petMotion=require('../../utils/pet-player');
+const dishFlight=require('../../utils/dish-flight');
 const options = require('../../data/options');
 const {themes} = require('../../data/themes');
 const ui = require('../../utils/ui');
 const actions = require('../../utils/recipe-actions');
 Page(motion.decorate({
   data:{tab:'home',visited:{home:true},standalone:false,wheelOpen:false,wheelHintDismissed:false,filtersOpen:false,addOpen:false,spinning:false,petState:'idle',angle:0,spinDuration:0,pointerMotion:null,pointerBeat:0,
-    wheelItems:[],selected:null,selectedMenu:[],servings:[1,2,3,4],library:[],libraryTotal:0,libraryTag:'all',search:'',
+    dishFlight:null,flightRecipe:null,flightPhase:'',flightStyle:'',flightIndex:-1,wheelItems:[],selected:null,selectedMenu:[],servings:[1,2,3,4],library:[],libraryTotal:0,libraryTag:'all',search:'',
     shoppingInput:'',fridgeMatches:[],toast:'',settings:{},pets:[],pet:{},filterGroups:[],avoidOptions:[],
     tastes:[],history:[],shopping:[],customRecipes:[],heatOptions:[{value:'all',label:'不限'},{value:'0',label:'不辣'},{value:'1',label:'微辣'},{value:'2',label:'中辣'},{value:'3',label:'较辣'},{value:'4',label:'爆辣'}]},
   onLoad(query){
@@ -22,7 +23,7 @@ Page(motion.decorate({
     this.refresh();
   },
   onReady(){this.drawWheel();},
-  onResize(){this.fitWheel();this.drawWheel();},
+  onResize(){if(this.data.dishFlight)this.cancelSpin();this.fitWheel();this.drawWheel();},
   fitWheel(){
     const screen=wx.getWindowInfo?wx.getWindowInfo():wx.getSystemInfoSync?wx.getSystemInfoSync():{};
     const width=screen.windowWidth||375,height=screen.windowHeight||667;
@@ -98,7 +99,7 @@ Page(motion.decorate({
     Object.assign(this.store.state.settings,{heat:'all',tags:[],tastes:[],avoidFlags:[],avoidTerms:'',recoveryMode:false,lowIodinePlan:false});
     this.store.save();this.refresh();
   },
-  openWheel(){this.setData({wheelOpen:true,wheelHintDismissed:false});this.refreshWheel();this.syncPetIdle();},
+  openWheel(){if(this.data.spinning)return;this.setData({wheelOpen:true,wheelHintDismissed:false});this.refreshWheel();this.syncPetIdle();},
   closeWheel(){if(!this.data.spinning)this.qClose('wheelOpen',function(){this.petPlayer.stop();});},
   refreshWheel(){
     const engine=this.store.engine;
@@ -128,21 +129,74 @@ Page(motion.decorate({
     const duration=this.store.state.settings.reduceMotion?0:4200;
     const angle=ui.spinTarget(this.data.angle,index,this.wheelRecipes.length,direction);
     const previousAngle=this.data.angle;
-    this.setData({spinning:true,wheelHintDismissed:true,spinDuration:duration,angle,petState:duration?(direction>0?'runRight':'runLeft'):'idle'});
+    this._flightEpoch=(this._flightEpoch||0)+1;this._flightReadyPath=null;this._resultPending=false;
+    this.setData({flightRecipe:duration?ui.recipeView(anchor):null,flightIndex:index,spinning:true,wheelHintDismissed:true,spinDuration:duration,angle,petState:duration?(direction>0?'runRight':'runLeft'):'idle'});
     this.startPointerSpin(previousAngle,angle,duration);
     if(duration)this.petPlayer.spin(previousAngle,angle,duration);
     if(!this.store.state.settings.reduceMotion&&wx.vibrateShort)wx.vibrateShort({type:'light',fail:()=>{}});
     this.spinTimer=setTimeout(()=>{
       this.stopPointer();
       this.store.state.selectedIds=menu.map(r=>r.id);this.store.save();
-      this.setData({petState:duration?'done':'idle'});
+      this._resultPending=true;
+      // Render the destination underneath the wheel while the pet finishes.
+      this.setData({petState:duration?'done':'idle',tab:'home','visited.home':true,activeId:anchor.id});
+      this.refresh();
       if(duration)this.petPlayer.done();
-      this.spinTimer=setTimeout(()=>{
-        this.setData({spinning:false,petState:'idle',wheelOpen:false,tab:'home',activeId:anchor.id});this.refresh();
-        wx.pageScrollTo({scrollTop:0,duration:this.store.state.settings.reduceMotion?0:200});
-        this.notify(`开饭啦！为你选了${menu.length}道菜`);
-      },duration?petMotion.DONE_MS:0);
+      this.spinTimer=setTimeout(()=>this.startDishFlight(anchor,menu.length),duration?petMotion.DONE_MS:0);
     },duration);
+  },
+  flightImageReady(e){if(e&&e.detail)this._flightReadyPath=e.detail.path;},
+  finishDishFlight(count){
+    clearTimeout(this.flightTimer);this._resultPending=false;
+    this.petPlayer.stop();
+    this.setData({dishFlight:null,flightRecipe:null,flightPhase:'landed',flightIndex:-1,spinning:false,petState:'idle',wheelOpen:false,tab:'home'});
+    this.refresh();
+    this.notify(`开饭啦！为你选了${count}道菜`);
+  },
+  startDishFlight(anchor,count){
+    const epoch=this._flightEpoch;
+    const current=()=>epoch===this._flightEpoch&&!this._petHidden;
+    // Align the destination behind the opaque wheel before measuring its photo.
+    let aligned=false;
+    const afterScroll=()=>{
+      if(aligned||!current())return;
+      aligned=true;clearTimeout(this.flightTimer);
+      if(this.store.state.settings.reduceMotion||this._flightReadyPath!==anchor.image){this.finishDishFlight(count);return;}
+      this.flightTimer=setTimeout(()=>{if(current())this.animateDishFlight(anchor,count,epoch);},40);
+    };
+    this.flightTimer=setTimeout(afterScroll,350);
+    try{wx.pageScrollTo({selector:count>1?'.home-scene .menu-strip':'.home-scene .hero-photo',offsetTop:0,duration:0,complete:afterScroll});}
+    catch(error){afterScroll();}
+  },
+  animateDishFlight(anchor,count,epoch){
+    const current=()=>epoch===this._flightEpoch&&!this._petHidden;
+    const finish=()=>{if(current())this.finishDishFlight(count);};
+    if(this.store.state.settings.reduceMotion||this._flightReadyPath!==anchor.image){finish();return;}
+    let queried=false;
+    // Failed/missing geometry must never trap the user behind the wheel.
+    this.flightTimer=setTimeout(()=>{queried=true;finish();},260);
+    try{
+      const query=wx.createSelectorQuery().in(this);
+      const sourceNode=query.select('#wheel-choice-'+this.data.flightIndex);
+      if(typeof sourceNode.boundingClientRect!=='function'){
+        clearTimeout(this.flightTimer);finish();return;
+      }
+      sourceNode.boundingClientRect();
+      query.select('.home-scene .hero-photo').boundingClientRect();
+      query.exec(rects=>{
+        if(queried||!current())return;queried=true;clearTimeout(this.flightTimer);
+        const geometry=dishFlight.plan(rects[0],rects[1]);
+        if(!geometry){finish();return;}
+        this.setData({dishFlight:ui.recipeView(anchor),flightPhase:'seed',flightStyle:geometry.start},()=>{
+          if(!current())return;
+          this.flightTimer=setTimeout(()=>{
+            if(!current())return;
+            this.setData({flightPhase:'flying',flightStyle:geometry.end});
+            this.flightTimer=setTimeout(finish,dishFlight.DURATION);
+          },40);
+        });
+      });
+    }catch(error){clearTimeout(this.flightTimer);finish();}
   },
   touchStart(e){
     if(this.data.spinning)return;
@@ -194,12 +248,13 @@ Page(motion.decorate({
     this.syncPetIdle();
   },
   cancelSpin(){
-    clearTimeout(this.spinTimer);this.touch=null;
+    clearTimeout(this.spinTimer);clearTimeout(this.flightTimer);this._flightEpoch=(this._flightEpoch||0)+1;this.touch=null;
     this.stopPointer();
     this.petPlayer.stop();
     const wasSpinning=this.data.spinning;
-    this.setData({spinning:false,spinDuration:0,petState:'idle'});
-    if(wasSpinning)this.refreshWheel();
+    const resultPending=this._resultPending;this._resultPending=false;
+    this.setData({dishFlight:null,flightRecipe:null,flightPhase:'',flightIndex:-1,spinning:false,spinDuration:0,petState:'idle',...(resultPending?{wheelOpen:false}:{})});
+    if(wasSpinning&&!resultPending)this.refreshWheel();
   },
   nudgePointer(effect){
     if(this.store.state.settings.reduceMotion||this.data.qPaused)return;

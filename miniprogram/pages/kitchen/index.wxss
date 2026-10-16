@@ -1,3 +1,5 @@
 @import "../../motion.wxss";
 @import "base.wxss";
 @import "design.wxss";
+
+@import "dish-flight.wxss";

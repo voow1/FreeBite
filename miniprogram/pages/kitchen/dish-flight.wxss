@@ -1,0 +1,19 @@
+/* One shared dish card moves from the winning label into the real menu photo. */
+.dish-preload{position:fixed;left:-4px;top:-4px;width:1px;height:1px;opacity:0;pointer-events:none}
+.dish-flight{position:fixed;inset:0;z-index:80;touch-action:none}
+.dish-flight-card{position:absolute;overflow:hidden;border-radius:12px;background:var(--surface-2);box-shadow:0 3px 14px rgba(35,42,48,.10);transform:translateY(0);will-change:left,top,width,height;}
+.dish-flight-card .flight-photo{position:absolute;inset:0;width:100%;height:100%;opacity:0}
+.flight-name{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:8px;text-align:center;font-size:11px;line-height:1.4;color:var(--ink)}
+.dish-flight.flying .dish-flight-card{transition:left 680ms cubic-bezier(.22,.78,.22,1),top 680ms cubic-bezier(.22,.78,.22,1),width 680ms cubic-bezier(.22,.78,.22,1),height 680ms cubic-bezier(.22,.78,.22,1),border-radius 680ms ease,box-shadow 680ms ease;border-radius:28rpx;box-shadow:none}
+.dish-flight.flying .flight-photo{opacity:1;transition:opacity 180ms ease 20ms}
+.dish-flight.flying .flight-name{opacity:0;transition:opacity 140ms ease}
+.app.has-dish-flight .home-scene .hero-photo{opacity:0}
+.app.has-dish-flight .home-scene,.app.has-dish-flight .brand,.app.has-dish-flight .bottom-nav{animation:flight-menu-in 680ms linear both}
+.wheel-label.flight-selected{opacity:0}
+.q-app .wheel-screen.flight-leaving{animation:flight-wheel-away 680ms ease both;pointer-events:none}
+@keyframes flight-wheel-away{0%{opacity:1;transform:none}35%{opacity:0;transform:scale(.97)}100%{opacity:0;transform:scale(.97)}}
+@keyframes flight-menu-in{0%,40%{opacity:0}75%,100%{opacity:1}}
+.reduce-motion .dish-flight{display:none}
+@media(prefers-reduced-motion:reduce){.dish-flight{display:none}}
+
+.app.dish-landed .home-scene{animation:none}

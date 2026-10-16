@@ -7,7 +7,7 @@ const path=require('node:path');
 const {createStore}=require('../../miniprogram/utils/store');
 const {mascotPresets}=require('../../miniprogram/data/options');
 const pointer=require('../../miniprogram/utils/wheel-pointer');
-function harness(pet,reduceMotion=false){
+function harness(pet,reduceMotion=false,rects=null){
   const store=createStore({getStorageSync:()=>null,setStorageSync(){}});
   store.state.mascotId=pet.id;store.state.settings.reduceMotion=reduceMotion;
   let page,clock=0,id=0;const timers=new Map();
@@ -17,7 +17,7 @@ function harness(pet,reduceMotion=false){
     Date:class extends Date{static now(){return clock;}},
     require:p=>p==='../../utils/ui'?{...nativeRequire(p),applyNavigation(){}}:nativeRequire(p),
     Page:p=>page=p,getApp:()=>({getStore:()=>store}),
-    wx:{setNavigationBarColor(){},setBackgroundColor(){},pageScrollTo(){},createSelectorQuery:()=>({in(){return this;},select(){return this;},fields(){return this;},exec:f=>f([])})},
+    wx:{setNavigationBarColor(){},setBackgroundColor(){},pageScrollTo(o){page.lastScroll=o;o.complete?.();},createSelectorQuery:()=>({in(){return this;},select(){return this;},fields(){return this;},boundingClientRect(){return this;},exec:f=>f(rects||[])})},
     setTimeout:(fn,ms)=>{timers.set(++id,{fn,at:clock+ms});return id;},clearTimeout:key=>timers.delete(key)
   },{filename});
   page.setData=function(patch,done){Object.assign(this.data,patch);done?.();};page.onLoad({});
@@ -25,6 +25,36 @@ function harness(pet,reduceMotion=false){
   return {page,store,advance};
 }
 const touch=(x,y=0)=>({touches:[{clientX:x,clientY:y}],changedTouches:[{clientX:x,clientY:y}]});
+const flightRects=[{left:168,top:360,width:48,height:30},{left:20,top:220,width:350,height:260}];
+test('winning dish flies from its label to the menu photo without changing the result',()=>{
+  for(const direction of [-1,1]){
+    const {page,store,advance}=harness(mascotPresets[0],false,flightRects);
+    page.openWheel();page.spin({direction});
+    const winner=page.wheelRecipes[page.data.flightIndex];
+    page.flightImageReady({detail:{path:winner.image}});
+    advance(5990);assert.equal(page.data.flightPhase,'seed');assert.equal(page.data.dishFlight.id,winner.id);
+    assert.match(page.data.flightStyle,/left:158px;top:351px;width:68px;height:48px/);
+    const selected=store.state.selectedIds.slice();assert(selected.includes(winner.id));assert.equal(page.lastScroll.selector,selected.length>1?'.home-scene .menu-strip':'.home-scene .hero-photo');assert.equal(page.lastScroll.duration,0);
+    advance(40);assert.equal(page.data.flightPhase,'flying');assert.match(page.data.flightStyle,/left:20px;top:220px;width:350px;height:260px/);
+    advance(680);assert.equal(page.data.dishFlight,null);assert(!page.data.wheelOpen);assert(!page.data.spinning);
+    assert.equal(page.data.activeId,winner.id);assert.deepEqual(store.state.selectedIds,selected);page.onUnload();
+  }
+});
+test('leaving during a dish flight cancels it and preserves the already selected menu',()=>{
+  for(const delay of [5950,5990,6030,6250]){
+    const {page,store,advance}=harness(mascotPresets[1],false,flightRects);
+    page.spin();page.flightImageReady({detail:{path:page.data.flightRecipe.image}});advance(delay);
+    const selected=store.state.selectedIds.slice();page.onHide();advance(10000);page.onShow();
+    assert.equal(page.data.dishFlight,null);assert(!page.data.wheelOpen);assert(!page.data.spinning);assert.deepEqual(store.state.selectedIds,selected);page.onUnload();
+  }
+});
+test('unready image or missing geometry falls back to a usable menu',()=>{
+  for(const ready of [false,true]){
+    const {page,store,advance}=harness(mascotPresets[2]);page.spin();
+    if(ready)page.flightImageReady({detail:{path:page.data.flightRecipe.image}});
+    advance(7000);assert.equal(page.data.dishFlight,null);assert(!page.data.spinning);assert(!page.data.wheelOpen);assert(store.state.selectedIds.length);page.onUnload();
+  }
+});
 test('all four pets retain both running directions and completion before returning home',()=>{
   for(const pet of mascotPresets)for(const direction of [-1,1]){
     const {page,store,advance}=harness(pet);

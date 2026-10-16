@@ -1,11 +1,11 @@
 /* Local verification adapter. Never included in the WeChat package. */
-document.getElementById('review').textContent='交互预览 v1.16.3 · 非微信真机';
+document.getElementById('review').textContent='交互预览 v1.17.0 · 非微信真机';
 window.addEventListener('error',e=>{const p=document.createElement('pre');p.textContent=e.message+'\n'+e.error?.stack;document.body.append(p);});
 const cache={},templates={},root=document.getElementById('root');let page,pagePath='/pages/kitchen/index',rendering=false;
 function normalize(p){const parts=[];p.split('/').forEach(s=>{if(s==='..')parts.pop();else if(s&&s!=='.')parts.push(s);});return '/'+parts.join('/');}
 function requireModule(p){p=normalize(p.endsWith('.js')?p:p+'.js');if(cache[p])return cache[p].exports;const m={exports:{}};cache[p]=m;new Function('require','module','exports',SOURCES[p])(q=>requireModule(q.startsWith('/')?q:p.slice(0,p.lastIndexOf('/')+1)+q),m,m.exports);return m.exports;}
 window.getApp=()=>({getStore:()=>store});window.Page=p=>{page=p;};
-window.wx={getStorageSync:k=>JSON.parse(localStorage.getItem('design-1.13.1:'+k)||'null'),setStorageSync:(k,v)=>localStorage.setItem('design-1.13.1:'+k,JSON.stringify(v)),setNavigationBarColor(){},setBackgroundColor(){},setNavigationBarTitle(){},pageScrollTo:o=>scrollTo(0,o.scrollTop),getWindowInfo:()=>({pixelRatio:devicePixelRatio,windowWidth:innerWidth,windowHeight:innerHeight}),vibrateShort(){},showToast:o=>alert(o.title),showModal:o=>o.success({confirm:confirm(o.content)}),setClipboardData:o=>navigator.clipboard.writeText(o.data),navigateTo:o=>openPage(o.url),reLaunch:o=>openPage(o.url),createSelectorQuery(){let selector;return{in(){return this;},select(s){selector=s;return this;},fields(){return this;},exec(fn){const node=document.querySelector(selector);fn(node?[{node,width:node.clientWidth,height:node.clientHeight}]:[]);}};}};
+window.wx={getStorageSync:k=>JSON.parse(localStorage.getItem('design-1.13.1:'+k)||'null'),setStorageSync:(k,v)=>localStorage.setItem('design-1.13.1:'+k,JSON.stringify(v)),setNavigationBarColor(){},setBackgroundColor(){},setNavigationBarTitle(){},pageScrollTo:o=>{const target=o.selector?document.querySelector(o.selector):null;scrollTo(0,target?target.getBoundingClientRect().top+scrollY-(o.offsetTop||0):o.scrollTop||0);requestAnimationFrame(()=>o.complete?.());},getWindowInfo:()=>({pixelRatio:devicePixelRatio,windowWidth:innerWidth,windowHeight:innerHeight}),vibrateShort(){},showToast:o=>alert(o.title),showModal:o=>o.success({confirm:confirm(o.content)}),setClipboardData:o=>navigator.clipboard.writeText(o.data),navigateTo:o=>openPage(o.url),reLaunch:o=>openPage(o.url),createSelectorQuery(){let selector;const selections=[];return{in(){return this;},select(s){selector=s;return this;},fields(){selections.push({selector,node:true});return this;},boundingClientRect(){selections.push({selector});return this;},exec(fn){fn(selections.map(item=>{const node=document.querySelector(item.selector);if(!node)return null;const r=node.getBoundingClientRect();return item.node?{node,width:r.width,height:r.height}:{left:r.left,top:r.top,width:r.width,height:r.height,right:r.right,bottom:r.bottom};}));}};}};
 const store=requireModule('/utils/store').createStore(wx);
 function evaluate(expression,scope){try{return new Function('scope','with(scope){return ('+expression+')}')(scope);}catch(e){window.__previewErrors.push(expression+': '+e.message);return undefined;}}
 function value(s,scope){const match=s.match(/^{{([^{}]*)}}$/);if(match)return evaluate(match[1],scope);return s.replace(/{{([\s\S]*?)}}/g,(_,e)=>evaluate(e,scope)??'');}
@@ -28,7 +28,7 @@ function renderNodes(nodes,scope,parent){let prior=false,chain=false;for(const n
   if(tag==='asset-image'){el.setAttribute('data-asset-image','');el.src=value(node.getAttribute('path')||'',scope);el.style.cssText='display:block;width:100%;height:100%;object-fit:'+(node.getAttribute('mode')==='aspectFit'?'contain':node.getAttribute('mode')==='scaleToFill'?'fill':'cover')+';'+el.style.cssText;el.alt='';}
   if(tag==='scroll-view'){if(node.hasAttribute('scroll-x'))el.style.overflowX='auto';if(node.hasAttribute('scroll-y')){el.style.overflowY='auto';el.style.overflowX='hidden';}}
   el.__previewEvents=[];
-  for(const attr of node.attributes){if(!/^(bind|catch)/.test(attr.name))continue;const original=attr.name.replace(/^(bind|catch):?/,'');const event={tap:'click',focus:'focus',blur:'blur',input:'input',change:'change',submit:'submit',touchstart:'pointerdown',touchend:'pointerup',touchmove:'pointermove',touchcancel:'pointercancel'}[original];if(!event)continue;
+  for(const attr of node.attributes){if(!/^(bind|catch)/.test(attr.name))continue;const original=attr.name.replace(/^(bind|catch):?/,'');const event={tap:'click',focus:'focus',blur:'blur',input:'input',change:'change',submit:'submit',touchstart:'pointerdown',touchend:'pointerup',touchmove:'pointermove',touchcancel:'pointercancel',ready:'load'}[original];if(!event)continue;
     if(original==='touchstart'){el.style.touchAction=node.hasAttribute('catchtouchmove')?'none':'pan-y';el.style.userSelect='none';}
     const handler=e=>{
       const target=e.currentTarget;
@@ -47,7 +47,7 @@ function renderNodes(nodes,scope,parent){let prior=false,chain=false;for(const n
       let v=tag==='switch'?target.checked:target.value;
       if(event==='submit')v=Object.fromEntries(new FormData(target));
       const point={clientX:e.clientX,clientY:e.clientY};
-      const payload={currentTarget:{dataset:{...target.dataset}},detail:{value:v},touches:event==='pointerup'||event==='pointercancel'?[]:[point],changedTouches:[point]};
+      const payload={currentTarget:{dataset:{...target.dataset}},detail:{value:v,path:target.getAttribute('path')},touches:event==='pointerup'||event==='pointercancel'?[]:[point],changedTouches:[point]};
       if(page[attr.value])page[attr.value](payload);
     };
     el.addEventListener(event,handler);el.__previewEvents.push([event,handler]);

@@ -30,7 +30,7 @@ Component({
         if(this._alive&&this._version===version)this.setData({resolved:path});
       }).catch(()=>{if(this._alive&&this._version===version)this.error();});
     },
-    loaded(e){if(!this._alive||e&&e.detail&&e.detail.path&&e.detail.path!==this.data.path)return;clearTimeout(this._loadTimer);this.setData({loading:false,failed:false});},
+    loaded(e){if(!this._alive||e&&e.detail&&e.detail.path&&e.detail.path!==this.data.path)return;clearTimeout(this._loadTimer);this.setData({loading:false,failed:false});if(this.triggerEvent)this.triggerEvent('ready',{path:this.data.path});},
     // Keep the asynchronous child mounted on timeout: a slow first download
     // can still finish and deliver its real image load event.
     error(e){if(!this._alive||e&&e.detail&&e.detail.path&&e.detail.path!==this.data.path)return;clearTimeout(this._loadTimer);this.setData({loading:false,failed:true});},
