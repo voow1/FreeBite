@@ -7,7 +7,7 @@ const path=require('node:path');
 const {createStore}=require('../../miniprogram/utils/store');
 const {mascotPresets}=require('../../miniprogram/data/options');
 const pointer=require('../../miniprogram/utils/wheel-pointer');
-function harness(pet,reduceMotion=false,rects=null){
+function harness(pet,reduceMotion=false,rects=null,navTop=700){
   const store=createStore({getStorageSync:()=>null,setStorageSync(){}});
   store.state.mascotId=pet.id;store.state.settings.reduceMotion=reduceMotion;
   let page,clock=0,id=0;const timers=new Map();
@@ -17,7 +17,7 @@ function harness(pet,reduceMotion=false,rects=null){
     Date:class extends Date{static now(){return clock;}},
     require:p=>p==='../../utils/ui'?{...nativeRequire(p),applyNavigation(){}}:nativeRequire(p),
     Page:p=>page=p,getApp:()=>({getStore:()=>store}),
-    wx:{setNavigationBarColor(){},setBackgroundColor(){},pageScrollTo(o){page.lastScroll=o;o.complete?.();},createSelectorQuery:()=>({in(){return this;},select(){return this;},fields(){return this;},boundingClientRect(){return this;},exec:f=>f(rects||[])})},
+    wx:{setNavigationBarColor(){},setBackgroundColor(){},pageScrollTo(o){page.lastScroll=o;o.complete?.();},createSelectorQuery:()=>{const selectors=[];return {in(){return this;},select(s){selectors.push(s);return this;},fields(){return this;},boundingClientRect(){return this;},exec:f=>f(selectors[0]==='.home-scene .hero-photo'?[rects&&rects[1],{top:navTop}]:['.home-scene .menu-strip','.wheel-play-area'].includes(selectors[0])?[]:rects||[])};}},
     setTimeout:(fn,ms)=>{timers.set(++id,{fn,at:clock+ms});return id;},clearTimeout:key=>timers.delete(key)
   },{filename});
   page.setData=function(patch,done){Object.assign(this.data,patch);done?.();};page.onLoad({});
@@ -26,6 +26,22 @@ function harness(pet,reduceMotion=false,rects=null){
 }
 const touch=(x,y=0)=>({touches:[{clientX:x,clientY:y}],changedTouches:[{clientX:x,clientY:y}]});
 const flightRects=[{left:168,top:360,width:48,height:30},{left:20,top:220,width:350,height:260}];
+test('pet cards animate only on the selection tab and resume without restarting their phase',()=>{
+  const {page,advance}=harness(mascotPresets[0]);
+  page.setData({wheelOpen:false});
+  const tab=name=>page.switchTab({currentTarget:{dataset:{tab:name}}});
+  tab('mine');advance(400);
+  assert(page.data.petPreviewFrame>0);
+  const frame=page.data.petPreviewFrame;
+  page.setPet({currentTarget:{dataset:{id:mascotPresets[2].id}}});
+  assert.equal(page.data.petPreviewFrame,frame,'changing theme preserves animation phase');
+  tab('home');advance(1000);assert.equal(page.data.petPreviewFrame,frame);
+  tab('mine');advance(400);assert.notEqual(page.data.petPreviewFrame,frame);
+  page.onHide();const hiddenFrame=page.data.petPreviewFrame;
+  advance(1000);assert.equal(page.data.petPreviewFrame,hiddenFrame);
+  page.onShow();advance(400);assert.notEqual(page.data.petPreviewFrame,hiddenFrame);
+  page.onUnload();assert.equal(page.petPreviewPlayer.status().active,false);
+});
 test('winning dish flies from its label to the menu photo without changing the result',()=>{
   for(const direction of [-1,1]){
     const {page,store,advance}=harness(mascotPresets[0],false,flightRects);
@@ -34,7 +50,7 @@ test('winning dish flies from its label to the menu photo without changing the r
     page.flightImageReady({detail:{path:winner.image}});
     advance(5990);assert.equal(page.data.flightPhase,'seed');assert.equal(page.data.dishFlight.id,winner.id);
     assert.match(page.data.flightStyle,/left:158px;top:351px;width:68px;height:48px/);
-    const selected=store.state.selectedIds.slice();assert(selected.includes(winner.id));assert.equal(page.lastScroll.selector,selected.length>1?'.home-scene .menu-strip':'.home-scene .hero-photo');assert.equal(page.lastScroll.duration,0);
+    const selected=store.state.selectedIds.slice();assert(selected.includes(winner.id));assert.equal(page.lastScroll.scrollTop,0);assert.equal(page.lastScroll.duration,0);
     advance(40);assert.equal(page.data.flightPhase,'flying');assert.match(page.data.flightStyle,/left:20px;top:220px;width:350px;height:260px/);
     advance(680);assert.equal(page.data.dishFlight,null);assert(!page.data.wheelOpen);assert(!page.data.spinning);
     assert.equal(page.data.activeId,winner.id);assert.deepEqual(store.state.selectedIds,selected);page.onUnload();
@@ -91,31 +107,56 @@ test('canvas-native x/y touch coordinates rotate left and right without scrollin
   page.touchCancel();assert(!page.data.spinning);assert.equal(page.data.petState,'idle');
 });
 
-test('pointer nudges follow sector edges, slow down, shrink and reverse with the disc',()=>{
-  const right=pointer.plan(0,2025,8,4200),left=pointer.plan(0,-2025,8,4200);
-  assert(right.length>5&&right.length<28,'limit bridge updates to visible nudges');
-  assert.deepEqual(right.map(t=>t.at),left.map(t=>t.at));
-  for(let i=0;i<right.length;i++){
-    assert.equal(right[i].kick,-left[i].kick);
-    assert(right[i].at+right[i].duration<=4200,'return to rest by the actual stop');
-    if(i){assert(right[i].at-right[i-1].at>=150);assert(Math.abs(right[i].kick)<=Math.abs(right[i-1].kick));}
+test('pointer leans with travel direction, narrows with speed and settles at rest',()=>{
+  assert.deepEqual(pointer.bounds(1.6),{near:40,far:80,period:240});
+  const slow=pointer.bounds(.06);
+  assert(slow.near>=15&&slow.near<17);assert(slow.far>=45&&slow.far<47);
+  assert(slow.period>pointer.bounds(1.6).period);
+  assert.equal(pointer.bounds(0).far,0);
+  const right=harness(mascotPresets[0]),left=harness(mascotPresets[0]);
+  right.page.startPointerSpin(0,2025,4200);left.page.startPointerSpin(0,-2025,4200);
+  const early=[],late=[];
+  for(let t=40;t<4200;t+=40){
+    right.advance(40);left.advance(40);
+    const angle=right.page.data.pointerMotion.angle;
+    assert(angle<=0,'clockwise top-edge motion leans the pointer right');
+    assert.equal(angle,-left.page.data.pointerMotion.angle);
+    if(t<400)early.push(Math.abs(angle));
+    if(t>3500)late.push(Math.abs(angle));
   }
-  assert(right.at(-1).at-right.at(-2).at>2*(right[1].at-right[0].at));
-  assert(Math.abs(right.at(-1).kick)<Math.abs(right[0].kick)/2);
-  // Independent easing reference: cubic-bezier parameter .5 gives x=.215, y=.77.
-  assert(Math.abs(pointer.timeAtProgress(.77)-.215)<.00001);
-  assert.deepEqual(pointer.plan(12,12,8,4200),[]);
-  assert.deepEqual(pointer.plan(0,2025,8,0),[]);
+  assert(Math.max(...early)>70);assert(Math.min(...early)>=40);
+  assert(Math.max(...late)<20,'late spin narrows its sway');
+  assert(late.at(-1)<1,'final frame nearly returns to center');
+  right.advance(40);left.advance(40);
+  assert.equal(right.page.data.pointerMotion,null);
+  assert.equal(right.page.pointerPlayer.status().timer,null);
+  right.page.onUnload();left.page.onUnload();
+});
+
+test('drag reversal changes the lean side and a stationary finger releases the pointer',()=>{
+  const {page,advance}=harness(mascotPresets[0]);
+  page.touchStart(touch(100));page.touchMove(touch(50));advance(40);
+  assert(page.data.pointerMotion.angle<0);
+  page.touchMove(touch(80));advance(40);assert(page.data.pointerMotion.angle>0);
+  advance(240);assert.equal(page.data.pointerMotion,null);
+  assert.equal(page.pointerPlayer.status().timer,null);page.onUnload();
 });
 
 test('pointer stops at selection and cannot resume after hiding or cancelling a drag',()=>{
   const {page,advance}=harness(mascotPresets[1]);
   page.spin();advance(300);assert(page.data.pointerMotion);
-  page.onHide();advance(6000);assert.equal(page.data.pointerMotion,null);assert.equal(page.pointerTimer,null);
+  page.onHide();advance(6000);assert.equal(page.data.pointerMotion,null);assert.equal(page.pointerPlayer.status().timer,null);
   page.onShow();page.spin();advance(4200);assert.equal(page.data.petState,'done');assert.equal(page.data.pointerMotion,null);
   advance(1750);page.openWheel();
   page.touchStart(touch(0));page.touchMove(touch(-100));assert(page.data.pointerMotion);
   page.touchCancel();assert.equal(page.data.pointerMotion,null);
   const reduced=harness(mascotPresets[1],true);reduced.page.spin();reduced.advance(0);
-  assert.equal(reduced.page.pointerTimer,null);assert.equal(reduced.page.data.pointerMotion,null);
+  assert.equal(reduced.page.pointerPlayer.status().timer,null);assert.equal(reduced.page.data.pointerMotion,null);
+});
+
+test('a short viewport scrolls only the amount needed before flying to the result',()=>{
+  const {page,advance}=harness(mascotPresets[0],false,flightRects,450);
+  page.spin();page.flightImageReady({detail:{path:page.data.flightRecipe.image}});
+  advance(5990);assert.equal(page.lastScroll.scrollTop,42);assert.equal(page.data.flightPhase,'seed');
+  page.onUnload();
 });

@@ -2,6 +2,7 @@ const { recipes } = require('../data/recipes');
 const options = require('../data/options');
 const { themes } = require('../data/themes');
 const createEngine = require('./engine');
+const {classifyRecipe}=require('./recipe-flavor');
 const KEY = 'freebite.miniprogram.v1';
 const clone = value => JSON.parse(JSON.stringify(value));
 const list = value => Array.isArray(value) ? value : [];
@@ -15,13 +16,14 @@ function createStore(platform) {
   settings.avoidFlags = list(settings.avoidFlags).filter(t=>options.avoidFlagOptions.some(f=>f.value===t));
   settings.avoidTerms = String(settings.avoidTerms || '').slice(0,300);
   settings.fridgeItems = String(settings.fridgeItems || '').slice(0,600);
-  settings.servingCount = [1,2,3,4].includes(Number(settings.servingCount)) ? Number(settings.servingCount) : 1;
+  settings.servingCount = [1,2,3,4,5,6].includes(Number(settings.servingCount)) ? Number(settings.servingCount) : 1;
   settings.heat = ['all','0','1','2','3','4'].includes(String(settings.heat)) ? String(settings.heat) : 'all';
   settings.theme = themes.some(t=>t.id===settings.theme) ? settings.theme : options.defaultSettings.theme;
   settings.recoveryMode = settings.recoveryMode === true;
   settings.lowIodinePlan = settings.lowIodinePlan === true;
   settings.followPetTheme = settings.followPetTheme === true;
-  settings.reduceMotion = settings.reduceMotion === true;
+  // The in-app animation toggle is retired; migrate its old saved state.
+  settings.reduceMotion = false;
   const state = {
     settings,
     mascotId: options.mascotPresets.some(p=>p.id===saved.mascotId) ? saved.mascotId : options.defaultMascotId,
@@ -30,7 +32,7 @@ function createStore(platform) {
       r.method && Array.isArray(r.method.steps)).slice(0,100),
     shopping: list(saved.shopping).filter(r=>r && typeof r.id==='string' && typeof r.name==='string').slice(0,300),
     history: list(saved.history).filter(r=>r && typeof r.id==='string').slice(0,24),
-    selectedIds: list(saved.selectedIds).filter(id=>typeof id==='string').slice(0,4)
+    selectedIds: list(saved.selectedIds).filter(id=>typeof id==='string').slice(0,6)
   };
   // Retired free palettes migrate to the chosen pet; all non-appearance data stays intact.
   const petTheme = themes.find(t=>t.petId===state.mascotId);
@@ -78,9 +80,10 @@ function createStore(platform) {
       flags:[],tags:['家常'],note:'自定义家常菜',image:'',method:{steps,tip:'请确认食材新鲜，并充分煮熟。',sources:[]}};
     recipe.tags = engine.inferRecipeTaxonomy(recipe);
     recipe = engine.withAutoHealthFlags(recipe);
+    recipe.flavor = classifyRecipe(recipe);
     state.customRecipes.unshift(recipe); save(); return recipe;
   }
-  if(saved.settings && (saved.settings.theme!==settings.theme || saved.settings.followPetTheme!==true))save();
+  if(saved.settings && (saved.settings.theme!==settings.theme || saved.settings.followPetTheme!==true || saved.settings.reduceMotion===true))save();
   return {state,engine,find,save,addShopping,cooked,addCustom,uid};
 }
 module.exports = {createStore,KEY};

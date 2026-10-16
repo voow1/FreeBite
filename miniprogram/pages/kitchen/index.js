@@ -2,18 +2,23 @@ const motion=require('../../utils/motion');
 const pointer=require('../../utils/wheel-pointer');
 const petMotion=require('../../utils/pet-player');
 const dishFlight=require('../../utils/dish-flight');
+const menuLayout=require('../../utils/menu-layout');
+const wheelLayout=require('../../utils/wheel-layout');
 const options = require('../../data/options');
 const {themes} = require('../../data/themes');
 const ui = require('../../utils/ui');
+const {flavorView}=require('../../utils/recipe-flavor');
 const actions = require('../../utils/recipe-actions');
 Page(motion.decorate({
-  data:{tab:'home',visited:{home:true},standalone:false,wheelOpen:false,wheelHintDismissed:false,filtersOpen:false,addOpen:false,spinning:false,petState:'idle',angle:0,spinDuration:0,pointerMotion:null,pointerBeat:0,
-    dishFlight:null,flightRecipe:null,flightPhase:'',flightStyle:'',flightIndex:-1,wheelItems:[],selected:null,selectedMenu:[],servings:[1,2,3,4],library:[],libraryTotal:0,libraryTag:'all',search:'',
-    shoppingInput:'',fridgeMatches:[],toast:'',settings:{},pets:[],pet:{},filterGroups:[],avoidOptions:[],
+  data:{tab:'home',visited:{home:true},standalone:false,wheelOpen:false,wheelHintDismissed:false,filtersOpen:false,addOpen:false,spinning:false,petState:'idle',angle:0,spinDuration:0,pointerMotion:null,
+    dishFlight:null,flightRecipe:null,flightPhase:'',flightStyle:'',flightIndex:-1,wheelItems:[],selected:null,selectedMenu:[],servings:[1,2,3,4,5,6],library:[],libraryTotal:0,libraryTag:'all',categoriesExpanded:false,search:'',
+    petPreviewFrame:0,menuScrollLeft:0,shoppingInput:'',fridgeMatches:[],toast:'',settings:{},pets:[],pet:{},filterGroups:[],avoidOptions:[],
     tastes:[],history:[],shopping:[],customRecipes:[],heatOptions:[{value:'all',label:'不限'},{value:'0',label:'不辣'},{value:'1',label:'微辣'},{value:'2',label:'中辣'},{value:'3',label:'较辣'},{value:'4',label:'爆辣'}]},
   onLoad(query){
     this.store=getApp().getStore(); this.limit=24;
     this.petPlayer=petMotion.createPlayer(patch=>this.setData(patch),{now:()=>Date.now(),set:(f,t)=>setTimeout(f,t),clear:t=>clearTimeout(t)});
+    this.petPreviewPlayer=petMotion.createPlayer(patch=>this.setData({petPreviewFrame:patch.petFrame}),{now:()=>Date.now(),set:(f,t)=>setTimeout(f,t),clear:t=>clearTimeout(t)});
+    this.pointerPlayer=pointer.createPlayer(effect=>this.setData({pointerMotion:effect}),{now:()=>Date.now(),set:(f,t)=>setTimeout(f,t),clear:t=>clearTimeout(t)});
     this.setData({petFrame:0,petColumn:0,petRow:0});
     this._releaseHidden=()=>this.setData({visited:{[this.data.tab]:true}});
     if(wx.onMemoryWarning)wx.onMemoryWarning(this._releaseHidden);
@@ -22,8 +27,8 @@ Page(motion.decorate({
     this.setData({wheelOpen:!this.store.state.selectedIds.length,categories:options.menuCategoryOptions});
     this.refresh();
   },
-  onReady(){this.drawWheel();},
-  onResize(){if(this.data.dishFlight)this.cancelSpin();this.fitWheel();this.drawWheel();},
+  onReady(){this.positionWheel();this.drawWheel();this.syncMenuStrip();},
+  onResize(){if(this.data.dishFlight)this.cancelSpin();this.fitWheel();this.drawWheel();this.syncMenuStrip();},
   fitWheel(){
     const screen=wx.getWindowInfo?wx.getWindowInfo():wx.getSystemInfoSync?wx.getSystemInfoSync():{};
     const width=screen.windowWidth||375,height=screen.windowHeight||667;
@@ -32,13 +37,27 @@ Page(motion.decorate({
     const petSize=Math.round(previousSize*.30)*1.2;
     // Reserve room for the enlarged pet above the disc, inside the gesture area.
     const size=Math.floor(Math.min(width-48,Math.max(100,height-safeBottom-302-petSize*150/160)));
-    this.setData({wheelSize:size,petSize,safeBottom});
+    this._wheelPreferred={size,petSize};
+    this.setData({...wheelLayout.placeWheel(Math.max(100,height-safeBottom-282),size,petSize,this.data.pet.id),safeBottom},()=>this.positionWheel());
+  },
+  positionWheel(){
+    if(!this.data.wheelOpen||this._petHidden||!this._wheelPreferred)return;
+    const epoch=this._wheelLayoutEpoch=(this._wheelLayoutEpoch||0)+1;
+    const query=wx.createSelectorQuery().in(this);
+    query.select('.wheel-play-area').boundingClientRect();
+    query.exec(rects=>{
+      if(epoch!==this._wheelLayoutEpoch||!this.data.wheelOpen||this._petHidden)return;
+      const area=rects&&rects[0];
+      if(!area||!(area.height>0))return;
+      const {size,petSize}=this._wheelPreferred;
+      this.setData(wheelLayout.placeWheel(area.height,size,petSize,this.data.pet.id));
+    });
   },
   onShow(){this._petHidden=false;if(wx.setNavigationBarTitle)wx.setNavigationBarTitle({title:'不牛马厨房'});if(this.store)this.refresh();},
-  onHide(){this._petHidden=true;this.cancelSpin();this.petPlayer.stop();},
-  onUnload(){this._petHidden=true;this.cancelSpin();this.petPlayer.stop();clearTimeout(this.toastTimer);if(wx.offMemoryWarning)wx.offMemoryWarning(this._releaseHidden);},
+  onHide(){this._petHidden=true;this.cancelSpin();this.petPlayer.stop();this.petPreviewPlayer.stop();},
+  onUnload(){this._petHidden=true;this.cancelSpin();this.petPlayer.stop();this.petPreviewPlayer.stop();clearTimeout(this.toastTimer);if(wx.offMemoryWarning)wx.offMemoryWarning(this._releaseHidden);},
   onReachBottom(){if(this.data.tab==='library'){this.limit+=24;this.refreshLibrary();}},
-  setViewData(patch){
+  setViewData(patch,done){
     const changed={};this._viewSnapshots=this._viewSnapshots||{};
     for(const key of Object.keys(patch)){
       const serialized=JSON.stringify(patch[key]);
@@ -46,7 +65,7 @@ Page(motion.decorate({
       if(this._viewSnapshots[key]!==serialized||JSON.stringify(this.data[key])!==serialized)changed[key]=patch[key];
       this._viewSnapshots[key]=serialized;
     }
-    if(Object.keys(changed).length)this.setData(changed);
+    if(Object.keys(changed).length)this.setData(changed,done);else if(done)done();
   },
   refresh(){
     const {state,engine}=this.store;
@@ -55,17 +74,22 @@ Page(motion.decorate({
     const current=selectedMenu.find(r=>r.id===this.data.activeId)||selectedMenu[0]||null;
     const group=options.preferenceFilterGroups.map(g=>({label:g.label,tags:g.tags.map(name=>({name,active:state.settings.tags.includes(name)}))}));
     this.setViewData({themeStyle:look.themeStyle,themeId:look.theme.id,themeName:look.theme.name,themeDescription:look.theme.description,themeAssets:look.theme.assets,accent:look.tokens['--accent'],settings:state.settings,pet:look.pet,
-      selectedMenu,selected:current,activeId:current?current.id:'',activeScrollId:current?'picked-'+current.id:'',
+      selectedMenu,selected:current,activeId:current?current.id:'',
       shopping:state.shopping,shoppingRemaining:state.shopping.filter(i=>!i.done).length,history:state.history,customRecipes:state.customRecipes,
       total:engine.allRecipes().length,poolCount:engine.filteredRecipes().length,
       tastes:options.tastePreferenceOptions.map(name=>({name,active:state.settings.tastes.includes(name)})),filterGroups:group,
       avoidOptions:options.avoidFlagOptions.map(f=>({...f,active:state.settings.avoidFlags.includes(f.value)})),
       pets:options.mascotPresets.map(p=>{const t=themes.find(t=>t.petId===p.id);return {...p,active:p.id===state.mascotId,themeName:t.name,description:t.description,swatches:t.swatches,cardStyle:'--pet-bg:'+t.tokens['--bg']+';--pet-accent:'+t.tokens['--accent']+';--pet-line:'+t.tokens['--line'],icon:t.assets.home};})
-    });
+    },()=>this.syncMenuStrip());
     if(this._navigationTheme!==look.theme.id){ui.applyNavigation(look.tokens);this._navigationTheme=look.theme.id;}
     this.refreshLibrary(); this.refreshFridge();
     if(!this.data.spinning&&this.data.wheelOpen)this.refreshWheel();
-    this.syncPetIdle();
+    this.syncPetIdle();this.syncPetPreviews();
+  },
+  syncPetPreviews(){
+    if(!this.petPreviewPlayer)return;
+    if(this._petHidden||this.data.tab!=='mine'||this.data.wheelOpen){this.petPreviewPlayer.stop();return;}
+    this.petPreviewPlayer.idle();
   },
   syncPetIdle(){
     if(!this.petPlayer)return;
@@ -74,7 +98,7 @@ Page(motion.decorate({
     if(!this.data.spinning&&this.data.petState==='idle')this.petPlayer.idle();
   },
   notify(text){clearTimeout(this.toastTimer);this.setData({toast:text});this.toastTimer=setTimeout(()=>this.setData({toast:''}),2400);},
-  switchTab(e){const tab=e.currentTarget.dataset.tab;this.setData({tab,qNavTab:tab,qNavBeat:1-(this.data.qNavBeat||0),['visited.'+tab]:true});this.syncPetIdle();wx.pageScrollTo({scrollTop:0,duration:0});},
+  switchTab(e){const tab=e.currentTarget.dataset.tab;this.setData({tab,qNavTab:tab,qNavBeat:1-(this.data.qNavBeat||0),['visited.'+tab]:true},()=>{if(tab==='home')this.syncMenuStrip();});this.syncPetIdle();this.syncPetPreviews();wx.pageScrollTo({scrollTop:0,duration:0});},
   setServing(e){if(this.data.spinning)return;this.store.state.settings.servingCount=Number(e.currentTarget.dataset.count);this.store.save();this.refresh();},
   toggleTaste(e){
     if(this.data.spinning)return;
@@ -99,7 +123,7 @@ Page(motion.decorate({
     Object.assign(this.store.state.settings,{heat:'all',tags:[],tastes:[],avoidFlags:[],avoidTerms:'',recoveryMode:false,lowIodinePlan:false});
     this.store.save();this.refresh();
   },
-  openWheel(){if(this.data.spinning)return;this.setData({wheelOpen:true,wheelHintDismissed:false});this.refreshWheel();this.syncPetIdle();},
+  openWheel(){if(this.data.spinning)return;this.setData({wheelOpen:true,wheelHintDismissed:false},()=>this.fitWheel());this.refreshWheel();this.syncPetIdle();},
   closeWheel(){if(!this.data.spinning)this.qClose('wheelOpen',function(){this.petPlayer.stop();});},
   refreshWheel(){
     const engine=this.store.engine;
@@ -156,7 +180,7 @@ Page(motion.decorate({
   startDishFlight(anchor,count){
     const epoch=this._flightEpoch;
     const current=()=>epoch===this._flightEpoch&&!this._petHidden;
-    // Align the destination behind the opaque wheel before measuring its photo.
+    // Start at the page top. Scroll only if the photo is below the usable screen.
     let aligned=false;
     const afterScroll=()=>{
       if(aligned||!current())return;
@@ -165,7 +189,21 @@ Page(motion.decorate({
       this.flightTimer=setTimeout(()=>{if(current())this.animateDishFlight(anchor,count,epoch);},40);
     };
     this.flightTimer=setTimeout(afterScroll,350);
-    try{wx.pageScrollTo({selector:count>1?'.home-scene .menu-strip':'.home-scene .hero-photo',offsetTop:0,duration:0,complete:afterScroll});}
+    try{wx.pageScrollTo({scrollTop:0,duration:0,complete:()=>{
+      if(!current())return;
+      try{
+        const query=wx.createSelectorQuery().in(this);
+        query.select('.home-scene .hero-photo').boundingClientRect();
+        query.select('.bottom-nav').boundingClientRect();
+        query.exec(rects=>{
+          if(aligned||!current())return;
+          const screen=wx.getWindowInfo?wx.getWindowInfo():{};
+          const visibleBottom=rects[1]&&rects[1].top>0?rects[1].top:(screen.windowHeight||667)-80;
+          const scrollTop=menuLayout.landingScroll(rects[0],visibleBottom);
+          if(scrollTop>0)wx.pageScrollTo({scrollTop,duration:0,complete:afterScroll});else afterScroll();
+        });
+      }catch(error){afterScroll();}
+    }});}
     catch(error){afterScroll();}
   },
   animateDishFlight(anchor,count,epoch){
@@ -202,7 +240,7 @@ Page(motion.decorate({
     if(this.data.spinning)return;
     const point=this.touchPoint(e.touches);
     this.stopPointer();
-    this.touch=point?{...point,startAngle:this.data.angle,lastX:point.x,lastTime:e.timeStamp||Date.now(),lastTick:0,delta:0,moved:false}:null;
+    this.touch=point?{...point,startAngle:this.data.angle,lastX:point.x,lastTime:e.timeStamp||Date.now(),delta:0,moved:false}:null;
     this.setData({spinDuration:0});
   },
   touchPoint(touches){
@@ -223,10 +261,7 @@ Page(motion.decorate({
     const angle=drag.startAngle-dx*180/this.data.wheelSize;
     const now=e.timeStamp||Date.now(),elapsed=Math.max(16,now-drag.lastTime);
     const petSpeed=(angle-this.data.angle)/elapsed;
-    const sector=360/this.wheelRecipes.length;
-    if(Math.floor(angle/sector)!==Math.floor(this.data.angle/sector)&&now-drag.lastTick>=150){
-      this.nudgePointer(pointer.pulse((angle-this.data.angle)/elapsed,drag.direction));drag.lastTick=now;
-    }
+    if(!this.store.state.settings.reduceMotion&&!this.data.qPaused)this.pointerPlayer.drag(petSpeed,drag.direction);
     drag.lastTime=now;
     const petState=this.store.state.settings.reduceMotion?'idle':drag.direction>0?'runRight':'runLeft';
     this.setData({angle,spinDuration:0,wheelHintDismissed:true,petState});
@@ -238,7 +273,7 @@ Page(motion.decorate({
     if(!drag||!point){this.touchCancel();return;}
     const dx=point.x-drag.x,dy=point.y-drag.y;
     const direction=drag.direction||(dx>0?-1:1);
-    if(Math.abs(dx)>35&&(drag.moved||Math.abs(dx)>Math.abs(dy))){this.touch=null;this.stopPointer();this.spin({direction});}
+    if(Math.abs(dx)>35&&(drag.moved||Math.abs(dx)>Math.abs(dy))){this.touch=null;this.spin({direction});}
     else this.touchCancel();
   },
   touchCancel(){
@@ -256,30 +291,35 @@ Page(motion.decorate({
     this.setData({dishFlight:null,flightRecipe:null,flightPhase:'',flightIndex:-1,spinning:false,spinDuration:0,petState:'idle',...(resultPending?{wheelOpen:false}:{})});
     if(wasSpinning&&!resultPending)this.refreshWheel();
   },
-  nudgePointer(effect){
-    if(this.store.state.settings.reduceMotion||this.data.qPaused)return;
-    this.setData({pointerMotion:effect,pointerBeat:1-this.data.pointerBeat});
-  },
   startPointerSpin(from,to,duration){
-    this.stopPointer();
-    const ticks=pointer.plan(from,to,this.wheelRecipes.length,duration);
-    const started=Date.now();
-    const next=index=>{
-      if(index>=ticks.length)return;
-      this.pointerTimer=setTimeout(()=>{
-        this.pointerTimer=null;
-        // Do not accumulate callback delay or replay stale ticks after a stall.
-        if(Date.now()-started-ticks[index].at<120)this.nudgePointer(ticks[index]);
-        next(index+1);
-      },Math.max(0,ticks[index].at-(Date.now()-started)));
-    };
-    next(0);
+    if(this.store.state.settings.reduceMotion||this.data.qPaused){this.stopPointer();return;}
+    this.pointerPlayer.spin(from,to,duration);
   },
-  stopPointer(){
-    clearTimeout(this.pointerTimer);this.pointerTimer=null;
-    if(this.data.pointerMotion)this.setData({pointerMotion:null});
+  stopPointer(){if(this.pointerPlayer)this.pointerPlayer.stop();},
+  onMenuScroll(e){this._menuActualLeft=e.detail.scrollLeft||0;},
+  syncMenuStrip(){
+    if(this._petHidden||this.data.tab!=='home'||this.data.selectedMenu.length<2)return;
+    const id=this.data.activeId,epoch=this._menuQueryEpoch=(this._menuQueryEpoch||0)+1;
+    try{
+      const query=wx.createSelectorQuery().in(this);
+      query.select('.home-scene .menu-strip').boundingClientRect();
+      query.select('.home-scene .strip-inner').boundingClientRect();
+      query.select('#picked-'+id).boundingClientRect();
+      query.exec(rects=>{
+        if(epoch!==this._menuQueryEpoch||id!==this.data.activeId||this._petHidden||this.data.tab!=='home')return;
+        const left=menuLayout.centeredScroll(...rects);
+        if(left===null)return;
+        const target=Math.round(left);
+        // A manually dragged strip can have moved while its bound target stayed the same.
+        if(this.data.menuScrollLeft===target&&Math.abs((this._menuActualLeft||0)-target)>1){
+          this.setData({menuScrollLeft:this._menuActualLeft},()=>{
+            if(epoch===this._menuQueryEpoch&&!this._petHidden)this.setData({menuScrollLeft:target});
+          });
+        }else if(this.data.menuScrollLeft!==target)this.setData({menuScrollLeft:target});
+      });
+    }catch(error){/* A missing strip must not block changing the recipe. */}
   },
-  selectPicked(e){const id=e.currentTarget.dataset.id;this.setData({activeId:id,activeScrollId:'picked-'+id,selected:ui.recipeView(this.store.find(id))});},
+  selectPicked(e){const id=e.currentTarget.dataset.id;if(!this.data.selectedMenu.some(r=>r.id===id))return;this.setData({activeId:id,selected:ui.recipeView(this.store.find(id))},()=>this.syncMenuStrip());},
   cyclePicked(e){
     const list=this.data.selectedMenu;if(!list.length)return;
     const idx=list.findIndex(r=>r.id===this.data.activeId);
@@ -287,6 +327,7 @@ Page(motion.decorate({
     this.selectPicked({currentTarget:{dataset:{id:r.id}}});
   },
   searchInput(e){this.setData({search:e.detail.value});this.limit=24;this.refreshLibrary();},
+  toggleCategories(){this.setData({categoriesExpanded:!this.data.categoriesExpanded});},
   setCategory(e){this.setData({libraryTag:e.currentTarget.dataset.value});this.limit=24;this.refreshLibrary();},
   refreshLibrary(){
     if(!this.store)return;
@@ -295,7 +336,7 @@ Page(motion.decorate({
     if(cacheKey===this._libraryKey)return;this._libraryKey=cacheKey;
     const all=this.store.engine.allRecipes().filter(r=>(this.data.libraryTag==='all'||r.tags.includes(this.data.libraryTag))&&
       (!query||this.store.engine.recipePreferenceText(r).toLowerCase().includes(query)));
-    this.setData({libraryTotal:all.length,library:all.slice(0,this.limit).map(r=>({id:r.id,name:r.name,image:r.image,time:r.time,heatText:['不辣','微辣','中辣','较辣','爆辣'][r.heat]}))});
+    this.setData({libraryTotal:all.length,library:all.slice(0,this.limit).map(r=>({id:r.id,name:r.name,image:r.image,time:r.time,flavorText:flavorView(r).flavor}))});
   },
   loadMore(){this.limit+=24;this.refreshLibrary();},
   openRecipe(e){wx.navigateTo({url:'/pages/recipe/index?id='+encodeURIComponent(e.currentTarget.dataset.id)});},

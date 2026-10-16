@@ -1,34 +1,43 @@
-// The pointer is nudged by passing sector edges, using the disc's easing curve.
-// One scheduled update per visible nudge; CSS handles each spring return.
-const MIN_GAP=150;
-function bezier(t,a,b){const s=1-t;return 3*s*s*t*a+3*s*t*t*b+t*t*t;}
-function timeAtProgress(progress){
-  let lo=0,hi=1;
-  for(let i=0;i<24;i++){const t=(lo+hi)/2;if(bezier(t,.72,1)<progress)lo=t;else hi=t;}
-  return bezier((lo+hi)/2,.12,.12);
+// Match the disc's actual easing; a continuous phase avoids restarting each swing.
+const {spinSpeed}=require('./pet-player');
+const STEP_MS=40;
+function bounds(speed){
+  const velocity=Math.abs(speed),strength=Math.min(1,velocity/1.6);
+  const settle=Math.min(1,velocity/.06);
+  return {near:(15+25*strength)*settle,far:(45+35*strength)*settle,period:440-200*strength};
 }
-function pulse(speed,direction){
-  const strength=Math.min(1,Math.max(0,Math.abs(speed)/1.6));
-  const kick=Number((-direction*(.6+7.4*Math.sqrt(strength))).toFixed(2));
-  return {kick,recoil:Number((-kick*.2).toFixed(2)),duration:Math.round(160+180*(1-strength))};
-}
-function plan(from,to,count,duration){
-  if(!count||duration<=0||from===to)return [];
-  const direction=Math.sign(to-from),step=360/count,travel=Math.abs(to-from),ticks=[];
-  let edge=direction>0?(Math.floor(from/step)+1)*step:(Math.ceil(from/step)-1)*step;
-  let last=-MIN_GAP;
-  for(;direction*(to-edge)>0;edge+=direction*step){
-    const progress=Math.abs(edge-from)/travel;
-    const at=Math.round(timeAtProgress(progress)*duration);
-    if(at-last<MIN_GAP)continue;
-    const before=timeAtProgress(Math.max(0,progress-.0005))*duration;
-    const after=timeAtProgress(Math.min(1,progress+.0005))*duration;
-    const speed=travel*.001/Math.max(1,after-before);
-    const effect=pulse(speed,direction);
-    // Finish the spring return before the disc stops, including short spins.
-    effect.duration=Math.min(effect.duration,duration-at);
-    ticks.push({at,...effect});last=at;
+function createPlayer(render,clock={now:()=>Date.now(),set:(f,t)=>setTimeout(f,t),clear:t=>clearTimeout(t)}){
+  let timer=null,active=false,phase=-Math.PI/2,last=0,mode,spin,dragSpeed=0,dragAt=0,direction=1;
+  function stop(){
+    clock.clear(timer);timer=null;
+    if(active)render(null);
+    active=false;
   }
-  return ticks;
+  function tick(){
+    timer=null;if(!active)return;
+    const now=clock.now(),elapsed=mode==='spin'?now-spin.at:now-dragAt;
+    if(mode==='spin'?elapsed>=spin.duration:elapsed>=240){stop();return;}
+    const speed=mode==='spin'?spinSpeed(spin.from,spin.to,spin.duration,elapsed):dragSpeed*Math.exp(-Math.max(0,elapsed-60)/70);
+    const range=bounds(speed);
+    phase+=(now-last)*Math.PI*2/range.period;last=now;
+    const magnitude=range.near+(range.far-range.near)*(1+Math.sin(phase))/2;
+    // At the top of the disc, clockwise travel is rightward; a hanging pointer
+    // needs negative CSS rotation to lean right. Never recoil into the other side.
+    render({angle:Number((-direction*magnitude).toFixed(2)),duration:STEP_MS});
+    timer=clock.set(tick,STEP_MS);
+  }
+  function start(){
+    if(active)return;
+    active=true;phase=-Math.PI/2;last=clock.now();tick();
+  }
+  return {
+    spin(from,to,duration){
+      if(duration<=0||from===to){stop();return;}
+      spin={from,to,duration,at:clock.now()};direction=Math.sign(to-from);mode='spin';start();
+    },
+    drag(speed,side){dragSpeed=Math.abs(speed);dragAt=clock.now();direction=side;mode='drag';start();},
+    stop,
+    status(){return {active,timer,phase};}
+  };
 }
-module.exports={plan,pulse,timeAtProgress};
+module.exports={bounds,createPlayer};

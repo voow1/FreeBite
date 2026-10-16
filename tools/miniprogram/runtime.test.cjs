@@ -13,7 +13,7 @@ function clock(){
 }
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
 
-for(const packageName of ['media00','petmotion'])test(packageName+' readiness handles failed downloads, changed actions and detached views',async()=>{
+for(const packageName of [...Array.from({length:14},(_,i)=>'media'+String(i).padStart(2,'0')),'petmotion'])test(packageName+' readiness handles failed downloads, changed actions and detached views',async()=>{
   const timer=clock();let definition;const requests=[];
   const nativeRequire={async:()=>new Promise((resolve,reject)=>requests.push({resolve,reject}))};
   vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../../miniprogram/components/asset-image/index.js'),'utf8'),{
@@ -34,16 +34,16 @@ test('native image component loads without the unsupported game-only package API
   const timer=clock();let definition;
   vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../../miniprogram/components/asset-image/index.js'),'utf8'),{
     wx:{},Component:c=>definition=c,...timer});
-  const component={...definition.methods,data:{...definition.data,path:'/media01/a.jpg'},setData(p,done){Object.assign(this.data,p);done?.();}};
+  const component={...definition.methods,data:{...definition.data,path:'/assets/a.jpg'},setData(p,done){Object.assign(this.data,p);done?.();}};
   definition.lifetimes.attached.call(component);
-  assert.equal(component.data.resolved,'/media01/a.jpg');
-  component.data.path='/media02/b.jpg';component.load(component.data.path);
-  component.loaded({detail:{path:'/media01/a.jpg'}});assert(component.data.loading);
+  assert.equal(component.data.resolved,'/assets/a.jpg');
+  component.data.path='/assets/b.jpg';component.load(component.data.path);
+  component.loaded({detail:{path:'/assets/a.jpg'}});assert(component.data.loading);
   timer.advance(30000);assert(component.data.failed);assert(!component.data.loading);
-  assert.equal(component.data.resolved,'/media02/b.jpg','slow asynchronous component must remain mounted');
-  component.loaded({detail:{path:'/media02/b.jpg'}});assert(!component.data.failed,'late native load recovers without user intervention');
+  assert.equal(component.data.resolved,'/assets/b.jpg','slow asynchronous component must remain mounted');
+  component.loaded({detail:{path:'/assets/b.jpg'}});assert(!component.data.failed,'late native load recovers without user intervention');
   component.error();component.retry();assert(component.data.loading);
-  component.loaded({detail:{path:'/media02/b.jpg'}});assert(!component.data.loading);
+  component.loaded({detail:{path:'/assets/b.jpg'}});assert(!component.data.loading);
   definition.lifetimes.detached.call(component);const before=JSON.stringify(component.data);
   component.error();component.loaded();timer.advance(30000);assert.equal(JSON.stringify(component.data),before);
 });
@@ -53,7 +53,7 @@ function pageHarness(){
   const filename=path.join(__dirname,'../../miniprogram/pages/kitchen/index.js'),nativeRequire=createRequire(filename);
   const wx={setNavigationBarColor(){},setBackgroundColor(){},setNavigationBarTitle(o){calls.push(['title',o]);},pageScrollTo(o){o.complete?.();},
     navigateTo:o=>calls.push(['navigate',o]),reLaunch:o=>calls.push(['relaunch',o]),setClipboardData:o=>calls.push(['clipboard',o]),
-    showModal:o=>o.success({confirm:true}),createSelectorQuery:()=>({in(){return this;},select(){return this;},fields(){return this;},exec:f=>f([])})};
+    showModal:o=>o.success({confirm:true}),createSelectorQuery:()=>({in(){return this;},select(){return this;},fields(){return this;},boundingClientRect(){return this;},exec:f=>f([])})};
   vm.runInNewContext(fs.readFileSync(filename,'utf8'),{require:p=>p==='../../utils/ui'?{...nativeRequire(p),applyNavigation(){}}:p==='../../utils/recipe-actions'?actions(wx):nativeRequire(p),Page:p=>page=p,getApp:()=>({getStore:()=>store}),wx,...timer});
   page.setData=function(patch,done){for(const [key,value]of Object.entries(patch)){const parts=key.split('.');let target=this.data;for(const part of parts.slice(0,-1))target=target[part];target[parts.at(-1)]=value;}done?.();};
   page.onLoad({});return {page,store,timer,calls,saved:()=>saved};
@@ -62,7 +62,7 @@ function actions(wx){const module={exports:{}};vm.runInNewContext(fs.readFileSyn
 const event=dataset=>({currentTarget:{dataset}});
 test('all page flows preserve settings, menu selection, shopping, custom recipes and sharing',()=>{
   const {page,store,timer,calls,saved}=pageHarness();
-  for(const count of [1,2,3,4]){
+  for(const count of [1,2,3,4,5,6]){
     page.setServing(event({count}));page.toggleTaste(event({value:'all'}));store.state.settings.reduceMotion=true;
     page.openWheel();page.spin();timer.advance(0);assert.equal(page.data.selectedMenu.length,count);
     const first=page.data.activeId;page.cyclePicked(event({direction:1}));if(count>1)assert.notEqual(page.data.activeId,first);
@@ -71,7 +71,7 @@ test('all page flows preserve settings, menu selection, shopping, custom recipes
   page.toggleTaste(event({value:'川味'}));page.toggleTaste(event({value:'粤式'}));assert.equal(store.state.settings.tastes.length,2);
   page.setAvoidTerms({detail:{value:'花生'}});page.closeFilters();assert.equal(saved().settings.avoidTerms,'花生');
   page.resetFilters();assert(store.engine.filteredRecipes().length>700);
-  page.searchInput({detail:{value:'韩式辣炒年糕'}});assert.equal(page.data.libraryTotal,1);assert.equal(page.data.library[0].id,'exp-290');
+  page.searchInput({detail:{value:'韩式辣炒年糕'}});assert.equal(page.data.libraryTotal,1);assert.equal(page.data.library[0].id,'exp-290');assert.equal(page.data.library[0].flavorText,store.find('exp-290').flavor);
   page.openRecipe(event({id:'exp-290'}));assert(calls.some(c=>c[0]==='navigate'&&c[1].url.endsWith('exp-290')));
   page.fridgeInput({detail:{value:'西红柿 鸡蛋'}});page.findFridge();assert(page.data.fridgeMatches.length>0);
   page.addSelectedShopping();assert(store.state.shopping.length>0);
@@ -85,7 +85,7 @@ test('all page flows preserve settings, menu selection, shopping, custom recipes
   assert.equal(page.onShareAppMessage().path,'/pages/kitchen/index');
   page.removeCustom(event({id:custom.id}));assert(!store.find(custom.id));assert(!store.state.selectedIds.includes(custom.id));
   page.restoreAppearance();assert.equal(store.state.mascotId,'lazy-yawn-cat');
-  const reopened=createStore({getStorageSync:()=>saved(),setStorageSync(){}});assert.equal(reopened.state.settings.servingCount,4);assert(reopened.state.history.length);
+  const reopened=createStore({getStorageSync:()=>saved(),setStorageSync(){}});assert.equal(reopened.state.settings.servingCount,6);assert(reopened.state.history.length);
   page.onShow();assert(calls.some(c=>c[0]==='title'&&c[1].title==='不牛马厨房'));page.onUnload();
 });
 test('rice-cake dishes use rice cakes and shrimp keeps the seafood exclusion',()=>{

@@ -1,12 +1,25 @@
-let petPackageReady;
-let petMotionReady;
-function ensurePetPackage(name){
-  if(name==='petmotion'){
-    if(!petMotionReady)petMotionReady=require.async('../../petmotion/ready.js').catch(error=>{petMotionReady=null;throw error;});
-    return petMotionReady;
-  }
-  if(!petPackageReady)petPackageReady=require.async('../../media00/ready.js').catch(error=>{petPackageReady=null;throw error;});
-  return petPackageReady;
+// Literal module paths let WeChat discover each asynchronous package dependency.
+const packageLoaders={
+  media00:()=>require.async('../../media00/ready.js'),
+  media01:()=>require.async('../../media01/ready.js'),
+  media02:()=>require.async('../../media02/ready.js'),
+  media03:()=>require.async('../../media03/ready.js'),
+  media04:()=>require.async('../../media04/ready.js'),
+  media05:()=>require.async('../../media05/ready.js'),
+  media06:()=>require.async('../../media06/ready.js'),
+  media07:()=>require.async('../../media07/ready.js'),
+  media08:()=>require.async('../../media08/ready.js'),
+  media09:()=>require.async('../../media09/ready.js'),
+  media10:()=>require.async('../../media10/ready.js'),
+  media11:()=>require.async('../../media11/ready.js'),
+  media12:()=>require.async('../../media12/ready.js'),
+  media13:()=>require.async('../../media13/ready.js'),
+  petmotion:()=>require.async('../../petmotion/ready.js')
+};
+const packageReady={};
+function ensureAssetPackage(name){
+  if(!packageReady[name])packageReady[name]=packageLoaders[name]().catch(error=>{delete packageReady[name];throw error;});
+  return packageReady[name];
 }
 Component({
   properties:{path:{type:String,value:'',observer:'load'},mode:{type:String,value:'aspectFill'},label:{type:String,value:'菜品图片'},bare:{type:Boolean,value:false}},
@@ -18,15 +31,15 @@ Component({
       clearTimeout(this._loadTimer);
       const version=this._version=(this._version||0)+1;
       const packageName=String(path||'').split('/')[1]||'';
-      // The pet package must be injected before mounting its nested component.
+      // Every package must be injected before mounting its nested component.
       // Use native asynchronous module loading; a placeholder alone can stay empty.
-      const petPackage=packageName==='media00'||packageName==='petmotion';
-      this.setData({resolved:petPackage?'':path||'',loading:!!path,failed:false,packageName});
+      const asyncPackage=!!packageLoaders[packageName];
+      this.setData({resolved:asyncPackage?'':path||'',loading:!!path,failed:false,packageName});
       if(!path)return;
       this._loadTimer=setTimeout(()=>{
         if(this._alive&&this._version===version)this.error();
       },30000);
-      if(petPackage)ensurePetPackage(packageName).then(()=>{
+      if(asyncPackage)ensureAssetPackage(packageName).then(()=>{
         if(this._alive&&this._version===version)this.setData({resolved:path});
       }).catch(()=>{if(this._alive&&this._version===version)this.error();});
     },

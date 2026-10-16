@@ -25,7 +25,7 @@ const {themes}=require('../../miniprogram/data/themes');
 const credits=require('../../miniprogram/info/credits');
 assert.equal(recipes.length,800);assert.equal(new Set(recipes.map(r=>r.id)).size,800);
 assert.equal(new Set(recipes.map(r=>r.name)).size,800);
-for(const pkg of ['media00','petmotion'])assert(fs.existsSync(path.join(dir,pkg,'ready.js')),'pet package readiness module missing: '+pkg);
+for(const pkg of app.subPackages.filter(p=>p.root.startsWith('media')||p.root==='petmotion').map(p=>p.root))assert(fs.existsSync(path.join(dir,pkg,'ready.js')),'asset package readiness module missing: '+pkg);
 assert.equal(options.mascotPresets.length,4);assert.equal(themes.length,4);
 for(const theme of themes){assert(options.mascotPresets.some(p=>p.id===theme.petId));for(const asset of Object.values(theme.assets))assert(fs.existsSync(path.join(dir,asset)),asset+' missing theme asset');}
 for(const r of recipes){

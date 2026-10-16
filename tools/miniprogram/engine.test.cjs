@@ -4,12 +4,19 @@ const {createStore}=require('../../miniprogram/utils/store');
 const ui=require('../../miniprogram/utils/ui');
 const {recipes}=require('../../miniprogram/data/recipes');
 function make(saved){let value=saved;return createStore({getStorageSync:()=>value,setStorageSync:(k,v)=>{value=JSON.parse(JSON.stringify(v));}});}
+test('retired animation preference is cleared and persisted even with the current theme',()=>{
+  let saved={mascotId:'lazy-yawn-cat',settings:{theme:'lazy-cat',followPetTheme:true,reduceMotion:true,avoidTerms:'花生'}};
+  const store=createStore({getStorageSync:()=>saved,setStorageSync:(_,value)=>{saved=JSON.parse(JSON.stringify(value));}});
+  assert.equal(store.state.settings.reduceMotion,false);
+  assert.equal(saved.settings.reduceMotion,false);
+  assert.equal(saved.settings.avoidTerms,'花生');
+});
 test('retired colors migrate to the saved pet without losing user data',()=>{
   const fresh=make();assert.equal(fresh.state.mascotId,'lazy-yawn-cat');assert.equal(ui.appearance(fresh.state).theme.id,'lazy-cat');
   for(const pet of require('../../miniprogram/data/options').mascotPresets){
     const saved={mascotId:pet.id,settings:{theme:'clear-sky-lime',followPetTheme:false,servingCount:3,avoidTerms:'花生',reduceMotion:true},shopping:[{id:'s1',name:'鸡蛋',done:true}],history:[{id:recipes[0].id,name:recipes[0].name}],selectedIds:[recipes[0].id]};
     const returning=make(saved);assert.equal(ui.appearance(returning.state).theme.petId,pet.id);assert.equal(returning.state.settings.theme,ui.appearance(returning.state).theme.id);assert.equal(returning.state.settings.followPetTheme,true);
-    assert.equal(returning.state.settings.servingCount,3);assert.equal(returning.state.settings.avoidTerms,'花生');assert.equal(returning.state.settings.reduceMotion,true);assert.deepEqual(returning.state.shopping,saved.shopping);assert.deepEqual(returning.state.history,saved.history);assert.deepEqual(returning.state.selectedIds,saved.selectedIds);
+    assert.equal(returning.state.settings.servingCount,3);assert.equal(returning.state.settings.avoidTerms,'花生');assert.equal(returning.state.settings.reduceMotion,false);assert.deepEqual(returning.state.shopping,saved.shopping);assert.deepEqual(returning.state.history,saved.history);assert.deepEqual(returning.state.selectedIds,saved.selectedIds);
     const reopened=make(JSON.parse(JSON.stringify(returning.state)));assert.deepEqual(reopened.state,returning.state);
   }
 });
@@ -67,4 +74,16 @@ test('page handlers complete spin, grocery, search and sharing flow',async()=>{
   const s=make();let page;global.Page=p=>{page=p;};global.getApp=()=>({getStore:()=>s});global.wx={setNavigationBarColor(){},setBackgroundColor(){},pageScrollTo(o){o.complete?.();},createSelectorQuery:()=>({in(){return this;},select(){return this;},fields(){return this;},exec(fn){fn([]);}})};
   require('../../miniprogram/pages/kitchen/index');page.data=JSON.parse(JSON.stringify(page.data));page.setData=function(patch,cb){for(const [k,v]of Object.entries(patch)){if(k.includes('.')){const [a,b]=k.split('.');this.data[a][b]=v;}else this.data[k]=v;}if(cb)cb();};
   page.onLoad({});assert.equal(page.wheelRecipes.length,8);s.state.settings.reduceMotion=true;page.spin();await new Promise(r=>setTimeout(r,30));assert(s.state.selectedIds.length);assert.equal(page.data.spinning,false);assert.equal(page.data.wheelOpen,false);page.addSelectedShopping();assert(s.state.shopping.length);page.markSelectedCooked();assert.equal(s.state.history.length,1);page.searchInput({detail:{value:'番茄'}});assert(page.data.library.length);assert(page.onShareAppMessage().path.includes('recipe'));page.onUnload();
+});
+
+test('five and six person menus survive reopening without truncation',()=>{
+  for(const count of [5,6]){
+    const s=make({settings:{servingCount:count}}),pool=s.engine.filteredRecipes();
+    assert.equal(s.engine.targetMenuCount(pool),count);
+    const menu=s.engine.buildPickedMenu(pool,s.engine.balancedWheelPool(pool)[0],count);
+    assert.equal(menu.length,count);assert.equal(new Set(menu.map(r=>r.id)).size,count);
+    const reopened=make({settings:{servingCount:count},selectedIds:menu.map(r=>r.id)});
+    assert.equal(reopened.state.settings.servingCount,count);
+    assert.deepEqual(reopened.state.selectedIds,menu.map(r=>r.id));
+  }
 });

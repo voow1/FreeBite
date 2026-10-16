@@ -1,2 +1,4 @@
 @import "../../motion.wxss";
 .detail-page{padding-bottom:calc(48rpx + env(safe-area-inset-bottom))}
+
+@import "../../recipe-card.wxss";

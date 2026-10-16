@@ -1,0 +1,13 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const {classifyRecipe,flavorView}=require('../../miniprogram/utils/recipe-flavor');
+const file=path.resolve(__dirname,'../../miniprogram/data/recipes.js');
+const data=require(file);
+for(const recipe of data.recipes)recipe.flavor=classifyRecipe(recipe);
+if(process.argv.includes('--write'))fs.writeFileSync(file,'/* 从网页菜谱生成，请通过 tools/miniprogram 更新。 */\nmodule.exports = '+JSON.stringify(data)+';\n','utf8');
+const groups={};
+for(const recipe of data.recipes)(groups[recipe.flavor]||=([])).push({id:recipe.id,name:recipe.name,heat:recipe.heat,tags:flavorView(recipe).flavorTags});
+const report=path.join(__dirname,'.generated/口味核对/菜谱口味分类.json');
+fs.mkdirSync(path.dirname(report),{recursive:true});
+fs.writeFileSync(report,JSON.stringify(groups,null,2)+'\n','utf8');
+console.log(JSON.stringify({recipes:data.recipes.length,groups:Object.fromEntries(Object.entries(groups).map(([key,rows])=>[key,rows.length])),report},null,2));

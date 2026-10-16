@@ -6,6 +6,7 @@ const out = path.join(root, 'miniprogram');
 const source = JSON.parse(fs.readFileSync(path.join(__dirname, '.generated/source.json'), 'utf8'));
 const assets = JSON.parse(fs.readFileSync(path.join(__dirname, '.generated/assets.json'), 'utf8'));
 const {themes,petThemes} = require('./pet-themes.cjs');
+const {classifyRecipe}=require('../../miniprogram/utils/recipe-flavor');
 const wheelArt=spawnSync(process.env.FREEBITE_PYTHON||'python',[path.join(__dirname,'wheel-art.py')],{input:JSON.stringify(themes),encoding:'utf8'});
 if(wheelArt.status!==0)throw new Error('转盘素材生成失败：'+(wheelArt.stderr||wheelArt.error||''));
 function write(file, text) {
@@ -22,7 +23,7 @@ const overrides=JSON.parse(fs.readFileSync(path.join(__dirname,'recipe-overrides
 const recipes = source.recipes.map(original => {
   const override=overrides[original.id];
   const r=override?{...original,ingredients:override.ingredients,flags:override.flags,note:override.note,method:{...original.method,steps:override.steps,tip:override.tip}}:original;
-  return ({ ...r, image: assets.files[r.image],
+  return ({ ...r, flavor:classifyRecipe(r), image: assets.files[r.image],
   creditId: path.basename(r.image), imageCredit: undefined,
   method: { steps:r.method.steps, tip:r.method.tip, sources:r.method.sources.map(refId) }
 });});
@@ -74,8 +75,7 @@ for(const pkg of assets.packages){
   write(name+'/image.wxss',':host{display:block;width:100%;height:100%}.photo{display:block;width:100%;height:100%}');
 }
 write('components/asset-image/index.json',JSON.stringify({component:true,usingComponents,componentPlaceholder},null,2));
-write('media00/ready.js','module.exports = {ready:true};\n');
-write('petmotion/ready.js','module.exports = {ready:true};\n');
+for(const pkg of assets.packages)write(pkg.root+'/ready.js','module.exports = {ready:true};\n');
 write('components/asset-image/index.wxml','<view class="asset {{bare ? \'bare\' : \'\'}}" bindtap="retry" aria-label="{{label}}">\n'+assets.packages.map(p=>`  <${p.root} class="renderer" wx:if="{{resolved && packageName === '${p.root}'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />`).join('\n')+'\n  <view wx:if="{{!bare && (loading || failed || !path)}}" class="placeholder">{{loading ? \'图片加载中\' : failed ? \'图片加载失败，点此重试\' : \'暂无可授权实拍图\'}}</view>\n</view>\n');
 const defaultPet=options.mascotPresets.find(p=>p.id===options.defaultMascotId);
 const defaultTokens=(options.defaultSettings.followPetTheme && petThemes[defaultPet.petTheme]) || themes.find(t=>t.id===options.defaultSettings.theme).tokens;

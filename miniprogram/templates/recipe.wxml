@@ -1,23 +1,30 @@
 <template name="recipe">
   <view class="recipe" wx:if="{{selected}}">
-    <view class="hero-photo"><asset-image class="asset-image" path="{{selected.image}}" label="{{selected.name}}" />
+    <view class="recipe-overview"><view class="hero-photo"><asset-image class="asset-image" path="{{selected.image}}" label="{{selected.name}}" />
       <block wx:if="{{selectedMenu.length > 1}}">
         <button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" class="photo-arrow prev" data-direction="-1" bindtap="cyclePicked" aria-label="上一道菜">‹</button>
         <button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" class="photo-arrow next" data-direction="1" bindtap="cyclePicked" aria-label="下一道菜">›</button>
       </block>
     </view>
-    <view class="recipe-title"><text>{{selected.name}}</text><button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" wx:if="{{!standalone}}" class="small secondary" bindtap="openWheel">再抽 ↻</button></view>
-    <view class="metrics"><text>{{selected.time}} 分钟</text><text>约 {{selected.kcal}} 千卡</text><text>{{selected.heatText}}</text></view>
+    <view class="recipe-title"><text>{{selected.name}}</text></view>
+    <view class="metrics"><view class="recipe-metric"><text class="metric-value">{{selected.kcal}}</text><text class="metric-label">千卡 / 份 · 约</text></view><view class="recipe-metric"><text class="metric-value">{{selected.time}}</text><text class="metric-label">分钟</text></view><view class="recipe-metric"><text class="metric-value">{{selected.flavorText}}</text><text class="metric-label">口味</text></view></view>
+    </view>
+    <view class="recipe-body">
     <view class="chips recipe-tags"><text class="tag" wx:for="{{selected.tags}}" wx:key="*this">{{item}}</text></view>
-    <view class="section-head"><text class="section-title">准备这些食材</text></view>
-    <view class="chips"><text class="ingredient" wx:for="{{selected.ingredients}}" wx:key="*this">{{item}}</text></view>
-    <view class="actions"><button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" class="primary" bindtap="addSelectedShopping">加入购物清单</button><button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" class="secondary" bindtap="markSelectedCooked">今天做过了 ✓</button></view>
+    <view class="section-head recipe-section-heading"><view class="recipe-section-icon" aria-hidden="true"><view class="recipe-line-icon checklist-icon"></view></view><text class="section-title">{{selected.name}} · 食材</text></view>
+    <view class="chips ingredient-list"><text class="ingredient" wx:for="{{selected.ingredients}}" wx:key="*this">{{item}}</text></view>
+    <view class="section-head recipe-section-heading"><view class="recipe-section-icon" aria-hidden="true"><view class="recipe-line-icon clipboard-icon"></view></view><text class="section-title">{{selected.name}} · 家常做法</text></view>
+    <view class="method-card"><view class="steps"><view class="step" wx:for="{{selected.method.steps}}" wx:key="index"><text class="step-number">{{index + 1 < 10 ? '0' + (index + 1) : index + 1}}</text><text class="step-text">{{item}}</text></view></view>
+    <view wx:if="{{selected.method.tip}}" class="tip"><view class="recipe-line-icon tip-spark" aria-hidden="true"></view><text>{{selected.method.tip}}</text></view>
+    <view wx:if="{{selected.note}}" class="caption recipe-note">{{selected.note}}</view></view>
+    <view class="actions recipe-actions">
+      <button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" wx:if="{{selectedMenu.length > 1}}" class="primary" bindtap="addMenuShopping"><view class="recipe-line-icon basket-icon" aria-hidden="true"></view><text>加入 {{selectedMenu.length}} 道清单</text></button>
+      <button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" wx:else class="primary" bindtap="addSelectedShopping"><view class="recipe-line-icon basket-icon" aria-hidden="true"></view><text>加入购物清单</text></button>
+      <button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" class="secondary" bindtap="markSelectedCooked"><view class="recipe-line-icon cooked-icon" aria-hidden="true"></view><text>这道做过了</text></button>
+    </view>
     <button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" wx:if="{{standalone}}" class="primary full" bindtap="chooseForDinner">今晚就吃这道</button>
-    <view class="section-head"><text class="section-title">一起慢慢做</text><text class="caption">{{selected.method.steps.length}} 个步骤</text></view>
-    <view class="steps"><view class="step" wx:for="{{selected.method.steps}}" wx:key="index"><text class="step-number">{{index+1}}</text><text class="step-text">{{item}}</text></view></view>
-    <view wx:if="{{selected.method.tip}}" class="tip">小提醒 · {{selected.method.tip}}</view>
-    <view wx:if="{{selected.note}}" class="caption recipe-note">{{selected.note}}</view>
     <view class="actions footer-actions"><button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" wx:if="{{selected.creditId}}" class="text-button" bindtap="openCredit">图片来源与授权</button><button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" class="text-button" open-type="share">分享这道菜 ↗</button></view>
     <text class="fine-print">热量为参考估算，随食材份量和烹调方式变化。</text>
+    </view>
   </view>
 </template>

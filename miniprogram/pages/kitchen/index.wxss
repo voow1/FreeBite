@@ -3,3 +3,5 @@
 @import "design.wxss";
 
 @import "dish-flight.wxss";
+
+@import "../../recipe-card.wxss";

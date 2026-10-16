@@ -1,6 +1,7 @@
 const {themes} = require('../data/themes');
 const {mascotPresets,defaultMascotId} = require('../data/options');
 const {references} = require('../data/recipes');
+const {flavorView,LEGACY_FLAVORS}=require('./recipe-flavor');
 function appearance(state) {
   const pet = mascotPresets.find(p=>p.id===state.mascotId) || mascotPresets.find(p=>p.id===defaultMascotId);
   const theme = themes.find(t=>t.petId===pet.id) || themes[0];
@@ -10,8 +11,9 @@ function appearance(state) {
 function recipeView(r) {
   if (!r) return null;
   const method = r.method || {steps:[],tip:'',sources:[]};
-  return {...r,heatText:['不辣','微辣','中辣','较辣','爆辣'][r.heat] || '不辣',
-    tags:r.tags.slice(0,6),method:{...method,sources:(method.sources||[]).map(i=>typeof i==='number'?references[i]:i).filter(Boolean)}};
+  const taste=flavorView(r);
+  return {...r,...taste,flavorText:taste.flavor,heatText:['不辣','微辣','中辣','较辣','爆辣'][r.heat] || '不辣',
+    tags:[...new Set([...taste.flavorTags,...r.tags.filter(tag=>!LEGACY_FLAVORS.includes(tag))])].slice(0,8),method:{...method,sources:(method.sources||[]).map(i=>typeof i==='number'?references[i]:i).filter(Boolean)}};
 }
 function sample(pool, count=8, random=Math.random) {
   const copy = pool.slice();

@@ -1,5 +1,7 @@
 /* Local verification adapter. Never included in the WeChat package. */
-document.getElementById('review').textContent='交互预览 v1.17.0 · 非微信真机';
+// Match a phone viewport: preserve scrolling without a desktop scrollbar gutter.
+const viewportStyle=document.createElement('style');viewportStyle.textContent='html{scrollbar-width:none}html::-webkit-scrollbar{width:0;height:0}';document.head.append(viewportStyle);
+document.getElementById('review').textContent='交互预览 v1.18.12 · 非微信真机';
 window.addEventListener('error',e=>{const p=document.createElement('pre');p.textContent=e.message+'\n'+e.error?.stack;document.body.append(p);});
 const cache={},templates={},root=document.getElementById('root');let page,pagePath='/pages/kitchen/index',rendering=false;
 function normalize(p){const parts=[];p.split('/').forEach(s=>{if(s==='..')parts.pop();else if(s&&s!=='.')parts.push(s);});return '/'+parts.join('/');}
@@ -28,7 +30,7 @@ function renderNodes(nodes,scope,parent){let prior=false,chain=false;for(const n
   if(tag==='asset-image'){el.setAttribute('data-asset-image','');el.src=value(node.getAttribute('path')||'',scope);el.style.cssText='display:block;width:100%;height:100%;object-fit:'+(node.getAttribute('mode')==='aspectFit'?'contain':node.getAttribute('mode')==='scaleToFill'?'fill':'cover')+';'+el.style.cssText;el.alt='';}
   if(tag==='scroll-view'){if(node.hasAttribute('scroll-x'))el.style.overflowX='auto';if(node.hasAttribute('scroll-y')){el.style.overflowY='auto';el.style.overflowX='hidden';}}
   el.__previewEvents=[];
-  for(const attr of node.attributes){if(!/^(bind|catch)/.test(attr.name))continue;const original=attr.name.replace(/^(bind|catch):?/,'');const event={tap:'click',focus:'focus',blur:'blur',input:'input',change:'change',submit:'submit',touchstart:'pointerdown',touchend:'pointerup',touchmove:'pointermove',touchcancel:'pointercancel',ready:'load'}[original];if(!event)continue;
+  for(const attr of node.attributes){if(!/^(bind|catch)/.test(attr.name))continue;const original=attr.name.replace(/^(bind|catch):?/,'');const event={tap:'click',focus:'focus',blur:'blur',input:'input',change:'change',submit:'submit',scroll:'scroll',touchstart:'pointerdown',touchend:'pointerup',touchmove:'pointermove',touchcancel:'pointercancel',ready:'load'}[original];if(!event)continue;
     if(original==='touchstart'){el.style.touchAction=node.hasAttribute('catchtouchmove')?'none':'pan-y';el.style.userSelect='none';}
     const handler=e=>{
       const target=e.currentTarget;
@@ -47,7 +49,7 @@ function renderNodes(nodes,scope,parent){let prior=false,chain=false;for(const n
       let v=tag==='switch'?target.checked:target.value;
       if(event==='submit')v=Object.fromEntries(new FormData(target));
       const point={clientX:e.clientX,clientY:e.clientY};
-      const payload={currentTarget:{dataset:{...target.dataset}},detail:{value:v,path:target.getAttribute('path')},touches:event==='pointerup'||event==='pointercancel'?[]:[point],changedTouches:[point]};
+      const payload={currentTarget:{dataset:{...target.dataset}},detail:{value:v,path:target.getAttribute('path'),scrollLeft:target.scrollLeft,scrollTop:target.scrollTop},touches:event==='pointerup'||event==='pointercancel'?[]:[point],changedTouches:[point]};
       if(page[attr.value])page[attr.value](payload);
     };
     el.addEventListener(event,handler);el.__previewEvents.push([event,handler]);
@@ -80,10 +82,19 @@ function render(){
     const next=document.createDocumentFragment();
     renderNodes(parse(SOURCES[pagePath+'.wxml']).childNodes,page.data,next);
     patchChildren(root,next);
+    // Native scroll-view bindings need an explicit DOM scroll in this preview.
+    root.querySelectorAll('[scroll-left]').forEach(el=>{
+      const left=Number(el.getAttribute('scroll-left'))||0;
+      if(el.__previewScrollTarget!==left){
+        el.__previewScrollTarget=left;
+        el.scrollTo({left,behavior:el.getAttribute('scroll-with-animation')==='true'?'smooth':'instant'});
+      }
+    });
   }finally{rendering=false;}
   if(page?.palette&&page?.data.wheelOpen)page.drawWheel?.();
 }
 function openPage(url){page?.onUnload?.();const [p,q]=url.split('?');pagePath=p;delete cache[p+'.js'];requireModule(p);page.data=JSON.parse(JSON.stringify(page.data));page.setData=function(patch,done){for(const[k,v]of Object.entries(patch)){if(k.includes('.')){const [a,b]=k.split('.');this.data[a][b]=v;}else this.data[k]=v;}render();done?.();};
   let css=SOURCES['/app.wxss'].replace(/@import[^;]+;/g,'')+(SOURCES[p+'.wxss']||'').replace(/@import \"([^\"]+)\";/g,(_,file)=>SOURCES[normalize(p.slice(0,p.lastIndexOf('/')+1)+file)]||'');css=css.replace(/([^{}]+)\{/g,(_,selector)=>selector.replace(/(?<![\w.-])text(?![\w-])/g,'span').replace(/(?<![\w.-])view(?![\w-])/g,'div').replace(/(?<![\w.-])asset-image(?![\w-])/g,'img[data-asset-image]')+'{').replace(/\bpage\b/g,'body').replace(/(-?[\d.]+)rpx/g,(_,n)=>`calc(${n} * min(100vw, 620px) / 750)`);document.getElementById('page-style')?.remove();const style=document.createElement('style');style.id='page-style';style.textContent=SOURCES['/font.wxss']+css;document.head.append(style);page.onLoad?.(Object.fromEntries(new URLSearchParams(q)));page.onShow?.();page.onReady?.();render();page.drawWheel?.();window.__miniPage=page;scrollTo(0,0);
 }
+window.addEventListener('resize',()=>page?.onResize?.());
 openPage('/pages/kitchen/index');
