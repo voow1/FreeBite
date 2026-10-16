@@ -1,7 +1,7 @@
 /* Local verification adapter. Never included in the WeChat package. */
 // Match a phone viewport: preserve scrolling without a desktop scrollbar gutter.
 const viewportStyle=document.createElement('style');viewportStyle.textContent='html{scrollbar-width:none}html::-webkit-scrollbar{width:0;height:0}';document.head.append(viewportStyle);
-document.getElementById('review').textContent='交互预览 v1.18.13 · 非微信真机';
+document.getElementById('review').textContent='交互预览 v1.18.14 · 非微信真机';
 window.addEventListener('error',e=>{const p=document.createElement('pre');p.textContent=e.message+'\n'+e.error?.stack;document.body.append(p);});
 const cache={},templates={},root=document.getElementById('root');let page,pagePath='/pages/kitchen/index',rendering=false;
 function normalize(p){const parts=[];p.split('/').forEach(s=>{if(s==='..')parts.pop();else if(s&&s!=='.')parts.push(s);});return '/'+parts.join('/');}
