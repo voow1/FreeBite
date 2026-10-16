@@ -20,3 +20,15 @@ site/assets/fonts/*
 !site/assets/fonts/lemi-milk-bubble.ttf
 !site/assets/fonts/lemi-milk-bubble.woff2
 !site/assets/fonts/LEMI-LICENSE-NOTICE.txt
+
+# Reproducible local caches and private platform evidence
+__pycache__/
+*.py[cod]
+node_modules/
+上线资料/备案备注填写_*.png
+上线资料/微信小程序注册页面.png
+上线资料/小程序验收/**/微信*.png
+上线资料/小程序验收/**/微信*包*.json
+
+# Local simulator captures, preview QR codes, and per-run traces
+上线资料/小程序验收/

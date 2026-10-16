@@ -1,0 +1,59 @@
+{
+  "tool": "built-in image_gen",
+  "displaySize": 70,
+  "items": [
+    {
+      "id": "strawberry",
+      "prompt": "Create ONE small UI tap tutorial icon, a cute chibi hand or paw pointing straight DOWN at 6 o'clock with wrist at TOP and one extended rounded index digit, other digits gently curled. Keep silhouette clear at 28px display size. Full icon centered, transparent background, no text, no arrow, no sparkles, no other objects. A little pastry girl's tiny peach-pink human hand, short rounded finger pointing DOWN, a strawberry-pink frilly sleeve cuff with tiny white scallop trim. Soft sweet storybook illustration, dusty rose outline, pastel pink and cream, compact cute shape. No fruit, no jewelry.",
+      "source": "C:\\Users\\丑女人\\.codex\\generated_images\\01a13afa-e345-7c53-9851-7de95ec9e539\\exec-6ba8d7e1-6272-4176-89fd-717b3f6afae1.png",
+      "asset": "miniprogram/assets/themes/strawberry/tap-hand.png",
+      "bytes": 6940,
+      "alphaBounds": [
+        81,
+        39,
+        1232,
+        1077
+      ]
+    },
+    {
+      "id": "milk-tea",
+      "prompt": "Create ONE small UI tap tutorial icon, a cute chibi hand or paw pointing straight DOWN at 6 o'clock with wrist at TOP and one extended rounded index digit, other digits gently curled. Keep silhouette clear at 28px display size. Full icon centered, transparent background, no text, no arrow, no sparkles, no other objects. A cream-colored little puppy paw forming a DOWNWARD pointing gesture, slightly furry silhouette, rounded extended index toe, other toes curled, caramel fur patches on back, tiny mint-green fabric cuff. Warm colored-pencil / wax-crayon texture with simple muted brown outline. Distinct animal paw, NOT a human glove. No visible claws.",
+      "source": "C:\\Users\\丑女人\\.codex\\generated_images\\01a13afa-e345-7c53-9851-7de95ec9e539\\exec-994c25c7-d0ea-44ac-885b-2df55aaa9ce1.png",
+      "asset": "miniprogram/assets/themes/milk-tea/tap-hand.png",
+      "bytes": 8961,
+      "alphaBounds": [
+        0,
+        19,
+        1219,
+        1271
+      ]
+    },
+    {
+      "id": "lazy-cat",
+      "prompt": "Create ONE small UI tap tutorial icon, a cute chibi hand or paw pointing straight DOWN at 6 o'clock with wrist at TOP and one extended rounded index digit, other digits gently curled. Keep silhouette clear at 28px display size. Full icon centered, transparent background, no text, no arrow, no sparkles, no other objects. A white little cat paw forming a DOWNWARD pointing gesture, one rounded toe extended down, other toes curled in a soft mitten paw. Pale mist-blue short cuff. Minimal hand-drawn charcoal-gray linework, white fill, very faint cool blue shading, tiny fur tufts. Distinct cat paw, no claws, no human fingernails.",
+      "source": "C:\\Users\\丑女人\\.codex\\generated_images\\01a13afa-e345-7c53-9851-7de95ec9e539\\exec-bba6cea7-5443-4d9d-8723-f5399ecdd927.png",
+      "asset": "miniprogram/assets/themes/lazy-cat/tap-hand.png",
+      "bytes": 4952,
+      "alphaBounds": [
+        0,
+        0,
+        1194,
+        1243
+      ]
+    },
+    {
+      "id": "baozi",
+      "prompt": "Create ONE small UI tap tutorial icon, a cute chibi hand or paw pointing straight DOWN at 6 o'clock with wrist at TOP and one extended rounded index digit, other digits gently curled. Keep silhouette clear at 28px display size. Full icon centered, transparent background, no text, no arrow, no sparkles, no other objects. A tiny warm butter-yellow chef oven mitt forming a DOWNWARD pointing gesture, one short chunky rounded digit extended down, rest of mitten very round like a bun. Short warm cream pleated cuff. Simple flat paper-cut illustration with warm ochre outline and a single pale golden shading shape, no realistic texture, no face. Clearly different from a human hand or animal paw.",
+      "source": "C:\\Users\\丑女人\\.codex\\generated_images\\01a13afa-e345-7c53-9851-7de95ec9e539\\exec-e716f8be-4569-4525-ad96-2356112b4cc5.png",
+      "asset": "miniprogram/assets/themes/baozi/tap-hand.png",
+      "bytes": 6403,
+      "alphaBounds": [
+        33,
+        13,
+        1234,
+        1254
+      ]
+    }
+  ],
+  "note": "按用户反馈从初版 28px 放大 2.5 倍；保持中心提示位置，交互后隐藏。"
+}

@@ -1,2 +1,3 @@
+@import "../../motion.wxss";
 @import "base.wxss";
 @import "design.wxss";

@@ -1,17 +1,18 @@
 <view class="asset {{bare ? 'bare' : ''}}" bindtap="retry" aria-label="{{label}}">
-  <media00 wx:if="{{resolved && packageName === 'media00'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
-  <media01 wx:if="{{resolved && packageName === 'media01'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
-  <media02 wx:if="{{resolved && packageName === 'media02'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
-  <media03 wx:if="{{resolved && packageName === 'media03'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
-  <media04 wx:if="{{resolved && packageName === 'media04'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
-  <media05 wx:if="{{resolved && packageName === 'media05'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
-  <media06 wx:if="{{resolved && packageName === 'media06'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
-  <media07 wx:if="{{resolved && packageName === 'media07'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
-  <media08 wx:if="{{resolved && packageName === 'media08'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
-  <media09 wx:if="{{resolved && packageName === 'media09'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
-  <media10 wx:if="{{resolved && packageName === 'media10'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
-  <media11 wx:if="{{resolved && packageName === 'media11'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
-  <media12 wx:if="{{resolved && packageName === 'media12'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
-  <media13 wx:if="{{resolved && packageName === 'media13'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <petmotion class="renderer" wx:if="{{resolved && packageName === 'petmotion'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media00 class="renderer" wx:if="{{resolved && packageName === 'media00'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media01 class="renderer" wx:if="{{resolved && packageName === 'media01'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media02 class="renderer" wx:if="{{resolved && packageName === 'media02'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media03 class="renderer" wx:if="{{resolved && packageName === 'media03'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media04 class="renderer" wx:if="{{resolved && packageName === 'media04'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media05 class="renderer" wx:if="{{resolved && packageName === 'media05'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media06 class="renderer" wx:if="{{resolved && packageName === 'media06'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media07 class="renderer" wx:if="{{resolved && packageName === 'media07'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media08 class="renderer" wx:if="{{resolved && packageName === 'media08'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media09 class="renderer" wx:if="{{resolved && packageName === 'media09'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media10 class="renderer" wx:if="{{resolved && packageName === 'media10'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media11 class="renderer" wx:if="{{resolved && packageName === 'media11'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media12 class="renderer" wx:if="{{resolved && packageName === 'media12'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
+  <media13 class="renderer" wx:if="{{resolved && packageName === 'media13'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />
   <view wx:if="{{!bare && (loading || failed || !path)}}" class="placeholder">{{loading ? '图片加载中' : failed ? '图片加载失败，点此重试' : '暂无可授权实拍图'}}</view>
 </view>

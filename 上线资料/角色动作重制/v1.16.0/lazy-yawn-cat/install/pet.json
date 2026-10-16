@@ -1,0 +1,10 @@
+{
+  "id": "lazy-yawn-cat",
+  "name": "慵懒小猫",
+  "sources": {
+    "idle": "assets/lazy-yawn-cat-idle.webp",
+    "runRight": "assets/lazy-yawn-cat-run-right.webp",
+    "runLeft": "assets/lazy-yawn-cat-run-left.webp",
+    "done": "assets/lazy-yawn-cat-done.webp"
+  }
+}

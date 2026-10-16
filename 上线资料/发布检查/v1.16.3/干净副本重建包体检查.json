@@ -1,0 +1,25 @@
+{
+  "recipes": 800,
+  "uniqueImages": 752,
+  "mascots": 4,
+  "themes": 4,
+  "packages": {
+    "main": 2005902,
+    "info": 324007,
+    "media00": 1758122,
+    "media01": 1771130,
+    "media02": 1777920,
+    "media03": 1776093,
+    "media04": 1786993,
+    "media05": 1782304,
+    "media06": 1772281,
+    "media07": 1784104,
+    "media08": 1781170,
+    "media09": 1787225,
+    "media10": 1775460,
+    "media11": 1763461,
+    "media12": 1412083,
+    "petmotion": 1902358
+  },
+  "totalBytes": 26960613
+}

@@ -15,6 +15,7 @@ for(const file of files){
   packages[pkg?pkg.root:'main']+=fs.statSync(file).size;
   if(file.endsWith('.json'))JSON.parse(fs.readFileSync(file,'utf8'));
   if(file.endsWith('.js'))new vm.Script(fs.readFileSync(file,'utf8'),{filename:file});
+  if(file.endsWith('.js'))assert(!fs.readFileSync(file,'utf8').includes('wx.loadSubpackage'),rel+' must not use the game-only loading API');
 }
 for(const [name,size]of Object.entries(packages))assert(size<2*1024*1024,`${name} exceeds 2 MiB: ${size}`);
 const total=Object.values(packages).reduce((a,b)=>a+b,0);assert(total<30*1024*1024);
@@ -24,6 +25,7 @@ const {themes}=require('../../miniprogram/data/themes');
 const credits=require('../../miniprogram/info/credits');
 assert.equal(recipes.length,800);assert.equal(new Set(recipes.map(r=>r.id)).size,800);
 assert.equal(new Set(recipes.map(r=>r.name)).size,800);
+for(const pkg of ['media00','petmotion'])assert(fs.existsSync(path.join(dir,pkg,'ready.js')),'pet package readiness module missing: '+pkg);
 assert.equal(options.mascotPresets.length,4);assert.equal(themes.length,4);
 for(const theme of themes){assert(options.mascotPresets.some(p=>p.id===theme.petId));for(const asset of Object.values(theme.assets))assert(fs.existsSync(path.join(dir,asset)),asset+' missing theme asset');}
 for(const r of recipes){
@@ -33,10 +35,14 @@ for(const r of recipes){
   assert(fs.existsSync(path.join(dir,r.image)),r.name+' missing image');
   assert(credits[r.creditId]?.author,r.name+' missing image credit');
 }
-for(const p of options.mascotPresets)for(const state of ['idle','runRight','runLeft','done'])assert(fs.existsSync(path.join(dir,p.sources[state])));
+for(const p of options.mascotPresets)for(const key of ['atlas','preview'])assert(p[key]&&fs.existsSync(path.join(dir,p[key])),p.id+' missing '+key);
+for(const theme of themes)assert(fs.existsSync(path.join(dir,'assets/themes',theme.id,'tap-hand.png')),theme.id+' missing tap hint');
+for(const theme of themes)for(let count=1;count<=8;count++)assert(fs.existsSync(path.join(dir,'assets/wheels',theme.id,count+'.png')));
 for(const p of [...app.pages,...app.subPackages.flatMap(p=>p.pages.map(page=>p.root+'/'+page))])for(const ext of ['js','json','wxml'])assert(fs.existsSync(path.join(dir,p+'.'+ext)),p+'.'+ext);
 const component=JSON.parse(fs.readFileSync(path.join(dir,'components/asset-image/index.json'),'utf8'));
-for(const pkg of app.subPackages.filter(p=>p.root.startsWith('media'))){assert.equal(component.componentPlaceholder[pkg.root],'view');assert.equal(component.usingComponents[pkg.root],'/'+pkg.root+'/image');}
+assert(!app.usingComponents?.['asset-image'],'The async image dispatcher must not be inherited by its own subpackage components');
+for(const page of app.pages){const config=JSON.parse(fs.readFileSync(path.join(dir,page+'.json'),'utf8'));assert.equal(config.usingComponents?.['asset-image'],'/components/asset-image/index');}
+for(const pkg of app.subPackages.filter(p=>p.root.startsWith('media')||p.root==='petmotion')){assert.equal(component.componentPlaceholder[pkg.root],'view');assert.equal(component.usingComponents[pkg.root],'/'+pkg.root+'/image');}
 const report={recipes:800,uniqueImages:new Set(recipes.map(r=>r.image)).size,mascots:4,themes:themes.length,packages,totalBytes:total};
 fs.mkdirSync(path.join(__dirname,'.generated'),{recursive:true});
 fs.writeFileSync(path.join(__dirname,'.generated/package-audit.json'),JSON.stringify(report,null,2));

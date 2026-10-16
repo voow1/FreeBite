@@ -1,24 +1,23 @@
 <template name="recipe">
   <view class="recipe" wx:if="{{selected}}">
-    <view class="hero-photo"><asset-image path="{{selected.image}}" label="{{selected.name}}" />
+    <view class="hero-photo"><asset-image class="asset-image" path="{{selected.image}}" label="{{selected.name}}" />
       <block wx:if="{{selectedMenu.length > 1}}">
-        <button class="photo-arrow prev" data-direction="-1" bindtap="cyclePicked" aria-label="上一道菜">‹</button>
-        <button class="photo-arrow next" data-direction="1" bindtap="cyclePicked" aria-label="下一道菜">›</button>
+        <button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" class="photo-arrow prev" data-direction="-1" bindtap="cyclePicked" aria-label="上一道菜">‹</button>
+        <button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" class="photo-arrow next" data-direction="1" bindtap="cyclePicked" aria-label="下一道菜">›</button>
       </block>
     </view>
-    <view class="recipe-title"><text>{{selected.name}}</text><button wx:if="{{!standalone}}" class="small secondary" bindtap="openWheel">再抽 ↻</button></view>
+    <view class="recipe-title"><text>{{selected.name}}</text><button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" wx:if="{{!standalone}}" class="small secondary" bindtap="openWheel">再抽 ↻</button></view>
     <view class="metrics"><text>{{selected.time}} 分钟</text><text>约 {{selected.kcal}} 千卡</text><text>{{selected.heatText}}</text></view>
     <view class="chips recipe-tags"><text class="tag" wx:for="{{selected.tags}}" wx:key="*this">{{item}}</text></view>
     <view class="section-head"><text class="section-title">准备这些食材</text></view>
     <view class="chips"><text class="ingredient" wx:for="{{selected.ingredients}}" wx:key="*this">{{item}}</text></view>
-    <view class="actions"><button class="primary" bindtap="addSelectedShopping">加入购物清单</button><button class="secondary" bindtap="markSelectedCooked">今天做过了 ✓</button></view>
-    <button wx:if="{{standalone}}" class="primary full" bindtap="chooseForDinner">今晚就吃这道</button>
+    <view class="actions"><button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" class="primary" bindtap="addSelectedShopping">加入购物清单</button><button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" class="secondary" bindtap="markSelectedCooked">今天做过了 ✓</button></view>
+    <button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" wx:if="{{standalone}}" class="primary full" bindtap="chooseForDinner">今晚就吃这道</button>
     <view class="section-head"><text class="section-title">一起慢慢做</text><text class="caption">{{selected.method.steps.length}} 个步骤</text></view>
     <view class="steps"><view class="step" wx:for="{{selected.method.steps}}" wx:key="index"><text class="step-number">{{index+1}}</text><text class="step-text">{{item}}</text></view></view>
     <view wx:if="{{selected.method.tip}}" class="tip">小提醒 · {{selected.method.tip}}</view>
     <view wx:if="{{selected.note}}" class="caption recipe-note">{{selected.note}}</view>
-    <view class="source-list"><text class="caption">家常做法参考</text><button wx:for="{{selected.method.sources}}" wx:key="url" class="source-link" data-url="{{item.url}}" bindtap="copySource">{{item.label}} · 复制链接</button></view>
-    <view class="actions footer-actions"><button wx:if="{{selected.creditId}}" class="text-button" bindtap="openCredit">图片来源与授权</button><button class="text-button" open-type="share">分享这道菜 ↗</button></view>
+    <view class="actions footer-actions"><button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" wx:if="{{selected.creditId}}" class="text-button" bindtap="openCredit">图片来源与授权</button><button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" class="text-button" open-type="share">分享这道菜 ↗</button></view>
     <text class="fine-print">热量为参考估算，随食材份量和烹调方式变化。</text>
   </view>
 </template>

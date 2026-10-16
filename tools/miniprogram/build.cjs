@@ -6,6 +6,8 @@ const out = path.join(root, 'miniprogram');
 const source = JSON.parse(fs.readFileSync(path.join(__dirname, '.generated/source.json'), 'utf8'));
 const assets = JSON.parse(fs.readFileSync(path.join(__dirname, '.generated/assets.json'), 'utf8'));
 const {themes,petThemes} = require('./pet-themes.cjs');
+const wheelArt=spawnSync(process.env.FREEBITE_PYTHON||'python',[path.join(__dirname,'wheel-art.py')],{input:JSON.stringify(themes),encoding:'utf8'});
+if(wheelArt.status!==0)throw new Error('转盘素材生成失败：'+(wheelArt.stderr||wheelArt.error||''));
 function write(file, text) {
   fs.mkdirSync(path.dirname(path.join(out, file)), { recursive: true });
   fs.writeFileSync(path.join(out, file), text, 'utf8');
@@ -29,7 +31,7 @@ const {funcs,regexes,recipes:ignored,...options} = source;
 options.defaultSettings.theme='lazy-cat';
 options.defaultSettings.followPetTheme=true;
 options.defaultMascotId='lazy-yawn-cat';
-options.mascotPresets = options.mascotPresets.map(p=>({...p,petTheme:themes.find(t=>t.petId===p.id).id,sources:Object.fromEntries(Object.entries(p.sources).map(([k,v])=>[k,assets.files[v]]))}));
+options.mascotPresets = options.mascotPresets.map(({sources,...p})=>({...p,petTheme:themes.find(t=>t.petId===p.id).id,atlas:'/petmotion/assets/'+p.id+'.png',preview:'/petmotion/assets/'+p.id+'-preview.png'}));
 write('data/options.js', 'module.exports = ' + JSON.stringify(options) + ';\n');
 const constants = Object.entries(regexes).map(([name,pattern]) => `const ${name} = new RegExp(${JSON.stringify(pattern)});`).join('\n');
 // Business rules remain identical to the website, with method text added to the exclusion check.
@@ -67,21 +69,21 @@ for(const pkg of assets.packages){
   const name=pkg.root;
   usingComponents[name]='/'+name+'/image';componentPlaceholder[name]='view';
   write(name+'/image.json',JSON.stringify({component:true}));
-  write(name+'/image.js',"Component({properties:{path:String,mode:String,label:String},methods:{loaded(){this.triggerEvent('loaded');},failed(){this.triggerEvent('failed');}}});\n");
+  write(name+'/image.js',"Component({properties:{path:String,mode:String,label:String},methods:{loaded(){this.triggerEvent('loaded',{path:this.data.path});},failed(){this.triggerEvent('failed',{path:this.data.path});}}});\n");
   write(name+'/image.wxml','<image class="photo" src="{{path}}" mode="{{mode}}" bindload="loaded" binderror="failed" aria-label="{{label}}" />');
   write(name+'/image.wxss',':host{display:block;width:100%;height:100%}.photo{display:block;width:100%;height:100%}');
 }
 write('components/asset-image/index.json',JSON.stringify({component:true,usingComponents,componentPlaceholder},null,2));
-write('components/asset-image/index.wxml','<view class="asset {{bare ? \'bare\' : \'\'}}" bindtap="retry" aria-label="{{label}}">\n'+assets.packages.map(p=>`  <${p.root} wx:if="{{resolved && packageName === '${p.root}'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />`).join('\n')+'\n  <view wx:if="{{!bare && (loading || failed || !path)}}" class="placeholder">{{loading ? \'图片加载中\' : failed ? \'图片加载失败，点此重试\' : \'暂无可授权实拍图\'}}</view>\n</view>\n');
+write('media00/ready.js','module.exports = {ready:true};\n');
+write('petmotion/ready.js','module.exports = {ready:true};\n');
+write('components/asset-image/index.wxml','<view class="asset {{bare ? \'bare\' : \'\'}}" bindtap="retry" aria-label="{{label}}">\n'+assets.packages.map(p=>`  <${p.root} class="renderer" wx:if="{{resolved && packageName === '${p.root}'}}" path="{{resolved}}" mode="{{mode}}" label="{{label}}" bind:loaded="loaded" bind:failed="error" />`).join('\n')+'\n  <view wx:if="{{!bare && (loading || failed || !path)}}" class="placeholder">{{loading ? \'图片加载中\' : failed ? \'图片加载失败，点此重试\' : \'暂无可授权实拍图\'}}</view>\n</view>\n');
 const defaultPet=options.mascotPresets.find(p=>p.id===options.defaultMascotId);
 const defaultTokens=(options.defaultSettings.followPetTheme && petThemes[defaultPet.petTheme]) || themes.find(t=>t.id===options.defaultSettings.theme).tokens;
 const app = {
   pages:['pages/kitchen/index','pages/recipe/index'],
   subPackages:[{root:'info',name:'info',pages:['index']},...assets.packages],
   window:{navigationBarTitleText:'不牛马厨房',navigationBarBackgroundColor:defaultTokens['--bg'],navigationBarTextStyle:'black',backgroundColor:defaultTokens['--bg']},
-  style:'v2',lazyCodeLoading:'requiredComponents',sitemapLocation:'sitemap.json',
-  usingComponents:{'asset-image':'/components/asset-image/index'},
-  preloadRule:{'pages/kitchen/index':{network:'all',packages:['media00']}}
+  style:'v2',lazyCodeLoading:'requiredComponents',sitemapLocation:'sitemap.json'
 };
 write('app.json',JSON.stringify(app,null,2)+'\n');
 const fontResult=spawnSync(process.env.FREEBITE_PYTHON||'python',[path.join(__dirname,'font.py')],{encoding:'utf8'});

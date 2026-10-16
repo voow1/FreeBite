@@ -1,1 +1,2 @@
+@import "../motion.wxss";
 .info-page{padding-bottom:calc(48rpx + env(safe-area-inset-bottom))}.info-block{padding:28rpx 0;border-top:1rpx solid var(--line)}.info-block>text{display:block;margin:14rpx 0;line-height:1.9;word-break:break-all}

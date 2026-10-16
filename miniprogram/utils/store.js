@@ -48,7 +48,9 @@ function createStore(platform) {
     let added = 0;
     names.forEach(name=>{
       name = String(name).trim().slice(0,60);
-      if (name && state.shopping.length < 300 && !state.shopping.some(i=>i.name===name)) {
+      const existing=state.shopping.find(i=>i.name===name);
+      if(existing){if(existing.done){existing.done=false;added++;}return;}
+      if (name && state.shopping.length < 300) {
         state.shopping.push({id:uid('shop'),name,done:false}); added++;
       }
     });

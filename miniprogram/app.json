@@ -108,6 +108,13 @@
       "pages": [
         "index"
       ]
+    },
+    {
+      "root": "petmotion",
+      "name": "petmotion",
+      "pages": [
+        "index"
+      ]
     }
   ],
   "window": {
@@ -118,16 +125,5 @@
   },
   "style": "v2",
   "lazyCodeLoading": "requiredComponents",
-  "sitemapLocation": "sitemap.json",
-  "usingComponents": {
-    "asset-image": "/components/asset-image/index"
-  },
-  "preloadRule": {
-    "pages/kitchen/index": {
-      "network": "all",
-      "packages": [
-        "media00"
-      ]
-    }
-  }
+  "sitemapLocation": "sitemap.json"
 }

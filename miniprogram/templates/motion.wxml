@@ -1,0 +1,3 @@
+<template name="motion">
+  <view wx:if="{{qTouch && !qReduced && !qPaused}}" class="q-touch q-touch-{{qTouch.beat}}" style="left:{{qTouch.x}}px;top:{{qTouch.y}}px" aria-hidden="true"><view class="q-ring"></view></view>
+</template>

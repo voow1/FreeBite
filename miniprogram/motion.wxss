@@ -1,0 +1,102 @@
+/* Q motion: compositor-only movement, bounded entrances, native press feedback. */
+.q-app{--q-tilt:-7deg;--q-rebound:1.065;--q-ease:cubic-bezier(.22,1.35,.36,1)}
+.q-app.theme-milk-tea{--q-tilt:9deg;--q-rebound:1.09}.q-app.theme-lazy-cat{--q-tilt:-4deg;--q-rebound:1.035;--q-ease:cubic-bezier(.2,.85,.3,1)}.q-app.theme-baozi{--q-tilt:5deg;--q-rebound:1.12}
+.q-app button,.q-app .q-clickable{transition:transform 260ms var(--q-ease),opacity 160ms ease;transform-origin:center}
+.q-app button.q-pressed,.q-app .q-clickable.q-pressed{animation:none!important;transform:scale(.93);opacity:.78}
+.q-app button.wheel-center.q-pressed{transform:translate(-50%,-50%) scale(.9)}
+.q-app button.photo-arrow.q-pressed{transform:translateY(-50%) scale(.9)}
+.q-app .q-scene,.q-app.q-scene{animation:q-scene-in 400ms var(--q-ease) both}
+.q-app.q-action-nav.q-beat-0 .q-scene.q-active{animation-name:q-scene-in}
+.q-app.q-action-nav.q-beat-1 .q-scene.q-active{animation-name:q-scene-again}
+.q-app .q-scene.q-inactive{display:none}
+.q-app .q-inactive view,.q-app .q-inactive image,.q-app .q-inactive text,.q-app .q-inactive button,.q-app .q-inactive asset-image{animation-play-state:paused!important}
+.q-app .q-scene .section-head:first-child{animation:q-rise 430ms var(--q-ease) both}
+.q-app .q-arrive{animation:q-rise 380ms var(--q-ease) both;animation-delay:var(--q-delay,0ms)}
+.q-app .input{transition:transform 220ms var(--q-ease),border-color 180ms ease}
+.q-app .input.q-focused{transform:translateY(-2px);border-color:var(--accent)}
+.q-app .brand .theme-brand-icon{animation:q-breathe 4s ease-in-out infinite}
+.q-app .empty .q-empty-icon{width:64px;height:64px;animation:q-float 2800ms ease-in-out infinite}
+.q-app .theme-decoration{animation:q-float 3500ms ease-in-out infinite}
+.q-app .bottom-nav .nav-item{transition:none}
+.q-app .bottom-nav .nav-item:active{transform:none;opacity:1}
+.q-app .bottom-nav .theme-nav-icon{animation:none}
+.q-app .bottom-nav .q-nav-beat-0 .theme-nav-icon{animation:q-nav-in-a 480ms var(--q-ease) both}
+.q-app .bottom-nav .q-nav-beat-1 .theme-nav-icon{animation:q-nav-in-b 480ms var(--q-ease) both}
+.q-app .wheel-screen{animation:q-wheel-in 360ms var(--q-ease) both}
+.q-app .wheel-topbar,.q-app .wheel-intro{animation:q-rise 400ms var(--q-ease) both}
+.q-app .wheel-center .theme-spin-icon{animation:q-breathe 2200ms ease-in-out infinite}
+/* Pet completion is animated in its source frames, avoiding double transforms. */
+.q-app .q-spinning .wheel-center .theme-spin-icon{animation:q-wiggle 650ms ease-in-out infinite}
+.q-app .scrim{animation:q-fade-in 180ms ease both}
+.q-app .sheet{animation:q-sheet-in 360ms var(--q-ease) both}
+.q-app .q-closing.scrim{animation:q-fade-out 160ms ease both;pointer-events:none}
+.q-app .q-closing .sheet{animation:q-sheet-out 160ms ease both}
+.q-app .q-closing.wheel-screen{animation:q-wheel-out 160ms ease both;pointer-events:none}
+.q-app .toast{animation:q-toast-in 360ms var(--q-ease) both}
+.q-app .toast.q-toast-1{animation-name:q-toast-again}
+.q-app .toast{display:flex;align-items:center;gap:8px}
+.q-app .q-toast-icon{width:28px;height:28px;flex:none;animation:q-wiggle 650ms ease-in-out 2}
+.q-app .q-radio-active radio{animation:q-check 400ms var(--q-ease) both}
+.q-app .recipe .ingredient{animation:q-rise 320ms var(--q-ease) both}
+.q-app .recipe .ingredient:nth-child(n+9){animation:none}
+.q-app .step-number{animation:q-check 400ms var(--q-ease) both}
+.q-app .step:nth-child(n+7) .step-number{animation:none}
+.q-app .info-block{animation:q-rise 430ms var(--q-ease) both}
+.q-app .info-block:nth-child(4){animation-delay:60ms}.q-app .info-block:nth-child(5){animation-delay:100ms}
+.q-app .shopping-name .check{transition:transform 230ms var(--q-ease),opacity 180ms ease}
+.q-app .shopping-name.done .check{animation:q-check 400ms var(--q-ease) both}
+.q-app .shopping-name>text:last-child{transition:opacity 180ms ease}
+.q-app .shopping-name.done>text:last-child{opacity:.55}
+.q-app .pet-selected{transition:transform 260ms var(--q-ease)}
+.q-app .pet-card.active .pet-selected{animation:q-rise 300ms var(--q-ease) both}
+.q-app.q-action-dish .hero-photo,.q-app.q-action-dish .recipe-title,.q-app.q-action-dish .metrics,
+.q-app.q-action-theme .theme-summary,.q-app.q-action-theme .pet-card.active .pet-thumb,
+.q-app.q-action-serving .servings .active,.q-app.q-action-serving .serving-choice.active,
+.q-app.q-action-taste .taste-choice.active,.q-app.q-action-filter .pill.active,
+.q-app.q-action-category .category-row .active,.q-app.q-action-match .match-card:nth-child(-n+4),
+.q-app.q-action-shopping .shopping-list,.q-app.q-action-check .q-target .check,
+.q-app.q-action-setting .setting-row switch,.q-app.q-action-success .recipe .actions:first-of-type{animation-duration:460ms;animation-timing-function:var(--q-ease);animation-fill-mode:both}
+.q-app.q-beat-0.q-action-dish .hero-photo,.q-app.q-beat-0.q-action-dish .recipe-title,.q-app.q-beat-0.q-action-dish .metrics,
+.q-app.q-beat-0.q-action-theme .theme-summary,.q-app.q-beat-0.q-action-theme .pet-card.active .pet-thumb,
+.q-app.q-beat-0.q-action-serving .servings .active,.q-app.q-beat-0.q-action-serving .serving-choice.active,
+.q-app.q-beat-0.q-action-taste .taste-choice.active,.q-app.q-beat-0.q-action-filter .pill.active,
+.q-app.q-beat-0.q-action-category .category-row .active,.q-app.q-beat-0.q-action-match .match-card:nth-child(-n+4),
+.q-app.q-beat-0.q-action-shopping .shopping-list,.q-app.q-beat-0.q-action-check .q-target .check,
+.q-app.q-beat-0.q-action-setting .setting-row switch{animation-name:q-pop-a}
+.q-app.q-beat-1.q-action-dish .hero-photo,.q-app.q-beat-1.q-action-dish .recipe-title,.q-app.q-beat-1.q-action-dish .metrics,
+.q-app.q-beat-1.q-action-theme .theme-summary,.q-app.q-beat-1.q-action-theme .pet-card.active .pet-thumb,
+.q-app.q-beat-1.q-action-serving .servings .active,.q-app.q-beat-1.q-action-serving .serving-choice.active,
+.q-app.q-beat-1.q-action-taste .taste-choice.active,.q-app.q-beat-1.q-action-filter .pill.active,
+.q-app.q-beat-1.q-action-category .category-row .active,.q-app.q-beat-1.q-action-match .match-card:nth-child(-n+4),
+.q-app.q-beat-1.q-action-shopping .shopping-list,.q-app.q-beat-1.q-action-check .q-target .check,
+.q-app.q-beat-1.q-action-setting .setting-row switch{animation-name:q-pop-b}
+.q-app .q-touch{position:fixed;width:0;height:0;z-index:200;pointer-events:none}
+.q-app .q-touch .q-ring{position:absolute;pointer-events:none;box-sizing:border-box;width:18px;height:18px;left:-9px;top:-9px;border:1px solid var(--accent);border-radius:50%;background:transparent;animation:q-ring-a 260ms ease-out both}
+.q-app .q-touch-1 .q-ring{animation-name:q-ring-b}
+@keyframes q-scene-in{from{opacity:0;transform:translateY(12px) scale(.99)}to{opacity:1;transform:none}}
+@keyframes q-scene-again{from{opacity:0;transform:translateY(12px) scale(.99)}to{opacity:1;transform:none}}
+@keyframes q-rise{from{opacity:0;transform:translateY(12px) scale(.96)}to{opacity:1;transform:none}}
+@keyframes q-pop-a{0%{transform:scale(.95)}55%{transform:scale(var(--q-rebound))}100%{transform:none}}
+@keyframes q-pop-b{0%{transform:scale(.95)}55%{transform:scale(var(--q-rebound))}100%{transform:none}}
+@keyframes q-nav-in-a{0%{transform:none}45%{transform:translateY(-4px) rotate(var(--q-tilt)) scale(1.12)}100%{transform:none}}
+@keyframes q-nav-in-b{0%{transform:none}45%{transform:translateY(-4px) rotate(var(--q-tilt)) scale(1.12)}100%{transform:none}}
+@keyframes q-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.055)}}
+@keyframes q-float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-5px) rotate(var(--q-tilt))}}
+@keyframes q-wheel-in{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes q-wheel-out{to{opacity:0;transform:translateY(18px) scale(.98)}}
+@keyframes q-wiggle{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg) scale(1.08)}}
+@keyframes q-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes q-fade-out{to{opacity:0}}
+@keyframes q-sheet-in{from{transform:translateY(65px);opacity:.5}to{transform:none;opacity:1}}
+@keyframes q-sheet-out{to{transform:translateY(45px);opacity:0}}
+@keyframes q-toast-in{0%{transform:translateX(-50%) translateY(16px) scale(.9);opacity:0}65%{transform:translateX(-50%) translateY(-3px) scale(1.025);opacity:1}100%{transform:translateX(-50%);opacity:1}}
+@keyframes q-toast-again{0%{transform:translateX(-50%) translateY(16px) scale(.9);opacity:0}65%{transform:translateX(-50%) translateY(-3px) scale(1.025);opacity:1}100%{transform:translateX(-50%);opacity:1}}
+@keyframes q-check{0%{transform:scale(.6) rotate(-15deg)}60%{transform:scale(1.25) rotate(8deg)}100%{transform:none}}
+@keyframes q-ring-a{from{opacity:.38;transform:scale(.55)}to{opacity:0;transform:scale(1.2)}}
+@keyframes q-ring-b{from{opacity:.38;transform:scale(.55)}to{opacity:0;transform:scale(1.2)}}
+/* Do not spend animation work behind full-screen overlays or hidden pages. */
+.q-app.modal-open>.brand .theme-brand-icon,.q-app.modal-open>.bottom-nav .theme-nav-icon,.q-app.modal-open>.q-scene .theme-decoration,.q-app.modal-open>.q-scene .q-empty-icon{animation-play-state:paused}
+.q-app.q-paused asset-image,.q-app.q-paused view,.q-app.q-paused image,.q-app.q-paused text,.q-app.q-paused button{animation-play-state:paused!important}
+.q-app.reduce-motion view,.q-app.reduce-motion image,.q-app.reduce-motion text,.q-app.reduce-motion button,.q-app.reduce-motion input,.q-app.reduce-motion textarea,.q-app.reduce-motion switch,.q-app.reduce-motion radio{animation:none!important;transition:none!important}
+.q-app.reduce-motion .q-focused{transform:none}
+@media(prefers-reduced-motion:reduce){.q-app view,.q-app image,.q-app text,.q-app button,.q-app input,.q-app textarea,.q-app switch,.q-app radio{animation:none!important;transition:none!important}.q-app .q-touch{display:none}}

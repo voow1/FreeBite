@@ -1,0 +1,14 @@
+{
+  "sourceDir": "上线资料/角色动作重制/v1.16.0/小程序图集",
+  "package": "petmotion",
+  "columns": 8,
+  "rows": 8,
+  "frameSize": 256,
+  "baseline": 240,
+  "states": {
+    "idle": 16,
+    "runRight": 16,
+    "runLeft": 16,
+    "done": 12
+  }
+}

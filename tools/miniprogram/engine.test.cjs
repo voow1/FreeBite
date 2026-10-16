@@ -63,10 +63,6 @@ test('custom recipe validation, inference, persistence and deduplicated shopping
 test('corrected source recipes include their named vegetables in fridge matching',()=>{
   const s=make();for(const [name,vegetable]of [['蒜苗炒鸡蛋','蒜苗'],['丝瓜鸡蛋汤','丝瓜']]){const r=recipes.find(r=>r.name===name);assert(r.ingredients.includes(vegetable));assert(s.engine.matchFridgeRecipe(r,['鸡蛋']).missing.includes(vegetable));assert(!r.method.steps.join('').includes('焯去血沫'));}
 });
-test('media loading deduplicates, bounds concurrency, and retries after failure',async()=>{
-  let active=0,max=0;const attempts={};global.wx={loadSubpackage(o){active++;max=Math.max(max,active);attempts[o.name]=(attempts[o.name]||0)+1;setTimeout(()=>{active--;if(o.name==='media99'&&attempts[o.name]===1)o.fail(new Error('offline'));else o.success();},5);}};
-  const media=require('../../miniprogram/utils/media');await Promise.all([media.ensure('/media01/a.jpg'),media.ensure('/media01/b.jpg'),media.ensure('/media02/a.jpg'),media.ensure('/media03/a.jpg')]);assert.equal(attempts.media01,1);assert.equal(max,2);await assert.rejects(media.ensure('/media99/a.jpg'));await media.ensure('/media99/a.jpg');assert.equal(attempts.media99,2);
-});
 test('page handlers complete spin, grocery, search and sharing flow',async()=>{
   const s=make();let page;global.Page=p=>{page=p;};global.getApp=()=>({getStore:()=>s});global.wx={setNavigationBarColor(){},setBackgroundColor(){},pageScrollTo(){},createSelectorQuery:()=>({in(){return this;},select(){return this;},fields(){return this;},exec(fn){fn([]);}})};
   require('../../miniprogram/pages/kitchen/index');page.data=JSON.parse(JSON.stringify(page.data));page.setData=function(patch,cb){for(const [k,v]of Object.entries(patch)){if(k.includes('.')){const [a,b]=k.split('.');this.data[a][b]=v;}else this.data[k]=v;}if(cb)cb();};

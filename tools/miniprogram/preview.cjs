@@ -3,10 +3,10 @@
 const http=require('node:http'),fs=require('node:fs'),path=require('node:path');
 const root=path.resolve(__dirname,'../../miniprogram');
 const walk=d=>fs.readdirSync(d,{withFileTypes:true}).flatMap(e=>e.isDirectory()?walk(path.join(d,e.name)):[path.join(d,e.name)]);
-const files=walk(root).filter(f=>/\.(js|wxss|wxml)$/.test(f)&&!path.relative(root,f).startsWith('media'));
 http.createServer((req,res)=>{
   const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname);
   if(pathname==='/'){
+    const files=walk(root).filter(f=>/\.(js|wxss|wxml)$/.test(f)&&!path.relative(root,f).startsWith('media'));
     const sources=Object.fromEntries(files.map(f=>['/'+path.relative(root,f).replace(/\\/g,'/'),fs.readFileSync(f,'utf8')]));
     const runtime=fs.readFileSync(path.join(__dirname,'preview-runtime.js'),'utf8');
     res.setHeader('Content-Type','text/html; charset=utf-8');

@@ -16,6 +16,5 @@ module.exports={
     this.store.state.selectedIds=[r.id];this.store.save();
     wx.reLaunch({url:'/pages/kitchen/index'});
   },
-  openCredit(){const r=this.data.selected;if(r&&r.creditId)wx.navigateTo({url:'/info/index?credit='+encodeURIComponent(r.creditId)});},
-  copySource(e){const url=e.currentTarget.dataset.url;if(url)wx.setClipboardData({data:url});}
+  openCredit(){const r=this.data.selected;if(r&&r.creditId)wx.navigateTo({url:'/info/index?credit='+encodeURIComponent(r.creditId)});}
 };

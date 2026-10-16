@@ -14,7 +14,8 @@
     "media10": "/media10/image",
     "media11": "/media11/image",
     "media12": "/media12/image",
-    "media13": "/media13/image"
+    "media13": "/media13/image",
+    "petmotion": "/petmotion/image"
   },
   "componentPlaceholder": {
     "media00": "view",
@@ -30,6 +31,7 @@
     "media10": "view",
     "media11": "view",
     "media12": "view",
-    "media13": "view"
+    "media13": "view",
+    "petmotion": "view"
   }
 }

@@ -1,0 +1,10 @@
+{
+  "id": "baozi-sous-chef",
+  "name": "包仔小厨",
+  "sources": {
+    "idle": "assets/baozi-sous-chef-idle.webp",
+    "runRight": "assets/baozi-sous-chef-run-right.webp",
+    "runLeft": "assets/baozi-sous-chef-run-left.webp",
+    "done": "assets/baozi-sous-chef-done.webp"
+  }
+}

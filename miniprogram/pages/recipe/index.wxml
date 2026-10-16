@@ -1,6 +1,8 @@
+<import src="../../templates/motion.wxml" />
 <import src="../../templates/recipe.wxml" />
-<view class="app detail-page" style="{{themeStyle}}">
+<view bindtap="qTap" class="app q-app q-beat-{{qBeat}} q-action-{{qAction}} {{qPaused ? 'q-paused' : ''}} {{qReduced ? 'reduce-motion' : ''}} detail-page q-scene theme-{{themeId}}" style="{{themeStyle}}">
   <template wx:if="{{selected}}" is="recipe" data="{{selected,selectedMenu,standalone}}" />
-  <view wx:else class="empty"><text class="title">这道菜暂时找不到了</text><text>自定义菜谱保存在创建者的设备上。</text><button class="primary" bindtap="backHome">回厨房选一道</button></view>
-  <view wx:if="{{toast}}" class="toast">{{toast}}</view>
+  <view wx:else class="empty"><image class="q-empty-icon" src="{{themeAssets.spin}}" mode="aspectFit" /><text class="title">这道菜暂时找不到了</text><text>自定义菜谱保存在创建者的设备上。</text><button hover-class="q-pressed" hover-start-time="0" hover-stay-time="110" class="primary" bindtap="backHome">回厨房选一道</button></view>
+  <view wx:if="{{toast}}" class="toast q-toast-{{qBeat}}"><image class="q-toast-icon" src="{{themeAssets.spin}}" mode="aspectFit" /><text>{{toast}}</text></view>
+<template is="motion" data="{{qTouch,qReduced,qPaused}}" />
 </view>

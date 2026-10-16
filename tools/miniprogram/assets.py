@@ -5,7 +5,7 @@ import json
 import shutil
 from datetime import datetime
 from pathlib import Path
-from PIL import Image, ImageSequence
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[2]
 OUT = ROOT / 'miniprogram'
@@ -38,26 +38,7 @@ def emit(source, payload, extension):
     used += len(payload)
     manifest[source] = '/' + target.relative_to(OUT).as_posix()
 
-# Package the four characters together so switching animations never loads another package.
-for pet in data['mascotPresets']:
-    for source in pet['sources'].values():
-        if source in manifest:
-            continue
-        with Image.open(ROOT / 'site' / source) as image:
-            frames, durations = [], []
-            for frame in ImageSequence.Iterator(image):
-                rgba = frame.convert('RGBA')
-                palette = rgba.convert('RGB').quantize(colors=255)
-                transparent = rgba.getchannel('A').point(lambda value: 255 if value < 96 else 0)
-                palette.paste(255, mask=transparent)
-                palette.info['transparency'] = 255
-                frames.append(palette)
-                durations.append(frame.info.get('duration', 100))
-            buf = io.BytesIO()
-            frames[0].save(buf, format='GIF', save_all=True, append_images=frames[1:],
-                           duration=durations, loop=0, transparency=255, disposal=2, optimize=False)
-            emit(source, buf.getvalue(), '.gif')
-
+# Animated pets are rendered from alpha-preserving PNG atlases in petmotion.
 for source in sorted({recipe['image'] for recipe in data['recipes']}):
     if not source.startswith('assets/dishes/'):
         raise ValueError(f'Unexpected external or empty image: {source}')
@@ -69,6 +50,20 @@ for source in sorted({recipe['image'] for recipe in data['recipes']}):
         emit(source, buf.getvalue(), '.jpg')
 
 result = {'files': manifest, 'packages': packages}
+atlas_config=json.loads((ROOT/'tools/miniprogram/pet-atlas.json').read_text(encoding='utf-8'))
+atlas_source=ROOT/atlas_config['sourceDir']
+atlas_out=OUT/'petmotion'
+if atlas_out.exists():
+    old.mkdir(parents=True,exist_ok=True)
+    shutil.move(str(atlas_out),str(old/'petmotion'))
+(atlas_out/'assets').mkdir(parents=True)
+for pet in data['mascotPresets']:
+    for suffix in ('.png','-preview.png'):
+        shutil.copy2(atlas_source/(pet['id']+suffix),atlas_out/'assets'/(pet['id']+suffix))
+(atlas_out/'index.js').write_text('Page({ onLoad() { wx.redirectTo({url:"/pages/kitchen/index"}); } });\n',encoding='utf-8')
+(atlas_out/'index.json').write_text('{}\n',encoding='utf-8')
+(atlas_out/'index.wxml').write_text('<view>不牛马厨房</view>\n',encoding='utf-8')
+packages.append({'name':'petmotion','root':'petmotion','pages':['index']})
 (ROOT / 'tools/miniprogram/.generated/assets.json').write_text(json.dumps(result, ensure_ascii=False), encoding='utf-8')
 print(json.dumps({'images': len(manifest), 'packages': len(packages),
                   'bytes': sum(p.stat().st_size for p in OUT.glob('media*/assets/*'))}))

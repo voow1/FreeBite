@@ -1,0 +1,1298 @@
+[
+  {
+    "path": "site/assets/dishes/avocado-egg-toast-b16.webp",
+    "bytes": 12924,
+    "sha256": "e36f8f89c574cc669eebcb77770aeb83accb97732382a877d8d475d866e570c4",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/banana-cocoa-cup-b15.webp",
+    "bytes": 7600,
+    "sha256": "9adb9c1cfc050b5f7697ffb62592ac2dfcda736950a11a4026a863e3756df996",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/beef-paomo-b14.webp",
+    "bytes": 61700,
+    "sha256": "cbc6e94d1e7fbe8adcaf466c7469b2bc95c9411547685388dd946dc5327488e8",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/beef-potato-rice.webp",
+    "bytes": 28810,
+    "sha256": "5a5df209cae4ab8b643b77d38ed352bfc60a6299dea1a0c460488ac1fe24a3c4",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/beef-vegetable-rolls-b28.webp",
+    "bytes": 18784,
+    "sha256": "d1cff5fafe8067f780b48c9c33dab1a42437343815391fbf88a89ac1c878afe0",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/bitter-melon-eggs.webp",
+    "bytes": 57806,
+    "sha256": "2a33c8c4bbeaba5701120566afa55478fb7505015da3e9a5dae0b36af4c51a88",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/black-bean-ribs-rice-b25.webp",
+    "bytes": 27824,
+    "sha256": "d01536619c589ef77c64be4ac772a7685a6130d396c1cc38b812ba3630d27473",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/black-pepper-beefsteak.webp",
+    "bytes": 53158,
+    "sha256": "1371054f04baeb4eefd33c56ecfe0a95072b6e1df2082e790ea8acf031b7bf6e",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/black-sesame-soy-milk-b10.webp",
+    "bytes": 12124,
+    "sha256": "0fb72050fcececa10c55e72bdf7303508c85b10cf2c6e5b3187a0dde03fda3a1",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/blanched-choy-sum-b15.webp",
+    "bytes": 29144,
+    "sha256": "2ccb29783cffda8c2b8fd1930961ccf2b262c2c195ebfc4549cc1e20f0cce146",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/boat-congee-b9.webp",
+    "bytes": 18428,
+    "sha256": "f23fc6b172b0a898cd0bb71f2647f6ffec76bb3fcb95efa8ffa6e382c3b28bbf",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/bobo-chicken-skewers-b13.webp",
+    "bytes": 89164,
+    "sha256": "9dcc730d7a8c191edbede49c6eb97448cef479d4d9d5213cbb3c63010ff14c4a",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/button-mushroom-beef-slices-b21.webp",
+    "bytes": 30006,
+    "sha256": "d171bda2fcdd6b1202278d61f84532bf1489fd6cb9af5abafc981165a2416f6c",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/cabbage-glass-noodle-soup-b20.webp",
+    "bytes": 13596,
+    "sha256": "d13acaf0eeabef94cceb53ec223ced8ec7948005218725644dafc8b8ff66bb7e",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/cabbage-glass-noodle-stew-b7.webp",
+    "bytes": 15526,
+    "sha256": "c1e3f154ce08877f19430772b26f2076c9cbdd615162a2c90996a998c7afe7fa",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/cabbage-tofu-casserole.webp",
+    "bytes": 11404,
+    "sha256": "f8e4aa967087fadf9a3799883133558b1c059e509a2e7ba6f3381bdd44bf22e5",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/cantonese-steamed-ribs.webp",
+    "bytes": 58368,
+    "sha256": "70115e28fe6d2db74d05342a3998af7a450556c58c7c0fd3fae9a40c4456ba98",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/carrot-corn-pork-rib-soup-b7.webp",
+    "bytes": 18240,
+    "sha256": "af94a8a725a83d576c31750a0b8f9090125536b6040c699ccffe9059b5befabb",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/celery-chicken-stir-fry-b10.webp",
+    "bytes": 32498,
+    "sha256": "149489c9119b2c5de87fddeb6455a12f7db384fd0b88fdb7e191f4c5b876404c",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/century-egg-pork-congee.webp",
+    "bytes": 16116,
+    "sha256": "e74aaf297361b7f29ef8453f8ae486163d254541515dbcb2671b786e085e1fa2",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/cheesecake-b19.webp",
+    "bytes": 13644,
+    "sha256": "4b13632321375a654bfefef0870ce2dabeea2890ac821d22913043209a018857",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/cheesy-chicken-bread-b20.webp",
+    "bytes": 15834,
+    "sha256": "444f36a6884fa7fd4e4e34836182c340f3de4022908f4932214f4105e3c06318",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/chenpi-puer-tea-b8.webp",
+    "bytes": 11556,
+    "sha256": "4ab88c50352dc6127502a57960629d46b756a14db486a7a5e6fede7b8ccfd03e",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/chicken-cabbage-soup.webp",
+    "bytes": 28744,
+    "sha256": "7dff3371c264ea377d2d98aa0ded0c5ce4fddb8bc9b97af881019935530c1f73",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/chicken-corn-congee-b26.webp",
+    "bytes": 12376,
+    "sha256": "426e58c0e55a24c7c5ca29bff21db5afb36f30e0fa0586dbd6b1d11277b12efd",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/chicken-corn-salad.webp",
+    "bytes": 21334,
+    "sha256": "be302d555a5c5f541d6e720dfaee3992a1b6424f25f45ad30ea3bf80899e3940",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/chicken-cucumber-salad-b28.webp",
+    "bytes": 47588,
+    "sha256": "d11bb2e3dcd386526354c95fdcc3693bc2c480bbb2160e54307fcb938c314934",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/chicken-curry-rice.webp",
+    "bytes": 22478,
+    "sha256": "17339e841e296a0b2fd753f64b4a2052bd895a7b7974b83d4d42bc9ca2f02f32",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/chicken-feet-b29.webp",
+    "bytes": 45736,
+    "sha256": "715ad50a94ae1b96862be543ffda202e1decc3272c3a68e82a3f56d96f15768c",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/chicken-mushroom-rice.webp",
+    "bytes": 19008,
+    "sha256": "e197f389f68fee9981665a4876ef68f9df2f319d95d15e335078e30e11b0f895",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/claypot-rice-chinese-sausage.webp",
+    "bytes": 31558,
+    "sha256": "ed043198857c519f8653e2139fc52052d0d21992ed306dcd1205c7fbd7b1f9ce",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/cocoa-oat-cookies-b18.webp",
+    "bytes": 77154,
+    "sha256": "516e4fc2b52c2f440135d3ff3b618ac42fa4dc42eca750f0bc58fc3aa86bead5",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/coconut-pumpkin-dessert-b20.webp",
+    "bytes": 44546,
+    "sha256": "771d99834572de32630ef0d8a3524048b13ab89d991d5cf3e2c922d636b54281",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/cold-rice-noodle-salad-b22.webp",
+    "bytes": 60114,
+    "sha256": "2ffeae655668be2769592e2b6a7e134d9c4f6088d0ac2db397c72fe96ae93f4a",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/corn-egg-cup-b10.webp",
+    "bytes": 10988,
+    "sha256": "66725f1fb01337912688397e67ec05914b6e12ac35738ce282126a44e92ceacd",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/corn-silk-tea-b14.webp",
+    "bytes": 25030,
+    "sha256": "93da0cea0349b8cc1e98ca58c8fb75efebe68d6b7bd743b11bc226dfc0e1d25c",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/corn-wotou-b30.webp",
+    "bytes": 66048,
+    "sha256": "0b3a14832a01d82e468b91a149f7eb494b4e07330fefe84c946d0f62531ee9e7",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/crayfish-noodles-b9.webp",
+    "bytes": 30266,
+    "sha256": "8e9c14bd2830455bae82424462fff93755ce7acef2496500ab6d95ccfe759de6",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/cucumber-egg-salad.webp",
+    "bytes": 31310,
+    "sha256": "8c8b6109033e2b795b71245c8ec56277f09384100124097e78ed4d1f447661d4",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/douhua-noodles.webp",
+    "bytes": 18036,
+    "sha256": "90495a66a879337480a4a940e28f973b13119ad78531a8a07818459090ae1e09",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/dry-fried-potato-strips-b24.webp",
+    "bytes": 37658,
+    "sha256": "12a3fc7b382204b931d0e334fc437ddd42effd5282ce00039c212123896c0232",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/dry-pot-frog-b11.webp",
+    "bytes": 82122,
+    "sha256": "9e5b4c612fb120d706fa6f9c3ffdcc6db787f2bc6e34593b9722e9b97411b797",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/dry-pot-pork-intestines.webp",
+    "bytes": 62110,
+    "sha256": "30a6b3d60ce2c50a75ef05f3851e28d76d972cfef32167e27e108cf8567106f2",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/dry-pot-ribs-shrimp-b11.webp",
+    "bytes": 34264,
+    "sha256": "28f889cd4f155549b8fde30ed26b19a240a7cd1c2534d21c6b203b42f4cafe55",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/duck-bamboo-soup-b28.webp",
+    "bytes": 26486,
+    "sha256": "92e73176af391a11be4e40e7a51932898fcc4a2afafa8c5f2ace323711a524b4",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/edamame-chicken-b29.webp",
+    "bytes": 53802,
+    "sha256": "d14671e1f38247b752b5598f24b1d6c64b2fd1020af1439e81687dd10b9be3d0",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/egg-ham-rice-noodles-b10.webp",
+    "bytes": 19146,
+    "sha256": "fec9a097e6fa2939d7b1756c682f92d00c0b22bde6cd714d8f66d457bcc31b46",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/egg-sauce-mixed-vegetables-b13.webp",
+    "bytes": 21316,
+    "sha256": "05dee1b4cf0e55904257ce1c35160d207cf5572c700710369943a940f320d375",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/egg-vegetable-noodles-b6.webp",
+    "bytes": 10756,
+    "sha256": "e8f100bea47161f8213b26381a15cd917ea3182fe7ddbf706ca10fd8c5798f22",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/egg-vegetable-pancakes.webp",
+    "bytes": 28912,
+    "sha256": "c862965a921ccc4a6fb226c6bc4f66b03246f8664de9563a71cb870012df6371",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/extra-spicy-beef-aorta-b12.webp",
+    "bytes": 29798,
+    "sha256": "fe9b99ba38eb45bd222996b37d265e278e84aec02d7927921cf20f6225bc7fb7",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/extra-spicy-frog-b13.webp",
+    "bytes": 81080,
+    "sha256": "c3f5e62ee0bc6614d4874c4ab2e9922b43db9276b005ce13ccdeef239a94a97a",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/extra-spicy-pork-intestine-b12.webp",
+    "bytes": 53468,
+    "sha256": "232cd77475129f1d033fc58dacbf445c813cb3cf8698fec1f797eb2f12ae59d4",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/fried-instant-noodles.webp",
+    "bytes": 22810,
+    "sha256": "41b0f03d5941f2640940704584669374f5193e481d2507d28a7c43d43fa9fc0d",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/fried-mantou-slices-b29.webp",
+    "bytes": 54286,
+    "sha256": "b08f696141d1e4a11d9639528b5495da0abece7c9ceb7f5ad2e1b829e0a1c0ae",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/garlic-eggplant-strips-b23.webp",
+    "bytes": 20936,
+    "sha256": "81e7f9432779cb33ac3eeb886593fd6ba9b7b9eb6a737828095a3015c607755e",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/garlic-grilled-eggplant.webp",
+    "bytes": 23700,
+    "sha256": "1b5719b5bbed789b2f5ce75c687dd2c5b7fcdfa010e5c22595a10265123ca240",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/garlic-steamed-scallops-b6.webp",
+    "bytes": 51336,
+    "sha256": "b17947f3218be0c147226eeddab395ca0914bedc96e18bbff8e3f112c2e900b2",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/garlic-vermicelli-shrimp.webp",
+    "bytes": 11578,
+    "sha256": "fcfd3eb8349ca1ab31b0de4514f62262db0ea319cc3d9f1fa51273ec2cdd8dfa",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/gourd-shaped-fried-chicken-b12.webp",
+    "bytes": 23732,
+    "sha256": "5d30ccb9d0600bb155105f94dbd28fefad372a035ea132da1bb26550ae9c991e",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/green-curry-shrimp-b22.webp",
+    "bytes": 17964,
+    "sha256": "ba20e47b9a91c5878991f0f1689a43838cba990ffa98e57ca9eb520c4fd71564",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/green-pepper-liver-stir-fry.webp",
+    "bytes": 40416,
+    "sha256": "97d762d2cc70cf86fb3421f2e3a48714582dd68641d97149eeb06a27939c9132",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/green-pepper-potato-shreds-b25.webp",
+    "bytes": 26680,
+    "sha256": "69a08cb8652ce284fcbad6a392264ba6290a068b5335e602fa5726e795c820ff",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/grilled-chicken-skin-b25.webp",
+    "bytes": 47952,
+    "sha256": "bcc0f5b48e6c4bb761aaa4726bb9336a463c5f584040b25f85603d22d43bc945",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/grilled-cold-noodles-b11.webp",
+    "bytes": 24154,
+    "sha256": "8dcdf3ff1661e5da1774bc62d4e31fd442f9d441a514d3b7af9e4fa37f4940e1",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/hand-torn-cabbage.webp",
+    "bytes": 26514,
+    "sha256": "18c20a5af31bbd2a551cdea46ed9792053d962d06e7966803a469a465f743ae6",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/home-style-tofu.webp",
+    "bytes": 20024,
+    "sha256": "ef952fe9562d79ab43443a89b57ef8038a521bf66b73e61598cc31b5fd1323b4",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/hot-and-sour-soup-b4.webp",
+    "bytes": 25676,
+    "sha256": "4bf58579435a4da3c8f3ac012214a132feef9451c3dcf3f1723c00b170619751",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/hot-sour-rice-noodles.webp",
+    "bytes": 12830,
+    "sha256": "a7eb951bcc218fd4e844a941b88f23124aa514f9fcef6994d517da94fe848986",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/intestine-blood-noodles-b11.webp",
+    "bytes": 21474,
+    "sha256": "1f9070d182e873f2c23a212d2688d14653c85df739e96bcb418fd8b07f9aa4af",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/jiangshui-noodles-b25.webp",
+    "bytes": 23296,
+    "sha256": "5166dee2b0ba3cdc6cc69ccd10a72c3242b37fa835fc708a1d55a8b993c0443c",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/kung-pao-chicken-less-sugar.webp",
+    "bytes": 27484,
+    "sha256": "589ed432fd99ed5b9f3ebaa17c0da360c3eba512f3135fbd04792700576b2c8b",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/lamb-radish-soup-b25.webp",
+    "bytes": 57240,
+    "sha256": "8d68fc124f15b13fe758c6c67746f1fd53a47cde84e4b9d23ff9ff7252cfe944",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/lamb-skewer-rice-b16.webp",
+    "bytes": 62340,
+    "sha256": "82ce4c2148d42e48b3477d2433d584b838de838e5b8602507e72711fc6cbdd85",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/lamb-skewers.webp",
+    "bytes": 28106,
+    "sha256": "512bc0321caa2119150e453633803379e7a63b38badff7af151da8862d36db62",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/lamb-spine-b29.webp",
+    "bytes": 17726,
+    "sha256": "988dd1bb42cdf74c89675edd5fc9481ff8098f92851ea159d29b0b74ad64947c",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/lanzhou-beef-noodles.webp",
+    "bytes": 56882,
+    "sha256": "3d5c147c0fe9b9ed9240365d9d02a4263f08917edb0673b993922b92e66cefdd",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/lemon-mint-beef-b10.webp",
+    "bytes": 39320,
+    "sha256": "7067792c748e503af4a6efea78d0942062dc4ec7b48851b5df630dba56d07f4b",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/lemongrass-grilled-fish-b9.webp",
+    "bytes": 34018,
+    "sha256": "b5a52650732269a909c9998e941dbe9cb89aab6329b19a2cf906128b2f992288",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/lotus-leaf-sticky-rice-chicken-b6.webp",
+    "bytes": 21826,
+    "sha256": "d2723e9cb90a4a9f546a22fb1bf69087077e4cfa167a69b72d763a8ea4f3a2dd",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/lotus-root-dish-b18.webp",
+    "bytes": 20714,
+    "sha256": "d6f87081b90c42a8a08dcdb724d42d1df8b7cf658d9a9d5cb27526a2199e199e",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/lotus-root-pork-rib-soup-b6.webp",
+    "bytes": 24424,
+    "sha256": "a2cdc3caddc034a1046e48ad034e0ec4f20c624a00db581f9975b4bf963e12c5",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/low-sugar-yogurt-chiffon-b23.webp",
+    "bytes": 13606,
+    "sha256": "a8623a4d70506f44610d0381b2ae6df8ac85c72c2c5ea0befc050af0c0efca85",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/mei-cai-pork-b29.webp",
+    "bytes": 32432,
+    "sha256": "2c6af3ba525fb7c6bbfa23aa501c267d9d735d91112615152d348f058855c5dd",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/milk-salt-dinner-rolls.webp",
+    "bytes": 15180,
+    "sha256": "a6363a9c0dc35d9d8f18bedd697c58a4395e6676985f6bbcde0abacd499a7d05",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/mint-mung-bean-drink-b24.webp",
+    "bytes": 22330,
+    "sha256": "9bc0776f225b866df1b649d55587cb9235b78f85621a97135acbe63c11bcede3",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/mung-bean-soup-b17.webp",
+    "bytes": 23490,
+    "sha256": "1eca45c4ebd2fab9d2b0764f79b2bbdd692d2040c0b4f6b9c03df0320263ced3",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/mushroom-steamed-chicken-b26.webp",
+    "bytes": 52828,
+    "sha256": "79b11a5ecf04546d91904362ff9e25749c9d7335bc5b79449fad38593d67ef11",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/mushroom-tofu-soup-b6.webp",
+    "bytes": 34040,
+    "sha256": "fedc66b4334d4067c3ae7d9ce9bf5b2bf011c97f68210a186605f62f6edfecb7",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/mushroom-vegetable-rice-b5.webp",
+    "bytes": 28270,
+    "sha256": "3e1e8fcad69d182e22e35a88ac126a3af1131357ccf6d9d7871df2202f310721",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/northeast-glass-noodle-salad-b9.webp",
+    "bytes": 51262,
+    "sha256": "e81a176ffb2d87b3e030c8a42a00339f80148382489e000ecd6ce947fb7feb2e",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/oat-milk-smoothie-b5.webp",
+    "bytes": 15216,
+    "sha256": "f1e23bcfa9e95344d62964633a3f6db6db2281fe2db06e891ea7caacd80c352d",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/oat-soy-milk-b24.webp",
+    "bytes": 12794,
+    "sha256": "ebe6fcb1aadf2fb7b7edac2354aab1d8ad2c23592a3c13636c8f66c9b67ce796",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/pepper-salt-flower-roll-b26.webp",
+    "bytes": 82948,
+    "sha256": "5da846f35ad9be7247b35e2e212ac64c0d625e8c3c5a3559a3818e5ced9941b3",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/pepper-salt-ribs.webp",
+    "bytes": 20258,
+    "sha256": "0c5298f4de8bb228926f89625eb12db59a859007206a9696208f40d9f249e4fb",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/pianerchuan.webp",
+    "bytes": 30154,
+    "sha256": "545b3eb9e12767722a8b82bc30498847546d913b2c52902c469889954a071f26",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/plain-muffins-b16.webp",
+    "bytes": 10196,
+    "sha256": "934a97ca3b8bc09b2d7b20356ed7040a976ea91ebd7eb3f1d2e72a01c63853f4",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/plain-scallion-noodle-soup-b9.webp",
+    "bytes": 12366,
+    "sha256": "6b645869936c74c314932c651d2faa8112a6e504d48f37a694ead276fafeebce",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/pork-preserved-vegetable-bun-b15.webp",
+    "bytes": 10010,
+    "sha256": "cf5d3ad4328694b6d60ec91cd8bce006a4b20e2b2f3ebb6845e0c5054822f82d",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/pork-vegetable-congee-b7.webp",
+    "bytes": 16116,
+    "sha256": "e74aaf297361b7f29ef8453f8ae486163d254541515dbcb2671b786e085e1fa2",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/pork-vegetable-wonton-b19.webp",
+    "bytes": 13420,
+    "sha256": "92e5a0a2788d21532db9f2fd706cf11684ab4256d0c3220309ea458da1215c47",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/pulled-pork-sandwich-b5.webp",
+    "bytes": 24976,
+    "sha256": "f9d93bd1051162129842f0e20322cbcf091179ee49eef91c392a6d1e88149ba9",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/pumpkin-millet-porridge.webp",
+    "bytes": 26638,
+    "sha256": "86b4e92129ade6262934aaed0cf6005e8463032e786d25224ad2da021ef2ac48",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/pumpkin-muffin-b17.webp",
+    "bytes": 33580,
+    "sha256": "86db9e82f46eccc0615b227fb3bb001d7574f373b379963e4b678198fe039b28",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/pumpkin-soft-bread-b8.webp",
+    "bytes": 25702,
+    "sha256": "27028f5ab33fdbe979d82728a359efbe755d52f891deb04d174177665347cb29",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/pumpkin-spice-latte-b19.webp",
+    "bytes": 18662,
+    "sha256": "7f5f9385e4bc6622e79a38503ff260eac1497a6d2582cb2a43accbe81fcf254f",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/purple-sweet-potato-milk-b26.webp",
+    "bytes": 11834,
+    "sha256": "715e1423575391ee5e1787af9492686114876b719a4361fcc71fb80988e3aa75",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/purple-sweet-potato-roll.webp",
+    "bytes": 17162,
+    "sha256": "3cbf8e4ea9b4608af015c9324b07756f09be8b06b5c5315336d48995ac1d91bf",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/purple-yam-dessert-cup-b8.webp",
+    "bytes": 17598,
+    "sha256": "70972923a72c10c4af7b404a3076eeeb20c7aedf4b5a5aa5af94415c5d8d3f21",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/quick-fried-cabbage.webp",
+    "bytes": 30874,
+    "sha256": "7e4dab9c304b1bac7c9e47eaae61d66e6a896998557726feac0d63e3afd4be18",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/rabbit-head-b30.webp",
+    "bytes": 28858,
+    "sha256": "2ec3df47c2d2bc75d0fc3c7696d7f2cde163970c805f18236967fc8bfc307df3",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/red-bean-barley-water-b10.webp",
+    "bytes": 21578,
+    "sha256": "e4ebcddedef94c2b7787603f9b7f59d699c6c74dbb63439521795c1299db7eeb",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/roasted-vegetable-chicken.webp",
+    "bytes": 25928,
+    "sha256": "50440728d62d9817f9fd67ecf2142c9b8d9bdce55b3014fc9d5edde8fdca12b5",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/savory-scallion-scones.webp",
+    "bytes": 18118,
+    "sha256": "d3d33fbd38bfdb047d80b6a2f7d8edc81a4865f52d1851ab4fb0ed0a7f3e6b3a",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/scallion-flower-roll-b24.webp",
+    "bytes": 67426,
+    "sha256": "b24f0eb5083095c4555b7db34e5139c01542eac788d6208e82ed356db238dfb8",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/scallion-herb-scones.webp",
+    "bytes": 35478,
+    "sha256": "1eafa0b27002969ce4157036e9aee37c440b0e421204e966618381380f4d501e",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/scallion-pork-floss-bread-b15.webp",
+    "bytes": 14252,
+    "sha256": "956afaea32d989a583657d34894a59c01c1b2c161971cde73528f5150476dc42",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/shiitake-chicken-stir-fry.webp",
+    "bytes": 22050,
+    "sha256": "574097119c101133536bb16e384e1dcfefeb11c0f6927ae9c5cb467217cedbc5",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/sichuan-pepper-chicken.webp",
+    "bytes": 29660,
+    "sha256": "06c345b3e127edca36f95f3179256af5ee56af49e44ecfa075a284087dfc77ec",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/sizzling-chicken-claypot-b24.webp",
+    "bytes": 50590,
+    "sha256": "401e92c40af7e76d57cb2affaacbb73ed34c271abf64ea92c248564ab8aa8f8a",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/small-pot-rice-noodles.webp",
+    "bytes": 14336,
+    "sha256": "22fc9646493d6881b6a07b27294d3594428d0b994daab1ca6dbbca5fa7058817",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/spicy-duck-blood-vermicelli-b25.webp",
+    "bytes": 57890,
+    "sha256": "bb12927438d34ecfa2a1484b8a95defdbf97736a3b4ff884d846ef9167b27fac",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/spicy-pork-brain-b28.webp",
+    "bytes": 56996,
+    "sha256": "48c818eebb593468b031437de5dfe4bf498bdcd5b8992cb10273b0b6480138a1",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/spicy-pork-liver.webp",
+    "bytes": 32644,
+    "sha256": "5df927d1c705d754afc822e5208d312faab3ed9e537ba5bdc3a57ef63b6ed8a4",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/spicy-sour-soba.webp",
+    "bytes": 15932,
+    "sha256": "aaeb7196701811751e6f6a0cb645a18410d4e7e64a8a09c3a68f2c26a6bc59b5",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/spinach-pork-congee.webp",
+    "bytes": 24160,
+    "sha256": "14ef33589487891a04ce9f4d44fc54ffb79af0a348893a40292076a5ac661bc9",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/steamed-winter-mushroom-chicken-b21.webp",
+    "bytes": 20754,
+    "sha256": "fe25a1f3cf06b513592c973dc1ea1ff3fe7511558e3bc361e60c6c69e7c6914a",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/stir-fried-bok-choy-b18.webp",
+    "bytes": 28282,
+    "sha256": "5ee8c35d257f451ae8947dd89aa4df7cfaf82625d7976407cbb1ac55aa9c580b",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/strawberry-sparkling-water-b16.webp",
+    "bytes": 13640,
+    "sha256": "7a18681b8e40b7c61a72488d125d0b0f8d30b580ac49bff1c6f9c7ebcd40979c",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/suan-cai-yu.webp",
+    "bytes": 36316,
+    "sha256": "f113f6e8c364f606bd6ca6ae97aceb9d21e36375c6c68aad1bffc25e5e055133",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/superior-broth-baby-cabbage-b15.webp",
+    "bytes": 22126,
+    "sha256": "1d7f573376d5fbfa4a9e045ba83f164e920e7967890680f325d5e459b2252895",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/sweet-potato-brownie-b21.webp",
+    "bytes": 37944,
+    "sha256": "7cbeb80ce3cb68e616ff0ba74dd5a102a127b3e1618d81a99b08b32197728f9f",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/sweet-rice-dumpling-soup-b20.webp",
+    "bytes": 12682,
+    "sha256": "0dde9db1a1ecdcca12b55d279c5c98a6267621d08f2768a67f06a03b738058f9",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/taro-ribs-claypot-b25.webp",
+    "bytes": 30646,
+    "sha256": "1244c530acea782a2edb8f14174affc3714bbd65942c2304459674620c81d098",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/tofu-beef-bowl-b11.webp",
+    "bytes": 33282,
+    "sha256": "e9f5ad7b512576db3d004f5a1cebc64a399cf5739e8e939bdcb5e3836522367f",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/tom-yum-soup-b15.webp",
+    "bytes": 27958,
+    "sha256": "de86f0c46056278326ecf66f55fc18bb37bee2e15c33f0d8b2031cee3fe1be9c",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/tom-yum-soup.webp",
+    "bytes": 17092,
+    "sha256": "6ca3c844d3e492fe4e9573e8e11e1ad6f894aad48e5ed6ddf8eabd5f00028b6d",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/tomato-dumpling-soup-b20.webp",
+    "bytes": 14884,
+    "sha256": "a1607ae81975a2fcb3646f3b82246bb94aa919a20c35295f8dc45b5beaf4cc44",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/tomato-eggs.webp",
+    "bytes": 20108,
+    "sha256": "418e217da1ea2b16d4315936f5f0ae16edab2bd74e0f29f8003c609f1e7f0937",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/tomato-lamb-noodles-b26.webp",
+    "bytes": 15466,
+    "sha256": "91a88e63f5c32101c0a094daf535512fa60b75741fc48b072e8fedfe3a9ddcb5",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/vegetable-bao-b30.webp",
+    "bytes": 19126,
+    "sha256": "cea3f36213444e3462b72072a74f7ad882daa9a111cd5e116511985c04bacc00",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/water-bamboo-pork-b28.webp",
+    "bytes": 18796,
+    "sha256": "674d03c0cd180d221f792395558e250e24292da562947b31aeb7596be894568d",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/wholegrain-steamed-buns-b24.webp",
+    "bytes": 93158,
+    "sha256": "b48ced85520f2aaf737f0d6a77e3939292104b150be6d1bf2359ea91a704bc60",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/winter-melon-mushroom-soup-b27.webp",
+    "bytes": 8020,
+    "sha256": "a213ef9bd78a1bffe4f6931072816b2ece61d6e65c6eca7dddd036b2b86f1903",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/winter-melon-soup.webp",
+    "bytes": 20566,
+    "sha256": "5137afe9599e9636b1699310faee0a2324f11f9d1f23ec308a565d2cfa3479e2",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/winter-melon-tea-b26.webp",
+    "bytes": 16348,
+    "sha256": "5c12c8d0f51881ca8de116b02ea405a6647ab82d7eca84a7e93d31cbeced7f60",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/wood-ear-pork-stir-fry-b28.webp",
+    "bytes": 27028,
+    "sha256": "ecbf956c62e617a6a1984cdaff36bf8c136bb8e34bf7e01df427e1f7796f2cbe",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/xuecai-shredded-pork.webp",
+    "bytes": 25140,
+    "sha256": "ac85e5bc5b10766c2d515bd958f945a6a724d37925e919da5a0ac414e4b24f89",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/yam-chicken-slices-b10.webp",
+    "bytes": 17460,
+    "sha256": "0863150f8a6ec6a80b737682e97976c045c707c91ead2a0a77a661361cf97687",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/yangzhou-fried-rice-b15.webp",
+    "bytes": 24790,
+    "sha256": "33f6b9c26a4b1e5bb18cf1199457670a0d67dfe7a8a346b60150e6e752bb5651",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "site/assets/dishes/yangzhou-fried-rice.webp",
+    "bytes": 28426,
+    "sha256": "596f7cb1ae21f8c0462a978dafa270410dffb54172698deb6a807f350e58c0dc",
+    "reason": "已由后续实拍替换，当前800道菜与网站代码均无引用"
+  },
+  {
+    "path": "tools/miniprogram/pet_gif.py",
+    "bytes": 1351,
+    "sha256": "e2a3a6c3a01673f466894a432ea6b5374d48fe92d95574c07a241c01d7b1879b",
+    "reason": "已用PNG图集替代的GIF编码与旧动作，或Python运行缓存"
+  },
+  {
+    "path": "tools/miniprogram/__pycache__/assets.cpython-311.pyc",
+    "bytes": 6845,
+    "sha256": "f178b2b17ad98905c161b93548676ebc22331f9a9b1fda3d1a0aa0dbbbc69024",
+    "reason": "已用PNG图集替代的GIF编码与旧动作，或Python运行缓存"
+  },
+  {
+    "path": "tools/miniprogram/__pycache__/package-pets-160.cpython-311.pyc",
+    "bytes": 14891,
+    "sha256": "9b351f537f3336af254a00462e477008248711f660e789b6031010ba79940411",
+    "reason": "已用PNG图集替代的GIF编码与旧动作，或Python运行缓存"
+  },
+  {
+    "path": "tools/miniprogram/__pycache__/pet_gif.cpython-311.pyc",
+    "bytes": 2691,
+    "sha256": "925436e7177df4e6a3f0a3bffe66eae0a99f0986056b1aa58eed8df3fbc520e9",
+    "reason": "已用PNG图集替代的GIF编码与旧动作，或Python运行缓存"
+  },
+  {
+    "path": "上线资料/小程序交互图标/v1.15.1/小狗待机/actions/idle.png",
+    "bytes": 1251225,
+    "sha256": "46b60d6ef494278ff5cf69bbcfd3a7d22e0ee72969219c8b7e776b9b24a52b8e",
+    "reason": "已用PNG图集替代的GIF编码与旧动作，或Python运行缓存"
+  },
+  {
+    "path": "上线资料/小程序交互图标/v1.15.1/小狗待机/character/原角色.png",
+    "bytes": 25512,
+    "sha256": "117475577782fddc736698e24104d1bdd66a6ca7b493586a144f1cf501f5aec0",
+    "reason": "已用PNG图集替代的GIF编码与旧动作，或Python运行缓存"
+  },
+  {
+    "path": "上线资料/小程序交互图标/v1.15.1/小狗待机/install/milk-tea-puppy-done.webp",
+    "bytes": 27796,
+    "sha256": "b82d9465631bbd6c1b5ca3298a9876d8fc316ff5af8efbd2201e71b6c175f0dd",
+    "reason": "已用PNG图集替代的GIF编码与旧动作，或Python运行缓存"
+  },
+  {
+    "path": "上线资料/小程序交互图标/v1.15.1/小狗待机/install/milk-tea-puppy-idle.webp",
+    "bytes": 150606,
+    "sha256": "00aff790b783037710701bd6d90cc76087041a1be450e184f48eb682e21f338c",
+    "reason": "已用PNG图集替代的GIF编码与旧动作，或Python运行缓存"
+  },
+  {
+    "path": "上线资料/小程序交互图标/v1.15.1/小狗待机/install/milk-tea-puppy-run-left.webp",
+    "bytes": 39352,
+    "sha256": "39b98d0769df9ed78148cf6f2fc491768c457d77e579930ae93e280f0dd1e53a",
+    "reason": "已用PNG图集替代的GIF编码与旧动作，或Python运行缓存"
+  },
+  {
+    "path": "上线资料/小程序交互图标/v1.15.1/小狗待机/install/milk-tea-puppy-run-right.webp",
+    "bytes": 39506,
+    "sha256": "fa85ea8dc39836667101a6f934676690c63ac413973c3b9b59f10f95cbda618f",
+    "reason": "已用PNG图集替代的GIF编码与旧动作，或Python运行缓存"
+  },
+  {
+    "path": "上线资料/小程序交互图标/v1.15.1/小狗待机/install/pet.json",
+    "bytes": 341,
+    "sha256": "b03a8b212a21fc314ed0bc15268268e60cdf7cefaee4571e93e2db9d6a5c849c",
+    "reason": "已用PNG图集替代的GIF编码与旧动作，或Python运行缓存"
+  },
+  {
+    "path": "上线资料/小程序交互图标/v1.15.1/小狗待机/旧动作/idle-边缘待清理.png",
+    "bytes": 1304587,
+    "sha256": "808ca1655596e3a7df263c521a7dbf8a5c9e990db462ed7bfaa34232dbfdc5c9",
+    "reason": "已用PNG图集替代的GIF编码与旧动作，或Python运行缓存"
+  },
+  {
+    "path": "上线资料/宠物主题/旧主题图/已撤下装饰/baozi/decoration.png",
+    "bytes": 16417,
+    "sha256": "b85864fd5723861070615d42c3282f0fbc68e54d77009501a62b8afb3d33b1d5",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/宠物主题/旧主题图/已撤下装饰/lazy-cat/decoration.png",
+    "bytes": 13890,
+    "sha256": "c70990d85085041c5d3383216999456c70dee9c9d5a048ab8c6d9514ecc644f9",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/宠物主题/旧主题图/已撤下装饰/milk-tea/decoration.png",
+    "bytes": 21115,
+    "sha256": "aa26a1149337be2e49dffce3832eb64ba360227d49b326edbc536577c342c27a",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/宠物主题/旧主题图/已撤下装饰/strawberry/decoration.png",
+    "bytes": 19907,
+    "sha256": "85f0d727a8c7bd960cec6108dab68a79a999272da4c9b5e3ca9edd80375ba611",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/旧界面/v1.13.0/旧上传指南.md",
+    "bytes": 4238,
+    "sha256": "436080677a8d72b94ea2989396b1c2000462f8601883afa404a87af5fbc0f9d8",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/旧界面/v1.13.0/转盘-390.png",
+    "bytes": 30185,
+    "sha256": "6db559fff3c6190fb297be1317ab5d46bd6ae44905aa0883eac30c355caabe18",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/旧界面/v1.13.0/首页-360.png",
+    "bytes": 44975,
+    "sha256": "2ab0080e4c6252021210082b7cc2f9dcbd2153c5d9722c6855ea10e2a9e3570b",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/旧界面/v1.13.0/首页-390.png",
+    "bytes": 46271,
+    "sha256": "4bb71b53bba4afae8082390ea3326f2959f384b2910934616def9201f627df9e",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/旧界面/v1.13.0/首页-430.png",
+    "bytes": 52285,
+    "sha256": "62a33c488cbd51bdb8cc9853e5c7f38bd63a92b5e243c576a498b73ebd2ed48f",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/旧界面/v1.13.0/验收说明.md",
+    "bytes": 2563,
+    "sha256": "91860f14e5e2e3475df62fad65fec5b7049b1ff265e19a75cf4597373c71f61a",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.0/旧界面/调整配色与撤除装饰前/四主题-我的对照.png",
+    "bytes": 582193,
+    "sha256": "aa55615fd7753690f530b69c3a0dea576738a4c7e9988edd6b685244933a01bd",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.0/旧界面/调整配色与撤除装饰前/四主题-转盘对照.png",
+    "bytes": 583977,
+    "sha256": "88774315b187a3ed7c92d825f96b04d644f3e2fe12426a2092d362c3937d53e5",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.0/旧界面/调整配色与撤除装饰前/燕麦奶茶-我的.png",
+    "bytes": 312420,
+    "sha256": "b2f7fe4c0f02fde7ed3a577277a77a6fbba98e7d2be47b3b51ca39f222ee5349",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.0/旧界面/调整配色与撤除装饰前/燕麦奶茶-转盘.png",
+    "bytes": 250147,
+    "sha256": "9844acb2864f82bb337872b5b002e9658ff67b51258f83f300b4eba6a26ec5f3",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.0/旧界面/调整配色与撤除装饰前/竹笼暖食-我的.png",
+    "bytes": 295959,
+    "sha256": "d5aeab604152f8989417b0be24dcd4dbbf7290623922931179f1b0f7e466e3b8",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.0/旧界面/调整配色与撤除装饰前/竹笼暖食-转盘.png",
+    "bytes": 232080,
+    "sha256": "0a07fd9298e80bd1c043f10f65f934e5368e082248899cf1f8f4cd6b85a65f61",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.3/旧提审资料/20261015-012056/微信提审准备记录.md",
+    "bytes": 1143,
+    "sha256": "0dd8def01e0c56dcf04b72887148d0d079edc4022731c4eabb1505b4d83ebdab",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.3/旧提审资料/20261015-012056/提审待补隐私邮箱.png",
+    "bytes": 65636,
+    "sha256": "81bf0afdf18fb9fcefa1a0da9cbf827f822af0c8a8aaab32ed7aa6f60176c75d",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.3/旧提审资料/20261015-012056/隐私保护指引-待确认.png",
+    "bytes": 179377,
+    "sha256": "5e8ea4ee80fea9eb87b85ebd6abfbd29c270da162b3f4fda5c17de7d0c8a68d0",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.7/旧排查截图/原生四主题布局验收.json",
+    "bytes": 3997,
+    "sha256": "27794bf9e97a483c8d941cc167667675203be300332925144a3f6119923de3f6",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.7/旧排查截图/原生转盘-包仔小厨.png",
+    "bytes": 88705,
+    "sha256": "c69d669b2e0075fc0129181ebc853a4c0436892ab6be6bdb6175664a712ef8cc",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.7/旧排查截图/原生转盘-奶茶小狗.png",
+    "bytes": 87559,
+    "sha256": "61b8f5e02a76ea091ab84453b0b569860be0c5f75dc304c2ae71b4a908bcc402",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.7/旧排查截图/原生转盘-慵懒小猫.png",
+    "bytes": 84252,
+    "sha256": "4b30076d61c2eead23f002874538f5bbba216dda769ffe1bb884b2fe2edfe708",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.7/旧排查截图/原生转盘-草莓甜心.png",
+    "bytes": 82609,
+    "sha256": "6e7cc1a4e688e92154106285867679c4fa2c549c3fab269925b1747a1b99109d",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.14.7/旧排查截图/宠物分包入口复核.png",
+    "bytes": 98776,
+    "sha256": "3f57647fd59bd372db643b3441dc54aab7beafe2ad54e2373c6033174b66ffe1",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.15.0/旧性能采样/原生性能采样.json",
+    "bytes": 1781,
+    "sha256": "f1309a0b4e2c1a3d891c970c67b05709e1a3e27e80c1c01d5859ca45003e1d17",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.15.0/旧文档/提审前-20261016-095151/网站进度表.md",
+    "bytes": 119004,
+    "sha256": "64fa349e73e5beea4aad22d7000a5a13ed3bc8ebe1ccfd6a6a403fc604469dba",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.15.0/旧文档/提审前-20261016-095151/验收与上传说明.md",
+    "bytes": 5652,
+    "sha256": "4942bd6863ef79ef2498a48ac2f5b4f6e2fd76f04ce979d30c26de90cefc895d",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.15.0/旧预览/微信开发版上传成功-20261016-015431.png",
+    "bytes": 21574,
+    "sha256": "f4ad4b67fbde5a92c2a6579ed650df91f2c1c334f2482b68d9559528ceaf5336",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.15.0/旧预览/微信预览二维码-20261016-015431.png",
+    "bytes": 46277,
+    "sha256": "b4316b13f2c66be33fff738642b9226387a0d01c44000dd7d728613691aa54d8",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.15.1/旧预览/小狗手势位置微调前.png",
+    "bytes": 99655,
+    "sha256": "67b1cb0324116fff3fc4a3fc5a66fb02a6fa5ed0a30512c56f8fc817f2a81652",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.16.0/旧预览/20261016-120242/原生变速采样.json",
+    "bytes": 2495,
+    "sha256": "b4649099c98c27f24bb9cfdd1e95a8877ef2a0eeda29e93cebd0e5b2ced8b4f0",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.16.0/旧预览/20261016-120242/小程序文件校验.json",
+    "bytes": 119220,
+    "sha256": "6f6398e1fa34c10d999f8218222e4418fa5a1951b94243973d98391c3138a599",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.16.0/旧预览/20261016-120242/微信预览二维码.png",
+    "bytes": 46813,
+    "sha256": "673da13e4937f3dce1b9ba5394a867fdc2b06a7b189d261cdbb3855a7449bdd7",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.16.0/旧预览/20261016-120242/微信预览包信息.json",
+    "bytes": 1313,
+    "sha256": "add8de248cc8bde4a5a722b9af569bc69ff05510830ba56a77a92ba9954f4e2c",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "上线资料/小程序验收/v1.16.0/旧预览/20261016-120242/本地包体检查.json",
+    "bytes": 521,
+    "sha256": "523bbb960cadc5755ac3968a43d7e1a5a1b3bf4466786b297b30f6cbd867ad12",
+    "reason": "已标为旧版本的对照与中间产物"
+  },
+  {
+    "path": "miniprogram/media00/assets/1623b9259f021a6f3033.gif",
+    "bytes": 50072,
+    "sha256": "81e6169f1bfef8843a853f7fb4cac84c3df48a9bc6f72820f8cdbae0125ee66d",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/2c4b43d13bfee207e53f.gif",
+    "bytes": 81081,
+    "sha256": "50dfeef4b8a67af2bcc229a543fc6423c56bd2e2005a2ed54bbb5f08fe589951",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/2e6202521f610d25213b.gif",
+    "bytes": 58237,
+    "sha256": "159b30a15dd0836e334ee83cebf5c10f0508e95bc17e7297a736362ea14eb291",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/3486b97362b94ca741c8.gif",
+    "bytes": 70869,
+    "sha256": "023cbc038f58ce893ad184ffaec5569dec1ae029ca69c4542ca1d7479e8345bb",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/4010fcf990ae99e63fa9.gif",
+    "bytes": 79883,
+    "sha256": "c75124261b4e2951529f7ee1c8f4d107efee29f2d8970f0d93790d8ba2332062",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/72d9d3841c08e23c820a.gif",
+    "bytes": 82861,
+    "sha256": "dacf93f8c79db11b0930329e97f29403a02fa8bcc1a3cbaf2b71c4aed4f1b8de",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/7adc04968f86aacc9ed2.gif",
+    "bytes": 32718,
+    "sha256": "1f81117c49f0f28f9593a4b8a2690b042cae24cb1845484672e3033d95b3b10a",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/916cfd3fee5fd3a682d9.gif",
+    "bytes": 80976,
+    "sha256": "20c8a8ca2d52712e13ce410b7a5ae73499bf7631792198abd87418b825876654",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/93cabf1e53c6596989fe.gif",
+    "bytes": 68830,
+    "sha256": "c5675f0c6bf4efbe7803d8c7559f5b075c40b1da9fe7cf4771525d9a1788fd8b",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/9b10e8be7930cabbbea4.gif",
+    "bytes": 72989,
+    "sha256": "fe4c7f9946c9dcca080d5147d85690612168eec23d4689f0baf7c14f57e84b94",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/d1bccc520fc76de8ec98.gif",
+    "bytes": 70595,
+    "sha256": "d0d014c40ffd735c9336984f18ec3c68aaf3158bb2abed7db15999e57630727d",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/d3cba30c5cceccd16ad4.gif",
+    "bytes": 32717,
+    "sha256": "196d644a2eb4aa6f7fe2db5a0f43a465358df331d275d12187a638b3d4827a0f",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/d9cc6969a2b359374c6f.gif",
+    "bytes": 59274,
+    "sha256": "de94347748f7bdda9ae1d64759efa23dc291b02aa50a586db4dc2df061f2dbf0",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/e7db7c738d3285f884da.gif",
+    "bytes": 26865,
+    "sha256": "11c1540c4f0f12f56c3acc938ac979fe43ab69b958f189977419b18a53522e85",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/f6ac1386db194be07ac3.gif",
+    "bytes": 31793,
+    "sha256": "a3c5ce2bd7ebba56ae8b332f32a4a5a4c529691e1f4e1a2abf5018c86e26c6c9",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/media00/assets/f958c81d04c9881db00f.gif",
+    "bytes": 70384,
+    "sha256": "37ecef83080d557c1cb0e8724acf9d631f34bfa010b1583a59098cbd435fa530",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  },
+  {
+    "path": "miniprogram/utils/media.js",
+    "bytes": 740,
+    "sha256": "b84de083ca166bec69bbaf1e28db84437de7b8cfc7f6bb4705e931c0443ab20f",
+    "reason": "已由原生异步图片组件及PNG图集替代；从Git基线保留恢复副本"
+  }
+]
