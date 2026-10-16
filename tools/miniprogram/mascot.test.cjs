@@ -7,7 +7,7 @@ const path=require('node:path');
 const {createStore}=require('../../miniprogram/utils/store');
 const {mascotPresets}=require('../../miniprogram/data/options');
 const pointer=require('../../miniprogram/utils/wheel-pointer');
-function harness(pet,reduceMotion=false,rects=null,navTop=700){
+function harness(pet,reduceMotion=false,rects=null,navTop=700,layoutEnv=null){
   const store=createStore({getStorageSync:()=>null,setStorageSync(){}});
   store.state.mascotId=pet.id;store.state.settings.reduceMotion=reduceMotion;
   let page,clock=0,id=0;const timers=new Map();
@@ -17,7 +17,7 @@ function harness(pet,reduceMotion=false,rects=null,navTop=700){
     Date:class extends Date{static now(){return clock;}},
     require:p=>p==='../../utils/ui'?{...nativeRequire(p),applyNavigation(){}}:nativeRequire(p),
     Page:p=>page=p,getApp:()=>({getStore:()=>store}),
-    wx:{setNavigationBarColor(){},setBackgroundColor(){},pageScrollTo(o){page.lastScroll=o;o.complete?.();},createSelectorQuery:()=>{const selectors=[];return {in(){return this;},select(s){selectors.push(s);return this;},fields(){return this;},boundingClientRect(){return this;},exec:f=>f(selectors[0]==='.home-scene .hero-photo'?[rects&&rects[1],{top:navTop}]:['.home-scene .menu-strip','.wheel-play-area'].includes(selectors[0])?[]:rects||[])};}},
+    wx:{getWindowInfo:()=>layoutEnv?.screen||{},setNavigationBarColor(){},setBackgroundColor(){},pageScrollTo(o){page.lastScroll=o;o.complete?.();},createSelectorQuery:()=>{const selectors=[];return {in(){return this;},select(s){selectors.push(s);return this;},fields(){return this;},boundingClientRect(){return this;},exec:f=>f(selectors[0]==='.wheel-play-area'&&layoutEnv?[{height:layoutEnv.height}]:selectors[0]==='.home-scene .hero-photo'?[rects&&rects[1],{top:navTop}]:['.home-scene .menu-strip','.wheel-play-area'].includes(selectors[0])?[]:rects||[])};}},
     setTimeout:(fn,ms)=>{timers.set(++id,{fn,at:clock+ms});return id;},clearTimeout:key=>timers.delete(key)
   },{filename});
   page.setData=function(patch,done){Object.assign(this.data,patch);done?.();};page.onLoad({});
@@ -158,5 +158,39 @@ test('a short viewport scrolls only the amount needed before flying to the resul
   const {page,advance}=harness(mascotPresets[0],false,flightRects,450);
   page.spin();page.flightImageReady({detail:{path:page.data.flightRecipe.image}});
   advance(5990);assert.equal(page.lastScroll.scrollTop,42);assert.equal(page.data.flightPhase,'seed');
+  page.onUnload();
+});
+
+test('dragging over the center cannot turn the release into an extra tap',()=>{
+  const {page,advance}=harness(mascotPresets[2]);
+  let spins=0;page.spin=()=>{spins++;};
+  page.touchStart(touch(100,200));page.touchMove(touch(120,200));
+  advance(800);page.touchEnd(touch(120,200));page.tapWheelCenter({});
+  assert.equal(spins,0,'a short drag is not a center-button click');
+  advance(501);page.tapWheelCenter({});assert.equal(spins,1,'a subsequent deliberate tap works');
+  page.touchStart(touch(100,200));page.touchMove(touch(170,200));page.touchEnd(touch(170,200));
+  page.tapWheelCenter({});assert.equal(spins,2,'a released swipe starts exactly one spin');
+  page.onUnload();
+});
+
+test('wheel uses phone width and recovers from an undersized first layout',()=>{
+  const env={screen:{windowWidth:390,windowHeight:844},height:270};
+  const {page,advance}=harness(mascotPresets[3],false,null,700,env);
+  page.openWheel();
+  assert.equal(page._wheelPreferred.size,358);
+  env.height=531;
+  advance(420);
+  assert.equal(page.data.wheelSize,358,'settled geometry restores the full-width disc');
+  const settled=page.data.wheelSize;
+  page.scheduleWheelLayout();page.onHide();env.height=150;advance(500);
+  assert.equal(page.data.wheelSize,settled,'a hidden page cannot apply delayed measurements');
+  page.onUnload();
+});
+test('short phone keeps a readable disc after compact header layout',()=>{
+  const env={screen:{windowWidth:360,windowHeight:640},height:389.2};
+  const {page,advance}=harness(mascotPresets[3],false,null,700,env);
+  page.openWheel();advance(420);
+  assert(page.data.wheelSize>=300);
+  assert(page.data.wheelTop+page.data.wheelSize<=env.height-4);
   page.onUnload();
 });

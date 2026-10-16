@@ -33,12 +33,16 @@ Page(motion.decorate({
     const screen=wx.getWindowInfo?wx.getWindowInfo():wx.getSystemInfoSync?wx.getSystemInfoSync():{};
     const width=screen.windowWidth||375,height=screen.windowHeight||667;
     const safeBottom=screen.safeArea?Math.max(0,screen.screenHeight-screen.safeArea.bottom):0;
-    const previousSize=Math.floor(Math.min(width-48,Math.max(128,(height-safeBottom-320)/1.30)));
-    const petSize=Math.round(previousSize*.30)*1.2;
-    // Reserve room for the enlarged pet above the disc, inside the gesture area.
-    const size=Math.floor(Math.min(width-48,Math.max(100,height-safeBottom-302-petSize*150/160)));
+    // Choose the diameter from width once; the measured play area is the only height constraint.
+    const size=Math.max(100,Math.floor(Math.min(width,620)-32));
+    const petSize=Math.round(size*(height-safeBottom<=760?.30:.432));
     this._wheelPreferred={size,petSize};
-    this.setData({...wheelLayout.placeWheel(Math.max(100,height-safeBottom-282),size,petSize,this.data.pet.id),safeBottom},()=>this.positionWheel());
+    this.setData({...wheelLayout.placeWheel(Math.max(100,height-safeBottom-282),size,petSize,this.data.pet.id),safeBottom},()=>{this.positionWheel();this.scheduleWheelLayout();});
+  },
+  scheduleWheelLayout(){
+    clearTimeout(this._wheelLayoutTimer);
+    // Opening transitions and first-render font metrics must settle before final measurement.
+    this._wheelLayoutTimer=setTimeout(()=>this.positionWheel(),420);
   },
   positionWheel(){
     if(!this.data.wheelOpen||this._petHidden||!this._wheelPreferred)return;
@@ -54,8 +58,8 @@ Page(motion.decorate({
     });
   },
   onShow(){this._petHidden=false;if(wx.setNavigationBarTitle)wx.setNavigationBarTitle({title:'不牛马厨房'});if(this.store)this.refresh();},
-  onHide(){this._petHidden=true;this.cancelSpin();this.petPlayer.stop();this.petPreviewPlayer.stop();},
-  onUnload(){this._petHidden=true;this.cancelSpin();this.petPlayer.stop();this.petPreviewPlayer.stop();clearTimeout(this.toastTimer);if(wx.offMemoryWarning)wx.offMemoryWarning(this._releaseHidden);},
+  onHide(){this._petHidden=true;clearTimeout(this._wheelLayoutTimer);this.cancelSpin();this.petPlayer.stop();this.petPreviewPlayer.stop();},
+  onUnload(){this._petHidden=true;clearTimeout(this._wheelLayoutTimer);this.cancelSpin();this.petPlayer.stop();this.petPreviewPlayer.stop();clearTimeout(this.toastTimer);if(wx.offMemoryWarning)wx.offMemoryWarning(this._releaseHidden);},
   onReachBottom(){if(this.data.tab==='library'){this.limit+=24;this.refreshLibrary();}},
   setViewData(patch,done){
     const changed={};this._viewSnapshots=this._viewSnapshots||{};
@@ -124,7 +128,7 @@ Page(motion.decorate({
     this.store.save();this.refresh();
   },
   openWheel(){if(this.data.spinning)return;this.setData({wheelOpen:true,wheelHintDismissed:false},()=>this.fitWheel());this.refreshWheel();this.syncPetIdle();},
-  closeWheel(){if(!this.data.spinning)this.qClose('wheelOpen',function(){this.petPlayer.stop();});},
+  closeWheel(){if(!this.data.spinning){clearTimeout(this._wheelLayoutTimer);this.qClose('wheelOpen',function(){this.petPlayer.stop();});}},
   refreshWheel(){
     const engine=this.store.engine;
     this.pool=engine.filteredRecipes();
@@ -236,6 +240,10 @@ Page(motion.decorate({
       });
     }catch(error){clearTimeout(this.flightTimer);finish();}
   },
+  tapWheelCenter(e){
+    if(Date.now()<(this._suppressWheelTapUntil||0))return;
+    this.spin(e);
+  },
   touchStart(e){
     if(this.data.spinning)return;
     const point=this.touchPoint(e.touches);
@@ -256,6 +264,7 @@ Page(motion.decorate({
     const dx=point.x-drag.x,dy=point.y-drag.y;
     if(!drag.moved&&(Math.abs(dx)<6||Math.abs(dx)<Math.abs(dy)))return;
     drag.moved=true;drag.delta=dx;
+    this._suppressWheelTapUntil=Date.now()+500;
     if(point.x!==drag.lastX)drag.direction=point.x>drag.lastX?-1:1;
     drag.lastX=point.x;
     const angle=drag.startAngle-dx*180/this.data.wheelSize;
@@ -271,9 +280,10 @@ Page(motion.decorate({
     if(this.data.spinning){this.touch=null;return;}
     const point=this.touchPoint(e.changedTouches),drag=this.touch;
     if(!drag||!point){this.touchCancel();return;}
+    if(drag.moved)this._suppressWheelTapUntil=Date.now()+500;
     const dx=point.x-drag.x,dy=point.y-drag.y;
     const direction=drag.direction||(dx>0?-1:1);
-    if(Math.abs(dx)>35&&(drag.moved||Math.abs(dx)>Math.abs(dy))){this.touch=null;this.spin({direction});}
+    if(Math.abs(dx)>35&&(drag.moved||Math.abs(dx)>Math.abs(dy))){this._suppressWheelTapUntil=Date.now()+500;this.touch=null;this.spin({direction});}
     else this.touchCancel();
   },
   touchCancel(){

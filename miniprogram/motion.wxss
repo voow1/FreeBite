@@ -82,7 +82,7 @@
 @keyframes q-nav-in-b{0%{transform:none}45%{transform:translateY(-4px) rotate(var(--q-tilt)) scale(1.12)}100%{transform:none}}
 @keyframes q-breathe{0%,100%{transform:scale(1)}50%{transform:scale(1.055)}}
 @keyframes q-float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-5px) rotate(var(--q-tilt))}}
-@keyframes q-wheel-in{from{opacity:0;transform:translateY(20px) scale(.97)}to{opacity:1;transform:none}}
+@keyframes q-wheel-in{from{opacity:0}to{opacity:1}}
 @keyframes q-wheel-out{to{opacity:0;transform:translateY(18px) scale(.98)}}
 @keyframes q-wiggle{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(8deg) scale(1.08)}}
 @keyframes q-fade-in{from{opacity:0}to{opacity:1}}

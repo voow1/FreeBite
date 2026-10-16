@@ -1,60 +1,60 @@
 /* Rounded dinner cards, shared by the menu and standalone recipe page. */
-.brand-icon-tile{width:92rpx;height:92rpx;flex:none;display:flex;align-items:center;justify-content:center;border:1rpx solid var(--line);border-radius:30rpx;background:var(--surface);box-shadow:0 10rpx 30rpx var(--line)}
-.brand-kicker{display:block;font-size:19rpx;font-weight:700;letter-spacing:3rpx;color:var(--accent);line-height:1.5}
-.brand .brand-name{display:block;font-size:36rpx;line-height:1.3}
+.brand-icon-tile{width:110.4rpx;height:110.4rpx;flex:none;display:flex;align-items:center;justify-content:center;border:1rpx solid var(--line);border-radius:36rpx;background:var(--surface);box-shadow:0 10rpx 30rpx var(--line)}
+.brand-kicker{display:block;font-size:22.8rpx;font-weight:700;letter-spacing:3rpx;color:var(--accent);line-height:1.5}
+.brand .brand-name{display:block;font-size:43.2rpx;line-height:1.3}
 .brand .brand-note{display:none}
-.dinner-card{border:1rpx solid var(--line);border-radius:40rpx;overflow:hidden;background:linear-gradient(135deg,var(--bg),var(--surface-2) 70%);box-shadow:0 14rpx 40rpx var(--line)}
-.dinner-intro{padding:30rpx 26rpx 12rpx;background:radial-gradient(ellipse at 100% 0,var(--surface-2),transparent 72%)}
-.home-heading{margin:0;gap:12rpx;align-items:center}
+.dinner-card{border:1rpx solid var(--line);border-radius:48rpx;overflow:hidden;background:linear-gradient(135deg,var(--bg),var(--surface-2) 70%);box-shadow:0 14rpx 40rpx var(--line)}
+.dinner-intro{padding:36rpx 31.2rpx 14.4rpx;background:radial-gradient(ellipse at 100% 0,var(--surface-2),transparent 72%)}
+.home-heading{margin:0;gap:14.4rpx;align-items:center}
 .dinner-heading-copy{flex:1;min-width:0}
-.home-heading .eyebrow{font-size:18rpx;font-weight:700;letter-spacing:1rpx}
-.home-heading .title{font-family:Lemi,sans-serif;font-size:48rpx;margin-top:12rpx;line-height:1.3}
-.app button.draw-entry{flex:none;gap:12rpx;min-height:48px;padding:8rpx 22rpx 8rpx 8rpx;border-radius:100rpx;color:var(--surface);background:var(--accent);border:1rpx solid var(--accent-2);box-shadow:0 10rpx 24rpx var(--line-strong),inset 0 2rpx 0 rgba(255,255,255,.25);font-family:Lemi,sans-serif;font-size:24rpx;white-space:nowrap}
-.draw-entry-icon{position:relative;display:block;width:62rpx;height:62rpx;border-radius:50%;flex:none;background:rgba(255,255,255,.16);border:1rpx solid rgba(255,255,255,.3)}
+.home-heading .eyebrow{font-size:21.6rpx;font-weight:700;letter-spacing:1rpx}
+.home-heading .title{font-family:Lemi,sans-serif;font-size:57.6rpx;margin-top:14.4rpx;line-height:1.3}
+.app button.draw-entry{flex:none;gap:14.4rpx;min-height:57.6px;padding:9.6rpx 26.4rpx 9.6rpx 9.6rpx;border-radius:120rpx;color:var(--surface);background:var(--accent);border:1rpx solid var(--accent-2);box-shadow:0 10rpx 24rpx var(--line-strong),inset 0 2rpx 0 rgba(255,255,255,.25);font-family:Lemi,sans-serif;font-size:28.8rpx;white-space:nowrap}
+.draw-entry-icon{position:relative;display:block;width:74.4rpx;height:74.4rpx;border-radius:50%;flex:none;background:rgba(255,255,255,.16);border:1rpx solid rgba(255,255,255,.3)}
 .shuffle-symbol{position:absolute;inset:12rpx;background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22white%22%20stroke-width%3D%222.3%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpath%20d%3D%22M3%206h2c5%200%209%2012%2014%2012h2M17%2014l4%204-4%204M3%2018h2c2.2%200%204.2-2.2%206.2-5.2M13%208.5C15%206.5%2017%206%2019%206h2M17%202l4%204-4%204%22%2F%3E%3C%2Fsvg%3E") center/contain no-repeat}
-.pool-summary{display:block;color:var(--muted-ink);font-family:Lemi,sans-serif;font-size:22rpx;letter-spacing:1rpx;margin:18rpx 0 8rpx}
-.home-scene .menu-strip{width:calc(100% - 52rpx);margin:12rpx 26rpx 14rpx;white-space:nowrap}
-.home-scene .strip-inner{display:inline-flex;gap:14rpx;padding:2rpx 0 10rpx}
-.home-scene .menu-card{display:flex;align-items:center;gap:14rpx;width:300rpx;min-height:112rpx;padding:10rpx;border-radius:30rpx;border:1rpx solid var(--line);background:radial-gradient(ellipse at 85% 0,var(--surface-2),transparent 65%),var(--surface);box-shadow:inset 0 2rpx 0 #fff;flex:none;white-space:normal}
-.home-scene .menu-photo{width:80rpx;height:92rpx;flex:none;border:1rpx solid var(--line);border-radius:22rpx;overflow:hidden}
+.pool-summary{display:block;color:var(--muted-ink);font-family:Lemi,sans-serif;font-size:26.4rpx;letter-spacing:1rpx;margin:21.6rpx 0 9.6rpx}
+.home-scene .menu-strip{width:calc(100% - 62.4rpx);margin:14.4rpx 31.2rpx 16.8rpx;white-space:nowrap}
+.home-scene .strip-inner{display:inline-flex;gap:16.8rpx;padding:2.4rpx 0 12rpx}
+.home-scene .menu-card{display:flex;align-items:center;gap:16.8rpx;width:360rpx;min-height:134.4rpx;padding:12rpx;border-radius:36rpx;border:1rpx solid var(--line);background:radial-gradient(ellipse at 85% 0,var(--surface-2),transparent 65%),var(--surface);box-shadow:inset 0 2rpx 0 #fff;flex:none;white-space:normal}
+.home-scene .menu-photo{width:96rpx;height:110.4rpx;flex:none;border:1rpx solid var(--line);border-radius:26.4rpx;overflow:hidden}
 .menu-card-copy{flex:1;min-width:0}
-.menu-card-name{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-family:Lemi,sans-serif;font-size:25rpx;line-height:1.3}
-.menu-card-meta{display:block;margin-top:6rpx;font-size:19rpx;font-weight:500;color:var(--muted-ink);white-space:nowrap}
-.home-scene .menu-card.chosen::after{height:4rpx;bottom:0;left:27%;width:46%;border-radius:999rpx 999rpx 0 0;background:var(--accent);opacity:.68;box-shadow:0 -4rpx 16rpx var(--accent-2)}
-.recipe-overview{padding:8rpx 26rpx 26rpx}
-.recipe .hero-photo{height:450rpx;border-radius:32rpx;box-shadow:0 16rpx 32rpx var(--line)}
-.dish-flight.flying .dish-flight-card{border-radius:32rpx}
-.recipe .photo-arrow{height:116rpx;font-size:48rpx}.recipe .photo-arrow.prev{border-radius:0 36rpx 36rpx 0}.recipe .photo-arrow.next{border-radius:36rpx 0 0 36rpx}
-.recipe .recipe-title{font-family:Lemi,sans-serif;font-size:50rpx;line-height:1.35;margin:30rpx 0 24rpx}
-.recipe .metrics{display:flex;flex-wrap:nowrap;gap:0;padding:20rpx 0;border-top:1rpx solid var(--line)}
+.menu-card-name{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;overflow:hidden;font-family:Lemi,sans-serif;font-size:30rpx;line-height:1.3}
+.menu-card-meta{display:block;margin-top:7.2rpx;font-size:22.8rpx;font-weight:500;color:var(--muted-ink);white-space:nowrap}
+.home-scene .menu-card.chosen::after{height:4.8rpx;bottom:0;left:27%;width:46%;border-radius:1198.8rpx 1198.8rpx 0 0;background:var(--accent);opacity:.68;box-shadow:0 -4rpx 16rpx var(--accent-2)}
+.recipe-overview{padding:9.6rpx 31.2rpx 31.2rpx}
+.recipe .hero-photo{height:540rpx;border-radius:38.4rpx;box-shadow:0 16rpx 32rpx var(--line)}
+.dish-flight.flying .dish-flight-card{border-radius:38.4rpx}
+.recipe .photo-arrow{height:139.2rpx;font-size:57.6rpx}.recipe .photo-arrow.prev{border-radius:0 43.2rpx 43.2rpx 0}.recipe .photo-arrow.next{border-radius:43.2rpx 0 0 43.2rpx}
+.recipe .recipe-title{font-family:Lemi,sans-serif;font-size:60rpx;line-height:1.35;margin:36rpx 0 28.8rpx}
+.recipe .metrics{display:flex;flex-wrap:nowrap;gap:0;padding:24rpx 0;border-top:1rpx solid var(--line)}
 .recipe-metric{flex:1;text-align:center;min-width:0;border-right:1rpx solid var(--line)}.recipe-metric:last-child{border-right:0}
-.metric-value{display:block;font-family:Lemi,sans-serif;font-size:34rpx;font-weight:700;color:var(--ink);line-height:1.3}
-.metric-label{display:block;font-family:Lemi,sans-serif;font-size:20rpx;color:var(--muted-ink);letter-spacing:1rpx;margin-top:6rpx}
-.recipe-body{background:var(--surface);border-top:1rpx solid var(--line);padding:26rpx}
-.recipe .recipe-tags{gap:10rpx;margin:0 0 30rpx}
-.recipe .tag{padding:9rpx 16rpx;border-radius:16rpx;font-family:Lemi,sans-serif;font-size:21rpx;background:var(--surface-2);color:var(--muted-ink)}
-.recipe-section-heading{justify-content:flex-start;gap:16rpx;margin:30rpx 0 20rpx}
-.recipe-section-heading .section-title{font-family:Lemi,sans-serif;font-size:30rpx;line-height:1.45;flex:1;min-width:0}
-.recipe-section-icon{width:64rpx;height:64rpx;flex:none;border-radius:23rpx;background:var(--surface-2);color:var(--accent);display:flex;align-items:center;justify-content:center}
-.recipe .ingredient-list{gap:12rpx;margin:0 0 30rpx}
-.recipe .ingredient{display:flex;align-items:center;gap:12rpx;font-family:Lemi,sans-serif;font-size:25rpx;border-radius:100rpx;padding:12rpx 22rpx;background:var(--bg);border:1rpx solid var(--line);max-width:100%;overflow-wrap:break-word}
-.recipe .ingredient::before{content:'';width:9rpx;height:9rpx;border-radius:50%;background:var(--accent);flex:none}
-.method-card{border:1rpx solid var(--line-strong);border-radius:36rpx;padding:28rpx 24rpx;background:var(--surface)}
-.recipe .step{gap:16rpx;margin:0 0 28rpx}.recipe .step:last-child{margin-bottom:0}
-.recipe .step-number{width:32rpx;height:auto;line-height:2.05;background:transparent;border-radius:0;font-family:Lemi,sans-serif;font-size:23rpx;color:var(--accent)}
-.recipe .step-text{font-family:Lemi,sans-serif;font-size:27rpx;line-height:2.05;letter-spacing:.6rpx;min-width:0}
-.recipe .tip{display:flex;align-items:flex-start;gap:14rpx;margin:24rpx 0 0;padding:20rpx 0 0;border-top:1rpx dashed var(--line-strong);border-radius:0;background:transparent;color:var(--muted-ink);font-family:Lemi,sans-serif;font-size:24rpx;line-height:1.85}
-.recipe .recipe-note{font-family:Lemi,sans-serif;font-size:22rpx;margin:18rpx 0 0}
-.recipe .recipe-actions{gap:14rpx;margin:24rpx 0 0}.recipe-actions button{font-family:Lemi,sans-serif;font-size:26rpx;border-radius:30rpx;padding:20rpx 10rpx;gap:12rpx;min-height:52px}.recipe-actions .primary{background:var(--surface-2);color:var(--accent);border:1rpx solid var(--line-strong)}.recipe-actions .secondary{background:var(--surface);color:var(--ink)}
-.recipe .footer-actions{margin:18rpx 0 4rpx}.recipe .footer-actions .text-button{font-size:20rpx;padding:8rpx 4rpx}.recipe .fine-print{font-size:19rpx;line-height:1.6;color:var(--muted-ink)}
-.app button.recent-card{display:flex;gap:16rpx;text-align:left;padding:24rpx;border-radius:36rpx;background:var(--surface);border:1rpx solid var(--line);margin-top:24rpx;box-shadow:0 12rpx 30rpx var(--line)}
-.recent-copy{flex:1;min-width:0}.recent-copy text{display:block}.recent-copy .section-title{font-family:Lemi,sans-serif;font-size:30rpx}.recent-copy .caption{font-family:Lemi,sans-serif;font-size:21rpx;margin-top:6rpx}.recent-count{color:var(--accent);font-family:Lemi,sans-serif;font-size:22rpx;white-space:nowrap}.history-icon{border-radius:50%}
-.detail-page .recipe{border:1rpx solid var(--line);border-radius:36rpx;overflow:hidden;background:var(--bg)}.detail-page .recipe-overview{padding-top:26rpx}
-@media(max-width:374px){.home-heading .title{font-size:43rpx}.home-heading .eyebrow{font-size:16rpx}.app button.draw-entry{font-size:23rpx;padding-right:16rpx;gap:8rpx}.draw-entry-icon{width:58rpx;height:58rpx}.recipe-actions button{font-size:24rpx;gap:8rpx}}
+.metric-value{display:block;font-family:Lemi,sans-serif;font-size:40.8rpx;font-weight:700;color:var(--ink);line-height:1.3}
+.metric-label{display:block;font-family:Lemi,sans-serif;font-size:24rpx;color:var(--muted-ink);letter-spacing:1rpx;margin-top:7.2rpx}
+.recipe-body{background:var(--surface);border-top:1rpx solid var(--line);padding:31.2rpx}
+.recipe .recipe-tags{gap:12rpx;margin:0 0 36rpx}
+.recipe .tag{padding:10.8rpx 19.2rpx;border-radius:19.2rpx;font-family:Lemi,sans-serif;font-size:25.2rpx;background:var(--surface-2);color:var(--muted-ink)}
+.recipe-section-heading{justify-content:flex-start;gap:19.2rpx;margin:36rpx 0 24rpx}
+.recipe-section-heading .section-title{font-family:Lemi,sans-serif;font-size:36rpx;line-height:1.45;flex:1;min-width:0}
+.recipe-section-icon{width:76.8rpx;height:76.8rpx;flex:none;border-radius:27.6rpx;background:var(--surface-2);color:var(--accent);display:flex;align-items:center;justify-content:center}
+.recipe .ingredient-list{gap:14.4rpx;margin:0 0 36rpx}
+.recipe .ingredient{display:flex;align-items:center;gap:14.4rpx;font-family:Lemi,sans-serif;font-size:30rpx;border-radius:120rpx;padding:14.4rpx 26.4rpx;background:var(--bg);border:1rpx solid var(--line);max-width:100%;overflow-wrap:break-word}
+.recipe .ingredient::before{content:'';width:10.8rpx;height:10.8rpx;border-radius:50%;background:var(--accent);flex:none}
+.method-card{border:1rpx solid var(--line-strong);border-radius:43.2rpx;padding:33.6rpx 28.8rpx;background:var(--surface)}
+.recipe .step{gap:19.2rpx;margin:0 0 33.6rpx}.recipe .step:last-child{margin-bottom:0}
+.recipe .step-number{width:38.4rpx;height:auto;line-height:2.05;background:transparent;border-radius:0;font-family:Lemi,sans-serif;font-size:27.6rpx;color:var(--accent)}
+.recipe .step-text{font-family:Lemi,sans-serif;font-size:32.4rpx;line-height:2.05;letter-spacing:.6rpx;min-width:0}
+.recipe .tip{display:flex;align-items:flex-start;gap:16.8rpx;margin:28.8rpx 0 0;padding:24rpx 0 0;border-top:1rpx dashed var(--line-strong);border-radius:0;background:transparent;color:var(--muted-ink);font-family:Lemi,sans-serif;font-size:28.8rpx;line-height:1.85}
+.recipe .recipe-note{font-family:Lemi,sans-serif;font-size:26.4rpx;margin:21.6rpx 0 0}
+.recipe .recipe-actions{gap:16.8rpx;margin:28.8rpx 0 0}.recipe-actions button{font-family:Lemi,sans-serif;font-size:31.2rpx;border-radius:36rpx;padding:24rpx 12rpx;gap:14.4rpx;min-height:62.4px}.recipe-actions .primary{background:var(--surface-2);color:var(--accent);border:1rpx solid var(--line-strong)}.recipe-actions .secondary{background:var(--surface);color:var(--ink)}
+.recipe .footer-actions{margin:21.6rpx 0 4.8rpx}.recipe .footer-actions .text-button{font-size:24rpx;padding:9.6rpx 4.8rpx}.recipe .fine-print{font-size:22.8rpx;line-height:1.6;color:var(--muted-ink)}
+.app button.recent-card{display:flex;gap:19.2rpx;text-align:left;padding:28.8rpx;border-radius:43.2rpx;background:var(--surface);border:1rpx solid var(--line);margin-top:28.8rpx;box-shadow:0 12rpx 30rpx var(--line)}
+.recent-copy{flex:1;min-width:0}.recent-copy text{display:block}.recent-copy .section-title{font-family:Lemi,sans-serif;font-size:36rpx}.recent-copy .caption{font-family:Lemi,sans-serif;font-size:25.2rpx;margin-top:7.2rpx}.recent-count{color:var(--accent);font-family:Lemi,sans-serif;font-size:26.4rpx;white-space:nowrap}.history-icon{border-radius:50%}
+.detail-page .recipe{border:1rpx solid var(--line);border-radius:43.2rpx;overflow:hidden;background:var(--bg)}.detail-page .recipe-overview{padding-top:31.2rpx}
+@media(max-width:374px){.home-heading .title{font-size:51.6rpx}.home-heading .eyebrow{font-size:19.2rpx}.app button.draw-entry{font-size:27.6rpx;padding-right:19.2rpx;gap:9.6rpx}.draw-entry-icon{width:69.6rpx;height:69.6rpx}.recipe-actions button{font-size:28.8rpx;gap:9.6rpx}}
 /* Original Lucide outlines; sources and ISC license: tools/miniprogram/vendor/lucide. */
-.recipe-line-icon{display:block;flex:none;width:40rpx;height:40rpx;background-color:currentColor;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain}
-.recipe .tip-spark{width:34rpx;height:40rpx;color:var(--accent)}
-.recipe-actions .recipe-line-icon{width:40rpx;height:40rpx}
+.recipe-line-icon{display:block;flex:none;width:48rpx;height:48rpx;background-color:currentColor;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:center;mask-position:center;-webkit-mask-size:contain;mask-size:contain}
+.recipe .tip-spark{width:40.8rpx;height:48rpx;color:var(--accent)}
+.recipe-actions .recipe-line-icon{width:48rpx;height:48rpx}
 .checklist-icon{-webkit-mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M13%205h8%22%20%2F%3E%20%3Cpath%20d%3D%22M13%2012h8%22%20%2F%3E%20%3Cpath%20d%3D%22M13%2019h8%22%20%2F%3E%20%3Cpath%20d%3D%22m3%2017%202%202%204-4%22%20%2F%3E%20%3Cpath%20d%3D%22m3%207%202%202%204-4%22%20%2F%3E%20%3C%2Fsvg%3E");mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M13%205h8%22%20%2F%3E%20%3Cpath%20d%3D%22M13%2012h8%22%20%2F%3E%20%3Cpath%20d%3D%22M13%2019h8%22%20%2F%3E%20%3Cpath%20d%3D%22m3%2017%202%202%204-4%22%20%2F%3E%20%3Cpath%20d%3D%22m3%207%202%202%204-4%22%20%2F%3E%20%3C%2Fsvg%3E")}
 .clipboard-icon{-webkit-mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Crect%20width%3D%228%22%20height%3D%224%22%20x%3D%228%22%20y%3D%222%22%20rx%3D%221%22%20ry%3D%221%22%20%2F%3E%20%3Cpath%20d%3D%22M16%204h2a2%202%200%200%201%202%202v14a2%202%200%200%201-2%202H6a2%202%200%200%201-2-2V6a2%202%200%200%201%202-2h2%22%20%2F%3E%20%3Cpath%20d%3D%22M12%2011h4%22%20%2F%3E%20%3Cpath%20d%3D%22M12%2016h4%22%20%2F%3E%20%3Cpath%20d%3D%22M8%2011h.01%22%20%2F%3E%20%3Cpath%20d%3D%22M8%2016h.01%22%20%2F%3E%20%3C%2Fsvg%3E");mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Crect%20width%3D%228%22%20height%3D%224%22%20x%3D%228%22%20y%3D%222%22%20rx%3D%221%22%20ry%3D%221%22%20%2F%3E%20%3Cpath%20d%3D%22M16%204h2a2%202%200%200%201%202%202v14a2%202%200%200%201-2%202H6a2%202%200%200%201-2-2V6a2%202%200%200%201%202-2h2%22%20%2F%3E%20%3Cpath%20d%3D%22M12%2011h4%22%20%2F%3E%20%3Cpath%20d%3D%22M12%2016h4%22%20%2F%3E%20%3Cpath%20d%3D%22M8%2011h.01%22%20%2F%3E%20%3Cpath%20d%3D%22M8%2016h.01%22%20%2F%3E%20%3C%2Fsvg%3E")}
 .tip-spark{-webkit-mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M11.017%202.814a1%201%200%200%201%201.966%200l1.051%205.558a2%202%200%200%200%201.594%201.594l5.558%201.051a1%201%200%200%201%200%201.966l-5.558%201.051a2%202%200%200%200-1.594%201.594l-1.051%205.558a1%201%200%200%201-1.966%200l-1.051-5.558a2%202%200%200%200-1.594-1.594l-5.558-1.051a1%201%200%200%201%200-1.966l5.558-1.051a2%202%200%200%200%201.594-1.594z%22%20%2F%3E%20%3Cpath%20d%3D%22M20%202v4%22%20%2F%3E%20%3Cpath%20d%3D%22M22%204h-4%22%20%2F%3E%20%3Ccircle%20cx%3D%224%22%20cy%3D%2220%22%20r%3D%222%22%20%2F%3E%20%3C%2Fsvg%3E");mask-image:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22currentColor%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20%3E%20%3Cpath%20d%3D%22M11.017%202.814a1%201%200%200%201%201.966%200l1.051%205.558a2%202%200%200%200%201.594%201.594l5.558%201.051a1%201%200%200%201%200%201.966l-5.558%201.051a2%202%200%200%200-1.594%201.594l-1.051%205.558a1%201%200%200%201-1.966%200l-1.051-5.558a2%202%200%200%200-1.594-1.594l-5.558-1.051a1%201%200%200%201%200-1.966l5.558-1.051a2%202%200%200%200%201.594-1.594z%22%20%2F%3E%20%3Cpath%20d%3D%22M20%202v4%22%20%2F%3E%20%3Cpath%20d%3D%22M22%204h-4%22%20%2F%3E%20%3Ccircle%20cx%3D%224%22%20cy%3D%2220%22%20r%3D%222%22%20%2F%3E%20%3C%2Fsvg%3E")}
