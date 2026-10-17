@@ -47,19 +47,45 @@ test('native image component loads without the unsupported game-only package API
   definition.lifetimes.detached.call(component);const before=JSON.stringify(component.data);
   component.error();component.loaded();timer.advance(30000);assert.equal(JSON.stringify(component.data),before);
 });
-function pageHarness(){
-  let saved;const store=createStore({getStorageSync:()=>saved,setStorageSync:(_,v)=>{saved=JSON.parse(JSON.stringify(v));}});
+function pageHarness(initialSaved,existingApp){
+  let saved=initialSaved;const store=existingApp?existingApp.getStore():createStore({getStorageSync:()=>saved,setStorageSync:(_,v)=>{saved=JSON.parse(JSON.stringify(v));}});
+  let app=existingApp;
+  if(!app){vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../../miniprogram/app.js'),'utf8'),{require:()=>({createStore:()=>store}),App:value=>app=value,wx:{}});app.onLaunch();}
   const timer=clock(),calls=[];let page;
   const filename=path.join(__dirname,'../../miniprogram/pages/kitchen/index.js'),nativeRequire=createRequire(filename);
   const wx={setNavigationBarColor(){},setBackgroundColor(){},setNavigationBarTitle(o){calls.push(['title',o]);},pageScrollTo(o){o.complete?.();},
     navigateTo:o=>calls.push(['navigate',o]),reLaunch:o=>calls.push(['relaunch',o]),setClipboardData:o=>calls.push(['clipboard',o]),
     showModal:o=>o.success({confirm:true}),createSelectorQuery:()=>({in(){return this;},select(){return this;},fields(){return this;},boundingClientRect(){return this;},exec:f=>f([])})};
-  vm.runInNewContext(fs.readFileSync(filename,'utf8'),{require:p=>p==='../../utils/ui'?{...nativeRequire(p),applyNavigation(){}}:p==='../../utils/recipe-actions'?actions(wx):nativeRequire(p),Page:p=>page=p,getApp:()=>({getStore:()=>store}),wx,...timer});
+  vm.runInNewContext(fs.readFileSync(filename,'utf8'),{require:p=>p==='../../utils/ui'?{...nativeRequire(p),applyNavigation(){}}:p==='../../utils/recipe-actions'?actions(wx,app):nativeRequire(p),Page:p=>page=p,getApp:()=>app,wx,...timer});
   page.setData=function(patch,done){for(const [key,value]of Object.entries(patch)){const parts=key.split('.');let target=this.data;for(const part of parts.slice(0,-1))target=target[part];target[parts.at(-1)]=value;}done?.();};
-  page.onLoad({});return {page,store,timer,calls,saved:()=>saved};
+  page.onLoad({});return {page,store,app,timer,calls,saved:()=>saved};
 }
-function actions(wx){const module={exports:{}};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../../miniprogram/utils/recipe-actions.js'),'utf8'),{module,wx});return module.exports;}
+function actions(wx,app){const module={exports:{}};vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../../miniprogram/utils/recipe-actions.js'),'utf8'),{module,wx,getApp:()=>app});return module.exports;}
 const event=dataset=>({currentTarget:{dataset}});
+
+test('cold entry opens the wheel and background resume preserves the previous page and menu',()=>{
+  const seed=pageHarness();seed.page.setServing(event({count:3}));seed.store.state.settings.reduceMotion=true;
+  seed.page.spin();seed.timer.advance(0);seed.store.addShopping(['青菜']);seed.page.markSelectedCooked();
+  seed.store.state.settings.reduceMotion=false;seed.store.save();const saved=JSON.parse(JSON.stringify(seed.saved()));seed.page.onUnload();
+  const {page,app,store,timer}=pageHarness(saved);page.onShow();
+  assert(page.data.wheelOpen);assert(page.data.wheelItems.length);assert.equal(page.data.tab,'home');
+  assert.deepEqual(store.state,saved,'entry must preserve persisted user data');
+  for(const tab of ['home','mine']){
+    page.setData({wheelOpen:false,tab});page.onHide();page.onShow();timer.advance(1000);
+    assert(!page.data.wheelOpen);assert.equal(page.data.tab,tab);assert(!page.data.spinning);
+    assert.deepEqual(store.state,saved);
+  }
+  page.setData({wheelOpen:false});page.onHide();page.onShow();
+  assert(!page.data.wheelOpen,'returning from an internal detail page preserves the result view');page.onUnload();
+});
+
+test('explicit dinner choice opens its result once and a new page instance opens the wheel',()=>{
+  const first=pageHarness();first.page.setData({selected:first.store.engine.allRecipes()[0]});
+  first.page.chooseForDinner();assert(first.calls.some(c=>c[0]==='relaunch'));first.page.onUnload();
+  const next=pageHarness(undefined,first.app);next.page.onShow();assert(!next.page.data.wheelOpen);assert(next.page.data.selected);
+  next.page.onHide();next.page.onShow();assert(!next.page.data.wheelOpen);next.page.onUnload();
+  const reopened=pageHarness(undefined,next.app);reopened.page.onShow();assert(reopened.page.data.wheelOpen);reopened.page.onUnload();
+});
 test('all page flows preserve settings, menu selection, shopping, custom recipes and sharing',()=>{
   const {page,store,timer,calls,saved}=pageHarness();
   for(const count of [1,2,3,4,5,6]){

@@ -1,12 +1,12 @@
 /* Local verification adapter. Never included in the WeChat package. */
 // Match a phone viewport: preserve scrolling without a desktop scrollbar gutter.
 const viewportStyle=document.createElement('style');viewportStyle.textContent='html{scrollbar-width:none}html::-webkit-scrollbar{width:0;height:0}';document.head.append(viewportStyle);
-document.getElementById('review').textContent='交互预览 v1.18.15 · 非微信真机';
+document.getElementById('review').textContent='交互预览 v1.18.17 · 非微信真机';
 window.addEventListener('error',e=>{const p=document.createElement('pre');p.textContent=e.message+'\n'+e.error?.stack;document.body.append(p);});
 const cache={},templates={},root=document.getElementById('root');let page,pagePath='/pages/kitchen/index',rendering=false;
 function normalize(p){const parts=[];p.split('/').forEach(s=>{if(s==='..')parts.pop();else if(s&&s!=='.')parts.push(s);});return '/'+parts.join('/');}
 function requireModule(p){p=normalize(p.endsWith('.js')?p:p+'.js');if(cache[p])return cache[p].exports;const m={exports:{}};cache[p]=m;new Function('require','module','exports',SOURCES[p])(q=>requireModule(q.startsWith('/')?q:p.slice(0,p.lastIndexOf('/')+1)+q),m,m.exports);return m.exports;}
-window.getApp=()=>({getStore:()=>store});window.Page=p=>{page=p;};
+  const app={getStore:()=>store};window.getApp=()=>app;window.Page=p=>{page=p;};
 window.wx={getStorageSync:k=>JSON.parse(localStorage.getItem('design-1.13.1:'+k)||'null'),setStorageSync:(k,v)=>localStorage.setItem('design-1.13.1:'+k,JSON.stringify(v)),setNavigationBarColor(){},setBackgroundColor(){},setNavigationBarTitle(){},pageScrollTo:o=>{const target=o.selector?document.querySelector(o.selector):null;scrollTo(0,target?target.getBoundingClientRect().top+scrollY-(o.offsetTop||0):o.scrollTop||0);requestAnimationFrame(()=>o.complete?.());},getWindowInfo:()=>({pixelRatio:devicePixelRatio,windowWidth:innerWidth,windowHeight:innerHeight}),vibrateShort(){},showToast:o=>alert(o.title),showModal:o=>o.success({confirm:confirm(o.content)}),setClipboardData:o=>navigator.clipboard.writeText(o.data),navigateTo:o=>openPage(o.url),reLaunch:o=>openPage(o.url),createSelectorQuery(){let selector;const selections=[];return{in(){return this;},select(s){selector=s;return this;},fields(){selections.push({selector,node:true});return this;},boundingClientRect(){selections.push({selector});return this;},exec(fn){fn(selections.map(item=>{const node=document.querySelector(item.selector);if(!node)return null;const r=node.getBoundingClientRect();return item.node?{node,width:r.width,height:r.height}:{left:r.left,top:r.top,width:r.width,height:r.height,right:r.right,bottom:r.bottom};}));}};}};
 const store=requireModule('/utils/store').createStore(wx);
 function evaluate(expression,scope){try{return new Function('scope','with(scope){return ('+expression+')}')(scope);}catch(e){window.__previewErrors.push(expression+': '+e.message);return undefined;}}
@@ -49,7 +49,7 @@ function renderNodes(nodes,scope,parent){let prior=false,chain=false;for(const n
       let v=tag==='switch'?target.checked:target.value;
       if(event==='submit')v=Object.fromEntries(new FormData(target));
       const point={clientX:e.clientX,clientY:e.clientY};
-      const payload={currentTarget:{dataset:{...target.dataset}},detail:{value:v,path:target.getAttribute('path'),scrollLeft:target.scrollLeft,scrollTop:target.scrollTop},touches:event==='pointerup'||event==='pointercancel'?[]:[point],changedTouches:[point]};
+      const payload={timeStamp:e.timeStamp,currentTarget:{dataset:{...target.dataset}},detail:{value:v,path:target.getAttribute('path'),scrollLeft:target.scrollLeft,scrollTop:target.scrollTop},touches:event==='pointerup'||event==='pointercancel'?[]:[point],changedTouches:[point]};
       if(page[attr.value])page[attr.value](payload);
     };
     el.addEventListener(event,handler);el.__previewEvents.push([event,handler]);

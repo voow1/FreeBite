@@ -4,14 +4,15 @@ const petMotion=require('../../utils/pet-player');
 const dishFlight=require('../../utils/dish-flight');
 const menuLayout=require('../../utils/menu-layout');
 const wheelLayout=require('../../utils/wheel-layout');
+const wheelGesture=require('../../utils/wheel-gesture');
 const options = require('../../data/options');
 const {themes} = require('../../data/themes');
 const ui = require('../../utils/ui');
 const {flavorView}=require('../../utils/recipe-flavor');
 const actions = require('../../utils/recipe-actions');
 Page(motion.decorate({
-  data:{tab:'home',visited:{home:true},standalone:false,wheelOpen:false,wheelHintDismissed:false,filtersOpen:false,addOpen:false,spinning:false,petState:'idle',angle:0,spinDuration:0,pointerMotion:null,
-    dishFlight:null,flightRecipe:null,flightPhase:'',flightStyle:'',flightIndex:-1,wheelItems:[],selected:null,selectedMenu:[],servings:[1,2,3,4,5,6],library:[],libraryTotal:0,libraryTag:'all',categoriesExpanded:false,search:'',
+  data:{tab:'home',visited:{home:true},standalone:false,wheelOpen:true,wheelHintDismissed:false,filtersOpen:false,addOpen:false,spinning:false,petState:'idle',angle:0,spinDuration:0,pointerMotion:null,
+    coasting:false,dishFlight:null,flightRecipe:null,flightPhase:'',flightStyle:'',flightIndex:-1,wheelItems:[],selected:null,selectedMenu:[],servings:[1,2,3,4,5,6],library:[],libraryTotal:0,libraryTag:'all',categoriesExpanded:false,search:'',
     petPreviewFrame:0,menuScrollLeft:0,shoppingInput:'',fridgeMatches:[],toast:'',settings:{},pets:[],pet:{},filterGroups:[],avoidOptions:[],
     tastes:[],history:[],shopping:[],customRecipes:[],heatOptions:[{value:'all',label:'不限'},{value:'0',label:'不辣'},{value:'1',label:'微辣'},{value:'2',label:'中辣'},{value:'3',label:'较辣'},{value:'4',label:'爆辣'}]},
   onLoad(query){
@@ -22,14 +23,17 @@ Page(motion.decorate({
     this.setData({petFrame:0,petColumn:0,petRow:0});
     this._releaseHidden=()=>this.setData({visited:{[this.data.tab]:true}});
     if(wx.onMemoryWarning)wx.onMemoryWarning(this._releaseHidden);
+    const app=getApp();
+    const showSelectedMenu=app.showSelectedMenuOnce===true&&this.store.state.selectedIds.length>0;
+    app.showSelectedMenuOnce=false;
+    this.setData({wheelOpen:!showSelectedMenu,categories:options.menuCategoryOptions});
     this.fitWheel();
-    if(query.id && this.store.find(query.id)) this.store.state.selectedIds=[query.id];
-    this.setData({wheelOpen:!this.store.state.selectedIds.length,categories:options.menuCategoryOptions});
     this.refresh();
   },
   onReady(){this.positionWheel();this.drawWheel();this.syncMenuStrip();},
-  onResize(){if(this.data.dishFlight)this.cancelSpin();this.fitWheel();this.drawWheel();this.syncMenuStrip();},
+  onResize(){this.touchCancel();if(this.data.dishFlight)this.cancelSpin();this.fitWheel();this.drawWheel();this.syncMenuStrip();},
   fitWheel(){
+    this._wheelGestureCenter=null;
     const screen=wx.getWindowInfo?wx.getWindowInfo():wx.getSystemInfoSync?wx.getSystemInfoSync():{};
     const width=screen.windowWidth||375,height=screen.windowHeight||667;
     const safeBottom=screen.safeArea?Math.max(0,screen.screenHeight-screen.safeArea.bottom):0;
@@ -54,7 +58,9 @@ Page(motion.decorate({
       const area=rects&&rects[0];
       if(!area||!(area.height>0))return;
       const {size,petSize}=this._wheelPreferred;
-      this.setData(wheelLayout.placeWheel(area.height,size,petSize,this.data.pet.id));
+      const layout=wheelLayout.placeWheel(area.height,size,petSize,this.data.pet.id);
+      this._wheelGestureCenter=Number.isFinite(area.left)&&Number.isFinite(area.top)&&area.width>0?{x:area.left+area.width/2,y:area.top+layout.wheelTop+layout.wheelSize/2}:null;
+      this.setData(layout);
     });
   },
   onShow(){this._petHidden=false;if(wx.setNavigationBarTitle)wx.setNavigationBarTitle({title:'不牛马厨房'});if(this.store)this.refresh();},
@@ -99,7 +105,7 @@ Page(motion.decorate({
     if(!this.petPlayer)return;
     if(this.store.state.settings.reduceMotion){this.petPlayer.reset();return;}
     if(this._petHidden||!this.data.wheelOpen||this.data.tab!=='home'){this.petPlayer.stop();return;}
-    if(!this.data.spinning&&this.data.petState==='idle')this.petPlayer.idle();
+    if(!this.data.spinning&&!this.data.coasting&&this.data.petState==='idle')this.petPlayer.idle();
   },
   notify(text){clearTimeout(this.toastTimer);this.setData({toast:text});this.toastTimer=setTimeout(()=>this.setData({toast:''}),2400);},
   switchTab(e){const tab=e.currentTarget.dataset.tab;this.setData({tab,qNavTab:tab,qNavBeat:1-(this.data.qNavBeat||0),['visited.'+tab]:true},()=>{if(tab==='home')this.syncMenuStrip();});this.syncPetIdle();this.syncPetPreviews();wx.pageScrollTo({scrollTop:0,duration:0});},
@@ -128,8 +134,9 @@ Page(motion.decorate({
     this.store.save();this.refresh();
   },
   openWheel(){if(this.data.spinning)return;this.setData({wheelOpen:true,wheelHintDismissed:false},()=>this.fitWheel());this.refreshWheel();this.syncPetIdle();},
-  closeWheel(){if(!this.data.spinning){clearTimeout(this._wheelLayoutTimer);this.qClose('wheelOpen',function(){this.petPlayer.stop();});}},
+  closeWheel(){if(!this.data.spinning){this.stopCoast();clearTimeout(this._wheelLayoutTimer);this.qClose('wheelOpen',function(){this.petPlayer.stop();});}},
   refreshWheel(){
+    this.stopCoast();
     const engine=this.store.engine;
     this.pool=engine.filteredRecipes();
     const pool=engine.balancedWheelPool(this.pool,engine.targetMenuCount(this.pool));
@@ -150,6 +157,7 @@ Page(motion.decorate({
   },
   spin(e){
     if(this.data.spinning || !this.wheelRecipes || !this.wheelRecipes.length)return;
+    this.stopCoast();
     const direction=e&&e.direction===-1?-1:1;
     const index=Math.floor(Math.random()*this.wheelRecipes.length);
     const anchor=this.wheelRecipes[index];
@@ -246,29 +254,29 @@ Page(motion.decorate({
   },
   touchStart(e){
     if(this.data.spinning)return;
+    this.stopCoast();
+    if(e.touches&&e.touches.length>1){this._suppressWheelTapUntil=Date.now()+500;this.touchCancel();return;}
     const point=this.touchPoint(e.touches);
     this.stopPointer();
-    this.touch=point?{...point,startAngle:this.data.angle,lastX:point.x,lastTime:e.timeStamp||Date.now(),delta:0,moved:false}:null;
+    const now=Number.isFinite(e.timeStamp)?e.timeStamp:Date.now();
+    this.touch=point?{...wheelGesture.begin(point,this.data.angle,this.data.wheelSize,this._wheelGestureCenter,now),identifier:point.identifier,lastTime:now,timeOffset:now-Date.now()}:null;
     this.setData({spinDuration:0});
   },
-  touchPoint(touches){
-    const p=touches&&touches[0];if(!p)return null;
+  touchPoint(touches,identifier){
+    const p=touches&&(identifier===undefined?touches[0]:Array.from(touches).find(p=>p.identifier===identifier));if(!p)return null;
     // Canvas-originated WeChat touches may expose x/y instead of clientX/Y.
     const x=Number(p.clientX!==undefined?p.clientX:p.pageX!==undefined?p.pageX:p.x);
     const y=Number(p.clientY!==undefined?p.clientY:p.pageY!==undefined?p.pageY:p.y);
-    return Number.isFinite(x)&&Number.isFinite(y)?{x,y}:null;
+    return Number.isFinite(x)&&Number.isFinite(y)?{x,y,identifier:p.identifier}:null;
   },
   touchMove(e){
-    const point=this.touchPoint(e.touches),drag=this.touch;
+    if(e.touches&&e.touches.length>1){this._suppressWheelTapUntil=Date.now()+500;this.touchCancel();return;}
+    const drag=this.touch,point=this.touchPoint(e.touches,drag&&drag.identifier);
     if(this.data.spinning||!drag||!point||!this.wheelRecipes.length)return;
-    const dx=point.x-drag.x,dy=point.y-drag.y;
-    if(!drag.moved&&(Math.abs(dx)<6||Math.abs(dx)<Math.abs(dy)))return;
-    drag.moved=true;drag.delta=dx;
+    const now=Number.isFinite(e.timeStamp)?e.timeStamp:Date.now()+drag.timeOffset,update=wheelGesture.move(drag,point,now);if(!update)return;
     this._suppressWheelTapUntil=Date.now()+500;
-    if(point.x!==drag.lastX)drag.direction=point.x>drag.lastX?-1:1;
-    drag.lastX=point.x;
-    const angle=drag.startAngle-dx*180/this.data.wheelSize;
-    const now=e.timeStamp||Date.now(),elapsed=Math.max(16,now-drag.lastTime);
+    const angle=update.angle;
+    const elapsed=Math.max(16,now-drag.lastTime);
     const petSpeed=(angle-this.data.angle)/elapsed;
     if(!this.store.state.settings.reduceMotion&&!this.data.qPaused)this.pointerPlayer.drag(petSpeed,drag.direction);
     drag.lastTime=now;
@@ -278,21 +286,43 @@ Page(motion.decorate({
   },
   touchEnd(e){
     if(this.data.spinning){this.touch=null;return;}
-    const point=this.touchPoint(e.changedTouches),drag=this.touch;
-    if(!drag||!point){this.touchCancel();return;}
+    const drag=this.touch;if(!drag)return;
+    const point=this.touchPoint(e.changedTouches,drag.identifier);
+    if(!point&&e.changedTouches&&e.changedTouches.length)return;
+    if(point)this.touchMove({touches:[point],timeStamp:e.timeStamp});
     if(drag.moved)this._suppressWheelTapUntil=Date.now()+500;
-    const dx=point.x-drag.x,dy=point.y-drag.y;
-    const direction=drag.direction||(dx>0?-1:1);
-    if(Math.abs(dx)>35&&(drag.moved||Math.abs(dx)>Math.abs(dy))){this._suppressWheelTapUntil=Date.now()+500;this.touch=null;this.spin({direction});}
-    else this.touchCancel();
+    const speed=wheelGesture.releaseSpeed(drag,Number.isFinite(e.timeStamp)?e.timeStamp:Date.now()+drag.timeOffset);this.touch=null;
+    if(wheelGesture.shouldSpin(speed)){this._suppressWheelTapUntil=Date.now()+500;this.spin({direction:Math.sign(speed)});}
+    else this.startCoast(speed);
+  },
+  stopCoast(){
+    clearTimeout(this._coastTimer);this._coastEpoch=(this._coastEpoch||0)+1;
+    if(this.data.coasting){this.setData({coasting:false,petState:'idle'});this.stopPointer();this.petPlayer.stop();this.syncPetIdle();}
+  },
+  startCoast(speed){
+    this.stopCoast();
+    if(this._petHidden||!this.data.wheelOpen||this.store.state.settings.reduceMotion||Math.abs(speed)<0.003){this.touchCancel();return;}
+    const epoch=this._coastEpoch,started=Date.now(),angle=this.data.angle,direction=Math.sign(speed);
+    this.setData({coasting:true,spinDuration:0,petState:direction>0?'runRight':'runLeft'});
+    const tick=()=>{
+      if(epoch!==this._coastEpoch||this._petHidden||!this.data.wheelOpen)return;
+      const step=wheelGesture.coast(speed,Date.now()-started);
+      this.setData({angle:angle+step.offset});
+      if(step.done){this.stopCoast();return;}
+      this.petPlayer.drag(step.speed,direction);this.pointerPlayer.drag(step.speed,direction);
+      this._coastTimer=setTimeout(tick,16);
+    };
+    tick();
   },
   touchCancel(){
     this.touch=null;
+    this.stopCoast();
     if(!this.data.spinning)this.stopPointer();
     if(!this.data.spinning)this.setData({petState:'idle'});
     this.syncPetIdle();
   },
   cancelSpin(){
+    this.stopCoast();
     clearTimeout(this.spinTimer);clearTimeout(this.flightTimer);this._flightEpoch=(this._flightEpoch||0)+1;this.touch=null;
     this.stopPointer();
     this.petPlayer.stop();

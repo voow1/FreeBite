@@ -86,11 +86,64 @@ test('all four pets retain both running directions and completion before returni
     page.onUnload();
   }
 });
-test('cancelled drags, vertical scrolling and leaving during a spin reset the mascot',()=>{
+test('cancelled drags and leaving during a spin reset the mascot',()=>{
   const {page,store,advance}=harness(mascotPresets[0]);
   page.touchStart(touch(0));page.touchMove(touch(-20));page.touchCancel();assert.equal(page.data.petState,'idle');
-  page.touchStart(touch(0));page.touchMove(touch(40,100));page.touchEnd(touch(40,100));assert(!page.data.spinning);
+  page.touchStart(touch(0));page.touchMove(touch(40,100));page.touchCancel();assert(!page.data.spinning);
   page.spin();page.onHide();advance(6000);assert.equal(page.data.petState,'idle');assert.equal(store.state.selectedIds.length,0);
+});
+
+test('all-direction gestures inside the disc and in surrounding space spin once on release',()=>{
+  for(const start of [[190,420],[190,540],[30,520],[350,520],[30,340]])for(const delta of [[0,70],[0,-70],[70,0],[-70,0],[60,60],[-60,-60]]){
+    const {page}=harness(mascotPresets[0]);page._wheelGestureCenter={x:190,y:520};
+    let spins=0,direction;page.spin=e=>{spins++;direction=e.direction;};
+    const [x,y]=start,[dx,dy]=delta;
+    page.touchStart(touch(x,y));page.touchMove(touch(x+dx,y+dy));
+    assert.notEqual(page.data.angle,0);const before=page.data.angle;
+    page.touchEnd(touch(x+dx,y+dy));page.tapWheelCenter({});
+    assert.equal(spins,1);assert.equal(direction,Math.sign(before));page.onUnload();
+  }
+});
+
+test('closed arcs, last release movement and multi-touch cancellation are handled',()=>{
+  const {page}=harness(mascotPresets[0]);page._wheelGestureCenter={x:190,y:520};
+  const p=a=>touch(190+100*Math.cos(a),520+100*Math.sin(a));
+  let spins=0;page.spin=()=>{spins++;};
+  page.touchStart(p(0));for(let i=1;i<=24;i++)page.touchMove(p(i*Math.PI/12));page.touchEnd(p(0));
+  assert.equal(spins,1);assert(Math.abs(page.data.angle-360)<0.001);
+  page.touchStart(touch(190,520));page.touchEnd(touch(190,590));assert.equal(spins,2,'quick swipe includes its final sample');
+  page.touchStart({touches:[{clientX:190,clientY:520,identifier:1}]});
+  page.touchMove({touches:[{clientX:190,clientY:570,identifier:1},{clientX:200,clientY:530,identifier:2}]});
+  page.touchEnd({changedTouches:[{clientX:190,clientY:570,identifier:1}]});page.tapWheelCenter({});assert.equal(spins,2);
+  page.onUnload();
+});
+
+test('slow release coasts without selecting, while a short fast flick selects',()=>{
+  const {page,store,advance}=harness(mascotPresets[0]);
+  page.touchStart(touch(190,400));advance(200);page.touchMove(touch(190,430));page.touchEnd(touch(190,430));
+  assert(!page.data.spinning);assert(page.data.coasting);const releasedAngle=page.data.angle;
+  advance(80);assert(page.data.angle>releasedAngle);assert.equal(store.state.selectedIds.length,0);
+  advance(1000);assert(!page.data.coasting);assert(!page.data.spinning);assert.equal(page.data.petState,'idle');
+  const stopped=page.data.angle;advance(500);assert.equal(page.data.angle,stopped);
+  page.touchStart(touch(190,400));advance(24);page.touchMove(touch(190,412));page.touchEnd(touch(190,412));assert(page.data.spinning);
+  page.onUnload();
+});
+
+test('touch timestamps preserve flick speed when runtime processing is delayed',()=>{
+  const {page,advance}=harness(mascotPresets[0]);
+  page.touchStart({...touch(190,400),timeStamp:1000});advance(300);
+  page.touchMove({...touch(190,420),timeStamp:1040});advance(300);
+  page.touchEnd({...touch(190,420),timeStamp:1041});assert(page.data.spinning);page.onUnload();
+});
+
+test('holding after a fast drag does not select and interrupted coasts cannot resume',()=>{
+  const {page,advance}=harness(mascotPresets[0]);
+  page.touchStart(touch(100));advance(30);page.touchMove(touch(200));advance(150);page.touchEnd(touch(200));
+  assert(!page.data.spinning);assert(!page.data.coasting);
+  const slow=()=>{page.touchStart(touch(100));advance(200);page.touchMove(touch(130));page.touchEnd(touch(130));assert(page.data.coasting);};
+  slow();advance(40);page.touchStart(touch(130));const angle=page.data.angle;advance(1000);assert.equal(page.data.angle,angle);assert(!page.data.coasting);page.touchCancel();
+  slow();page.onHide();const hidden=page.data.angle;advance(1000);assert.equal(page.data.angle,hidden);assert(!page.data.coasting);
+  page.onShow();slow();page.closeWheel();advance(1000);assert(!page.data.coasting);page.qFinishClose();assert(!page.data.wheelOpen);page.onUnload();
 });
 test('reduced motion skips directional running and celebration delays',()=>{
   const {page,store,advance}=harness(mascotPresets[0],true);
